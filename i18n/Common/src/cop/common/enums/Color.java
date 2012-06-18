@@ -31,6 +31,6 @@ public enum Color {
 	 */
 
 	static {
-		LocaleStore.registerStore(Color.class, CommonProperty.I18N, LocalizationExt.DEFAULT_LOCALE);
+		LocaleStore.registerStore(Color.class, null /*CommonProperty.I18N*/, LocalizationExt.DEFAULT_LOCALE);
 	}
 }

@@ -51,7 +51,7 @@ public final class LocaleStore {
 	}
 
 	private LocaleStore(String root, Locale defLocale) {
-		this.root = root + ".";
+		this.root = isEmpty(root) ? "" : root + ".";
 		this.defLocale = defLocale;
 	}
 
