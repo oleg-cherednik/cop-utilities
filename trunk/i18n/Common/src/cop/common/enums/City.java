@@ -11,6 +11,6 @@ public enum City {
 	BERLIN;
 
 	static {
-		LocaleStore.registerStore(City.class, CommonProperty.I18N, LocalizationExt.DEFAULT_LOCALE);
+		LocaleStore.registerStore(City.class, null/*CommonProperty.I18N*/, LocalizationExt.DEFAULT_LOCALE);
 	}
 }
