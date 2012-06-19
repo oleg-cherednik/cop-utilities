@@ -1,6 +1,7 @@
 package cop.common;
 
 public final class CommonProperty {
-	public static final String I18N = "i18n";
+	public static final String PATH_I18N = null;
+
 	private CommonProperty() {}
 }

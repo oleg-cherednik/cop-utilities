@@ -4,9 +4,10 @@ import java.util.Locale;
 
 import cop.common.CommonProperty;
 import cop.i18n.LocaleStore;
-import cop.i18n.LocalizationExt;
+import cop.i18n.Localizable;
+import cop.i18n.annotations.i18n;
 
-public enum Color {
+public enum Color implements Localizable {
 	RED,
 	BLUE,
 	GREEN,
@@ -16,21 +17,31 @@ public enum Color {
 	 * Localizable
 	 */
 
-//	@Override
+	@Override
 	public String i18n() {
 		return LocaleStore._i18n(this, name());
 	}
 
-//	@Override
+	@Override
 	public String i18n(Locale locale) {
 		return LocaleStore._i18n(this, name(), locale);
 	}
 
 	/*
-	 * statis
+	 * static
 	 */
 
+	@i18n
+	public static String[] getLocalizedName() {
+		return LocaleStore.i18n(values());
+	}
+
+	@i18n
+	public static String[] getLocalizedName(Locale locale) {
+		return LocaleStore.i18n(values(), locale);
+	}
+
 	static {
-		LocaleStore.registerStore(Color.class, null /*CommonProperty.I18N*/, LocalizationExt.DEFAULT_LOCALE);
+		LocaleStore.registerStore(Color.class, CommonProperty.PATH_I18N);
 	}
 }
