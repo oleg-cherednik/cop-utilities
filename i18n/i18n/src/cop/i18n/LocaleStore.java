@@ -12,61 +12,62 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import cop.i18n.exceptions.KeyDuplicationException;
-
 /**
  * @author Oleg Cherednik
  * @since 04.03.2012
  */
 public final class LocaleStore {
 	public static final String DEFAULT_KEY = "default";
+	public static final Locale RUSSIAN = new Locale("ru", "");
+	public static final Locale RU = new Locale("ru", "RU");
 
+	private static final String[] EMPTY_STR_ARR = new String[0];
 	private static final Map<Integer, LocalStoreDecorator> MAP = new HashMap<Integer, LocalStoreDecorator>();
 
+	private static Locale defaultLocale = Locale.getDefault();
+
 	private final String root;
-	private final Locale defLocale;
 
-	public static synchronized void registerStore(Class<?> cls, String root, Locale defLocale) {
-		registerStore(cls, DEFAULT_KEY, root, defLocale, true);
+	public static synchronized void registerStore(Class<?> cls, String root) {
+		registerStore(cls, DEFAULT_KEY, root, true);
 	}
 
-	public static synchronized void registerStore(Class<?> cls, String key, String storeRoot, Locale defLocale) {
-		registerStore(cls, key, storeRoot, defLocale, false);
+	public static synchronized void registerStore(Class<?> cls, String key, String storeRoot) {
+		registerStore(cls, key, storeRoot, false);
 	}
 
-	public static synchronized void registerStore(Class<?> cls, String key, String root, Locale defLocale, boolean def) {
+	public static synchronized void registerStore(Class<?> cls, String key, String root, boolean def) {
 		try {
 			int hashCode = cls.getClassLoader().hashCode();
 			LocalStoreDecorator unit = MAP.get(hashCode);
 
-			if (unit == null)
+			if(unit == null)
 				MAP.put(hashCode, unit = new LocalStoreDecorator());
-			else if (unit.containsKey(key))
-				throw new KeyDuplicationException(key);
+			else if(!unit.containsKey(key))
+				return;
 
-			unit.addLocalStore(key, new LocaleStore(root, defLocale), def);
+			unit.addLocalStore(key, new LocaleStore(root), def);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private LocaleStore(String root, Locale defLocale) {
-		this.root = isEmpty(root) ? "" : root + ".";
-		this.defLocale = defLocale;
+	private LocaleStore(String root) {
+		this.root = isEmpty(root) ? "" : root + "/";
 	}
 
 	public String i18n(Object obj, String key) {
-		return i18n(obj, key, defLocale);
+		return i18n(obj, key, defaultLocale);
 	}
 
 	public String i18n(Object obj, String key, Locale locale) {
-		if (obj == null || isEmpty(key) || locale == null)
+		if(obj == null || isEmpty(key) || locale == null)
 			return "unknown";
 
 		try {
 			ResourceBundle bundle = getBundle(obj, locale);
 
-			if (bundle != null)
+			if(bundle != null)
 				return bundle.getString(key);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -97,7 +98,7 @@ public final class LocaleStore {
 		public void addLocalStore(String key, LocaleStore store, boolean def) {
 			map.put(key, store);
 
-			if (def || map.size() == 1)
+			if(def || map.size() == 1)
 				defKey = key;
 		}
 
@@ -114,6 +115,14 @@ public final class LocaleStore {
 	 * static
 	 */
 
+	public static Locale getDefaultLocale() {
+		return defaultLocale;
+	}
+
+	public static void setDefaultLocale(Locale locale) {
+		LocaleStore.defaultLocale = locale;
+	}
+
 	public static String _i18n(Object obj, String key) {
 		return MAP.get(obj.getClass().getClassLoader().hashCode()).getStore().i18n(obj, key);
 	}
@@ -122,7 +131,27 @@ public final class LocaleStore {
 		return MAP.get(obj.getClass().getClassLoader().hashCode()).getStore().i18n(obj, key, locale);
 	}
 
+	public static String[] i18n(Localizable[] objs) {
+		return i18n(objs, defaultLocale);
+	}
+
+	public static String[] i18n(Localizable[] objs, Locale locale) {
+		if(isEmpty(objs) || locale == null)
+			return EMPTY_STR_ARR;
+
+		String[] res = new String[objs.length];
+
+		for(int i = 0, size = objs.length; i < size; i++)
+			res[i] = objs[i].i18n(locale);
+
+		return res;
+	}
+
 	private static boolean isEmpty(String str) {
 		return str == null || str.trim().length() == 0;
+	}
+
+	private static <T> boolean isEmpty(T[] arr) {
+		return arr == null || arr.length == 0;
 	}
 }

@@ -8,23 +8,25 @@
 package cop.i18n.exceptions;
 
 /**
+ * Exception declares any error while using self-defined annotations.
+ * 
  * @author Oleg Cherednik
- * @since 04.03.2012
+ * @since 16.08.2010
  */
-public class KeyDuplicationException extends Exception {
+public class i18nDeclarationException extends Exception {
 	private static final long serialVersionUID = 1907237273650425166L;
 
-	public KeyDuplicationException() {}
+	public i18nDeclarationException() {}
 
-	public KeyDuplicationException(String message) {
+	public i18nDeclarationException(String message) {
 		super(message);
 	}
 
-	public KeyDuplicationException(String message, Throwable cause) {
+	public i18nDeclarationException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public KeyDuplicationException(Throwable cause) {
+	public i18nDeclarationException(Throwable cause) {
 		super(cause);
 	}
 }
