@@ -28,6 +28,10 @@ public final class LocaleStore {
 
 	private final String root;
 
+	public static synchronized void registerStore(Class<?> cls) {
+		registerStore(cls, DEFAULT_KEY, null, true);
+	}
+
 	public static synchronized void registerStore(Class<?> cls, String root) {
 		registerStore(cls, DEFAULT_KEY, root, true);
 	}
@@ -53,7 +57,7 @@ public final class LocaleStore {
 	}
 
 	private LocaleStore(String root) {
-		this.root = isEmpty(root) ? "" : root + "/";
+		this.root = isEmpty(root) ? "" : root + ".";
 	}
 
 	public String i18n(Object obj, String key) {
@@ -77,7 +81,7 @@ public final class LocaleStore {
 	}
 
 	private ResourceBundle getBundle(Object obj, Locale locale) {
-		String baseName = root + obj.getClass().getSimpleName();
+		String baseName = root + getClassName(obj);
 		ClassLoader loader = obj.getClass().getClassLoader();
 
 		return ResourceBundle.getBundle(baseName, locale, loader);
@@ -114,6 +118,12 @@ public final class LocaleStore {
 	/*
 	 * static
 	 */
+
+	private static String getClassName(Object obj) {
+		if(obj instanceof Enum)
+			return ((Enum<?>)obj).getDeclaringClass().getSimpleName();
+		return obj.getClass().getSimpleName();
+	}
 
 	public static Locale getDefaultLocale() {
 		return defaultLocale;
