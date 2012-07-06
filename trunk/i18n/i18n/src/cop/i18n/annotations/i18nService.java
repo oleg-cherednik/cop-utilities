@@ -7,17 +7,12 @@
  */
 package cop.i18n.annotations;
 
+import cop.i18n.exceptions.i18nDeclarationException;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import cop.i18n.exceptions.i18nDeclarationException;
+import java.util.*;
 
 /**
  * @author Oleg Cherednik
@@ -37,7 +32,7 @@ public final class i18nService {
 		if (isEmpty(key))
 			throw new IllegalArgumentException("key is empty");
 
-		Class<?> parameterType = (locale != null) ? Locale.class : null;
+		Class<?> parameterType = locale != null ? Locale.class : null;
 		Method[] methods = getAnnotatedMethods(cls, i18n.class, String.class, parameterType);
 
 		if (methods.length == 0)
@@ -161,10 +156,10 @@ public final class i18nService {
 	 */
 
 	private static boolean isEmpty(String str) {
-		return str == null || str.trim().isEmpty();
+		return str == null || str.trim().length() == 0;
 	}
 
-	private static <T> boolean isEmpty(T[] arr) {
+	private static <T> boolean isEmpty(T... arr) {
 		return arr == null || arr.length == 0;
 	}
 
