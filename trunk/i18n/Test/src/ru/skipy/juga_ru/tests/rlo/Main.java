@@ -31,8 +31,8 @@ import javax.swing.JFrame;
  * @version 1.0
  */
 public class Main extends JFrame {
-
-    /**
+	private static final long serialVersionUID = 5775299263866090279L;
+	/**
      * English button caption
      */
     private static final String EN = "English";
