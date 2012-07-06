@@ -23,14 +23,12 @@ public enum Count implements Localizable {
 	 * Localizable
 	 */
 
-	@Override
 	public String i18n() {
-		return LocaleStore._i18n(this, name());
+		return LocaleStore.i18n(this, name());
 	}
 
-	@Override
 	public String i18n(Locale locale) {
-		return LocaleStore._i18n(this, name(), locale);
+		return LocaleStore.i18n(this, name(), locale);
 	}
 
 	/*
@@ -48,6 +46,6 @@ public enum Count implements Localizable {
 	}
 
 	static {
-		LocaleStore.registerStore(Count.class, CommonProperty.PATH_I18N);
+		LocaleStore.registerBundle(Count.class, CommonProperty.PATH_I18N);
 	}
 }
