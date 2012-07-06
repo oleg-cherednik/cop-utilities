@@ -17,14 +17,12 @@ public enum City implements Localizable {
 	 * Localizable
 	 */
 
-	@Override
 	public String i18n() {
-		return LocaleStore._i18n(this, name());
+		return LocaleStore.i18n(this, name());
 	}
 
-	@Override
 	public String i18n(Locale locale) {
-		return LocaleStore._i18n(this, name(), locale);
+		return LocaleStore.i18n(this, name(), locale);
 	}
 
 	/*
@@ -42,6 +40,6 @@ public enum City implements Localizable {
 	}
 
 	static {
-		LocaleStore.registerStore(City.class, ServerProperty.PATH_I18N);
+		LocaleStore.registerBundle(City.class, ServerProperty.PATH_I18N);
 	}
 }

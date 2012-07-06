@@ -2,7 +2,11 @@ package cop.i18n;
 
 import java.util.Locale;
 
+import com.devexperts.tos.ui.admin.controls.nameprovider.LocalizableNameProvider;
+import com.devexperts.tos.ui.admin.controls.nameprovider.NameProvider;
+
 import cop.common.enums.Color;
+import cop.common.enums.ColorNameProvider;
 import cop.common.enums.Count;
 import cop.server.enums.City;
 
@@ -12,8 +16,8 @@ public class TestMain {
 	public static void main(String[] args) {
 		setSystemDefaultLocale(LocaleStore.RU);
 		// printCounts();
-		// printColors();
-		printCities();
+		printColors();
+		//printCities();
 	}
 
 	private static void setSystemDefaultLocale(Locale locale) {
@@ -22,11 +26,13 @@ public class TestMain {
 	}
 
 	private static void printColors() {
+		LocalizableNameProvider<Color> nameProvider = ColorNameProvider.create();
+		
 		for(Color color : Color.values()) {
-			printColor(color);
+			printColor(color, nameProvider);
 
 			for(Locale locale : locales)
-				printColor(color, locale);
+				printColor(color, locale, nameProvider);
 		}
 	}
 
@@ -55,6 +61,16 @@ public class TestMain {
 
 	private static void printColor(Color color) {
 		System.out.println(color.i18n());
+	}
+	
+	private static void printColor(Color color, NameProvider<Color> nameProvider) {
+		System.out.println(nameProvider.getName(color));
+		System.out.println(nameProvider.getName(color, ColorNameProvider.LONG_NAME));
+	}
+	
+	private static void printColor(Color color, Locale locale, LocalizableNameProvider<Color> nameProvider) {
+		System.out.println("locale: " + locale + ", " + nameProvider.getName(color, locale));
+		System.out.println("locale: " + locale + ", " + nameProvider.getName(color, ColorNameProvider.LONG_NAME, locale));
 	}
 
 	private static void printCount(Count count, Locale locale) {

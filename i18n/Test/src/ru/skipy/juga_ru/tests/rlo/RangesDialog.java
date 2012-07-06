@@ -29,8 +29,9 @@ import javax.swing.*;
  * @version 1.0
  */
 public class RangesDialog extends JDialog {
+	private static final long serialVersionUID = 2450959065124210678L;
 
-    /**
+	/**
      * Constructs dialog, centered with respect to owner.
      *
      * @param owner dialog owner
@@ -42,7 +43,7 @@ public class RangesDialog extends JDialog {
         setTitle(loc_data.getString("title"));
         String enabled = loc_data.getString("enabled");
         String disabled = loc_data.getString("disabled");
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JLabel lblBig = new JLabel(loc_data.getString("bigAlphabet"));
         JLabel lblSmall = new JLabel(loc_data.getString("smallAlphabet"));
         JLabel lblDigits = new JLabel(loc_data.getString("digits"));
