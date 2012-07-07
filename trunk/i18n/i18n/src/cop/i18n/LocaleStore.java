@@ -7,13 +7,81 @@
  */
 package cop.i18n;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
- * This class describes a locale store. It's just a simple set of *.property files are holding localizable strings for
- * one given object.
+ * This class defines a global store for holding localizable strings. It defined as global store, that holds all local
+ * stores from many modules, as each local stores of other modules. This implementation gives full methods' set for
+ * working with {@link Locale}.<br>
+ * E.g. we would like to have access to the localized string through an enum implementation. To do so, the enum must
+ * implement {@link Localizable} interface and register itself to the global store. In following example, enum Color
+ * register itself in the {@link LocaleStore} and provide them a path to the set of *.properties files, where
+ * <tt>name()</tt> is the property key. After that any client code can invoke <tt>i18</tt> methods to get localizable
+ * string.
+ * <p>
+ * <blockquote>
  * 
- * suffix - key suffix, if it's not empty and not {@link #DEFAULT_SUFFIX}, then <code>key = key + '_' + suffix</code>
+ * <pre>
+ * public enum Color implements Localizable {
+ * 	RED,
+ * 	BLUE,
+ * 	GREEN,
+ * 	WHITE;
+ * 
+ * 	public String i18n() {
+ * 		return LocaleStore.i18n(this, name());
+ * 	}
+ * 
+ * 	public String i18n(Locale locale) {
+ * 		return LocaleStore.i18n(this, name(), locale);
+ * 	}
+ * 
+ * 	static {
+ * 		LocaleStore.registerBundle(Color.class, CommonProperty.PATH_I18N);
+ * 	}
+ * }
+ * </pre>
+ * 
+ * </blockquote>
+ * <p>
+ * For this enum property file name should be <tt>Color</tt> (it's a class name of the Color class) and contains set of
+ * the pair <tt>key - localizable string</tt>:
+ * 
+ * <pre>
+ * <code>
+ * RED=red
+ * BLUE=blue
+ * GREEN=green
+ * WHITE=white
+ * </code>
+ * </pre>
+ * 
+ * Invoking of the following methods will give same result:
+ * <code>i18n() == i18n({@link LocaleStore#defaultLocale})</code>.<br>
+ * Additionally, there's a way to add extra localizable strings to the same key. E.g. to give <i>long color name</i>
+ * using same Color enum. To do so client should give extra <tt>suffix</tt> that will be automatically added to the
+ * property key. In the following example property file contains extra long color names under <tt>suffix = "LONG"</tt>
+ * and client calls {@link LocaleStore#i18n(Object, Object, String)} method too get long localizable string with default
+ * system locale for Color.RED key:
+ * 
+ * <pre>
+ * <code>
+ * RED=red
+ * BLUE=blue
+ * GREEN=green
+ * WHITE=white
+ * 
+ * RED_LONG=red (long)
+ * BLUE_LONG=blue (long)
+ * GREEN_LONG=green (long)
+ * WHITE_LONG=white (long)
+ * ...
+ * LocaleStore.i18n(Color.RED, Color.RED, "LONG") = "red (long)";
+ * </code>
+ * </pre>
  * 
  * @author Oleg Cherednik
  * @since 04.03.2012
@@ -30,11 +98,6 @@ public final class LocaleStore {
 
 	/**
 	 * Default (or system) locale will be used if using methods with no specified locale.<br>
-	 * <ul>
-	 * Invoking following methods are equal:<br>
-	 * <li><code>String i18nInt(String name)</code>
-	 * <li><code>String i18nInt(String name, LocaleStore.defaultLocale)</code>
-	 * </ul>
 	 */
 	private static Locale defaultLocale = Locale.getDefault();
 
@@ -102,7 +165,7 @@ public final class LocaleStore {
 	}
 
 	public static <T> String i18n(Object obj, T key) {
-		return i18n(obj, key, DEFAULT_SUFFIX);
+		return i18n(obj, key, DEFAULT_SUFFIX, defaultLocale);
 	}
 
 	public static <T> String i18n(Object obj, T key, Locale locale) {
@@ -110,7 +173,7 @@ public final class LocaleStore {
 	}
 
 	public static <T> String i18n(Object obj, T key, String suffix) {
-		return MAP.get(obj.getClass().getClassLoader().hashCode())._i18n(obj, key, suffix, defaultLocale);
+		return i18n(obj, key, suffix, defaultLocale);
 	}
 
 	public static <T> String i18n(Object obj, T key, String suffix, Locale locale) {
