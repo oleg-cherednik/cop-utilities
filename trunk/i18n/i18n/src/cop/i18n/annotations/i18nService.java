@@ -53,21 +53,16 @@ public final class i18nService {
 		return "";
 	}
 
-	// TODO write checks
-	// for ENUM
-	public static String[] getTranslations(Class<?> item, Locale locale) throws i18nDeclarationException {
-		if (item == null)
-			throw new NullPointerException("item == null");
-
-		if (!item.isEnum())
+	public static <T> String[] getTranslations(Class<T> cls, Locale locale) throws i18nDeclarationException {
+		if (!cls.isEnum())
 			return NO_STRING;
 
-		Object[] constants = item.getEnumConstants();
+		Object[] constants = cls.getEnumConstants();
 
 		if (isEmpty(constants))
 			return NO_STRING;
 
-		Method[] methods = getAnnotatedMethods(item, i18n.class, Locale.class);
+		Method[] methods = getAnnotatedMethods(cls, i18n.class, Locale.class);
 
 		if (isEmpty(methods))
 			return NO_STRING;
@@ -90,66 +85,6 @@ public final class i18nService {
 
 		return NO_STRING;
 	}
-
-	// private static Method getRightMethod(Method method1, Method method2) throws AnnotationDeclarationException
-	// {
-	// Assert.isNotNull(method1);
-	//
-	// Class<?> returnType1 = method1.getReturnType();
-	// Class<?> returnType2 = isNotNull(method2) ? method2.getReturnType() : null;
-	//
-	// for(Class<?> type : new Class<?>[] { returnType1, returnType2 })
-	// if(isNotNull(type) && !type.isAssignableFrom(String.class) && !type.isAssignableFrom(String[].class))
-	// throw new AnnotationDeclarationException("Method annotatated with @i18n must return String or String[]");
-	//
-	// if(returnType1.equals(returnType2))
-	// throw new AnnotationDeclarationException("Methods annotatated with @i18n must return String or String[]");
-	//
-	// if(isNull(returnType2))
-	// return method1;
-	//
-	// return method1.getReturnType().isAssignableFrom(String[].class) ? method1 : method2;
-	// }
-
-	// private static String[] getTranslations(Method method, Object[] constants) throws Exception
-	// {
-	// Assert.isNotNull(method);
-	// Assert.isTrue(isNotEmpty(constants));
-	//
-	// Class<?> returnType = method.getReturnType();
-	//
-	// if(returnType.isAssignableFrom(String[].class))
-	// return (String[])invokeMethod(null, method);
-	//
-	// if(returnType.isAssignableFrom(String.class))
-	// {
-	// String[] i18n = getTranslationsSingle(method, constants);
-	//
-	// if(isEmpty(i18n) || i18n.length != constants.length)
-	// throw new AnnotationDeclarationException("Method with @i18n annotation and return type "
-	// + "String[] must return exactly the same number of elements"
-	// + "as enumeration constant number");
-	//
-	// return i18n;
-	// }
-	//
-	// Assert.isTrue(false, "Method annotatated with @i18n must return String or String[]");
-	//
-	// return new String[0];
-	// }
-
-	// private static String[] getTranslationsSingle(Method method, Object[] constants) throws Exception
-	// {
-	// assert method != null;
-	// assert !isEmpty(constants);
-	//
-	// String[] i18n = new String[constants.length];
-	//
-	// for(int i = 0, size = constants.length; i < size; i++)
-	// i18n[i] = invokeMethod(constants[i], method).toString();
-	//
-	// return i18n;
-	// }
 
 	/*
 	 * static
@@ -187,7 +122,7 @@ public final class i18nService {
 	// }
 
 	private static <T extends Annotation> Method[] getAnnotatedMethods(Class<?> cls, Class<T> annotationClass,
-	                Class<?>... parameterTypes) {
+			Class<?>... parameterTypes) {
 		if (cls == null)
 			return NO_METHODS;
 
