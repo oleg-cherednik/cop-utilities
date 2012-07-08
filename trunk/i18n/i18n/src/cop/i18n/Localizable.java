@@ -17,8 +17,8 @@ import java.util.Locale;
  */
 public interface Localizable {
 	/**
-	 * Returns localized string of the current object for the {@link Locale#getDefault()} locale.<br>
-	 * It's equal to invoke {@link Localizable#i18n(Locale)} with {@link Locale#getDefault()} locale.
+	 * Returns localized string of the current object for the {@link LocaleStore#defaultLocale} locale.<br>
+	 * It's equal to invoke {@link Localizable#i18n(Locale)} with {@link LocaleStore#defaultLocale} locale.
 	 * 
 	 * @return localized string
 	 */
@@ -30,6 +30,5 @@ public interface Localizable {
 	 * @param locale locale
 	 * @return localized string
 	 */
-
 	String i18n(Locale locale);
 }

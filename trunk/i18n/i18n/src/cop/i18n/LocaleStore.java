@@ -12,6 +12,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import cop.i18n.exceptions.DuplicationBundleException;
+import cop.i18n.exceptions.LocaleStoreException;
+import cop.i18n.exceptions.UnknownKeyException;
+
 /**
  * This class defines a global store for holding localizable strings. It defined as global store, that holds all local
  * stores from many modules, as each local stores of other modules. This implementation gives full methods' set for
@@ -101,21 +105,29 @@ public final class LocaleStore {
 	 */
 	private static Locale defaultLocale = Locale.getDefault();
 
-	private final String path;
+	private final Map<Class<?>, String> paths = new HashMap<Class<?>, String>();
 
+	/**
+	 * Register new bundle in the locale store. Bundle can be registered only once.
+	 * 
+	 * @param cls bundle class
+	 * @param path property files path
+	 */
 	public static synchronized void registerBundle(Class<?> cls, String path) {
 		try {
 			int hashCode = cls.getClassLoader().hashCode();
 
 			if (!MAP.containsKey(hashCode))
-				MAP.put(hashCode, new LocaleStore(path));
+				MAP.put(hashCode, new LocaleStore(cls, path));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private LocaleStore(String path) {
-		this.path = isEmpty(path) ? "" : path + '.';
+	private LocaleStore(Class<?> cls, String path) throws LocaleStoreException {
+		if (paths.containsKey(cls))
+			throw new DuplicationBundleException(cls.getSimpleName());
+		paths.put(cls, isEmpty(path) ? "" : path + '.');
 	}
 
 	private String _i18n(Object obj, Object key, String suffix, Locale locale) {
@@ -135,8 +147,13 @@ public final class LocaleStore {
 		return keyName;
 	}
 
-	private ResourceBundle getBundle(Object obj, Locale locale) {
-		String baseName = path + getClassName(obj);
+	private ResourceBundle getBundle(Object obj, Locale locale) throws UnknownKeyException {
+		Class<?> cls = getClass(obj);
+
+		if (!paths.containsKey(cls))
+			throw new UnknownKeyException(cls.getSimpleName());
+
+		String baseName = paths.get(cls) + cls.getSimpleName();
 		ClassLoader loader = obj.getClass().getClassLoader();
 		return ResourceBundle.getBundle(baseName, locale, loader);
 	}
@@ -145,10 +162,10 @@ public final class LocaleStore {
 	 * static
 	 */
 
-	private static String getClassName(Object obj) {
+	private static Class<?> getClass(Object obj) {
 		if (obj instanceof Enum)
-			return ((Enum<?>)obj).getDeclaringClass().getSimpleName();
-		return obj.getClass().getSimpleName();
+			return ((Enum<?>)obj).getDeclaringClass();
+		return obj.getClass();
 	}
 
 	private static String getKeyName(Object obj, String suffix) {
