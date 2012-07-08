@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import cop.i18n.LocaleStore;
 import cop.i18n.Localizable;
-import cop.i18n.annotations.i18n;
 import cop.server.ServerProperty;
 
 public enum City implements Localizable {
@@ -28,16 +27,6 @@ public enum City implements Localizable {
 	/*
 	 * static
 	 */
-
-	@i18n
-	public static String[] getLocalizedName() {
-		return LocaleStore.i18n(values());
-	}
-
-	@i18n
-	public static String[] getLocalizedName(Locale locale) {
-		return LocaleStore.i18n(values(), locale);
-	}
 
 	static {
 		LocaleStore.registerBundle(City.class, ServerProperty.PATH_I18N);
