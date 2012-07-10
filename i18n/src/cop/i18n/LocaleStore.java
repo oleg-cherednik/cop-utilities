@@ -94,7 +94,7 @@ public final class LocaleStore {
 	public static final String DEFAULT_SUFFIX = "def";
 	public static final String DEFAULT_PATH = "root";
 	public static final Locale RUSSIAN = new Locale("ru", "");
-	public static final Locale RU = new Locale("ru", "RU");
+	public static final Locale RUSSIA = new Locale("ru", "RU");
 
 	private static final String[] EMPTY_STR_ARR = new String[0];
 	// key - class loader's hash code
