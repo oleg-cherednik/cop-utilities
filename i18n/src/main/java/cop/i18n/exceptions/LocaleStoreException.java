@@ -9,7 +9,7 @@ package cop.i18n.exceptions;
 
 /**
  * @author Oleg Cherednik
- * @since 08.-7.2012
+ * @since 08.07.2012
  */
 public class LocaleStoreException extends Exception {
 	private static final long serialVersionUID = 4102126493678940468L;
