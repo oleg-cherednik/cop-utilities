@@ -48,14 +48,14 @@ public class LocaleStoreTest {
 		LocaleStore.setDefaultLocale(Locale.ENGLISH);
 
 		for (Count count : Count.values()) {
-			assertEquals(PROP.get(count.name()), count.i18n());
-			assertEquals(PROP.get(count.name()), count.i18n(Locale.ITALY));
+			assertEquals(PROP.getProperty(count.name()), count.i18n());
+			assertEquals(PROP.getProperty(count.name()), count.i18n(Locale.ITALY));
 
-			assertEquals(PROP_RU.get(count.name()), count.i18n(LocaleStore.RUSSIAN));
-			assertEquals(PROP_RU.get(count.name()), count.i18n(LocaleStore.RUSSIA));
+			assertEquals(PROP_RU.getProperty(count.name()), count.i18n(LocaleStore.RUSSIAN));
+			assertEquals(PROP_RU.getProperty(count.name()), count.i18n(LocaleStore.RUSSIA));
 
-			assertEquals(PROP_DE.get(count.name()), count.i18n(Locale.GERMAN));
-			assertEquals(PROP_DE.get(count.name()), count.i18n(Locale.GERMANY));
+			assertEquals(PROP_DE.getProperty(count.name()), count.i18n(Locale.GERMAN));
+			assertEquals(PROP_DE.getProperty(count.name()), count.i18n(Locale.GERMANY));
 		}
 	}
 
@@ -65,14 +65,14 @@ public class LocaleStoreTest {
 		LocaleStore.setDefaultLocale(Locale.GERMAN);
 
 		for (Count count : Count.values()) {
-			assertEquals(PROP.get(count.name()), count.i18n(Locale.ENGLISH));
-			assertEquals(PROP.get(count.name()), count.i18n(Locale.ITALY));
+			assertEquals(PROP.getProperty(count.name()), count.i18n(Locale.ENGLISH));
+			assertEquals(PROP.getProperty(count.name()), count.i18n(Locale.ITALY));
 
-			assertEquals(PROP_RU.get(count.name()), count.i18n(LocaleStore.RUSSIAN));
-			assertEquals(PROP_RU.get(count.name()), count.i18n(LocaleStore.RUSSIA));
+			assertEquals(PROP_RU.getProperty(count.name()), count.i18n(LocaleStore.RUSSIAN));
+			assertEquals(PROP_RU.getProperty(count.name()), count.i18n(LocaleStore.RUSSIA));
 
-			assertEquals(PROP_DE.get(count.name()), count.i18n());
-			assertEquals(PROP_DE.get(count.name()), count.i18n(Locale.GERMANY));
+			assertEquals(PROP_DE.getProperty(count.name()), count.i18n());
+			assertEquals(PROP_DE.getProperty(count.name()), count.i18n(Locale.GERMANY));
 		}
 	}
 
