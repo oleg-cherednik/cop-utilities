@@ -17,7 +17,7 @@ import cop.i18n.exceptions.LocaleStoreException;
 import cop.i18n.exceptions.UnknownKeyException;
 
 /**
- * This class defines a global store for holding localizable strings. It defined as global store, that holds all local
+ * This class defines a global store for holding localizable strings. It's defined as global store, that holds all local
  * stores from many modules, as each local stores of other modules. This implementation gives full methods' set for
  * working with {@link Locale}.<br>
  * E.g. we would like to have access to the localized string through an enum implementation. To do so, the enum must
@@ -163,9 +163,7 @@ public final class LocaleStore {
 	 */
 
 	private static Class<?> getClass(Object obj) {
-		if (obj instanceof Enum)
-			return ((Enum<?>)obj).getDeclaringClass();
-		return obj.getClass();
+		return (obj instanceof Enum) ? ((Enum<?>)obj).getDeclaringClass() : obj.getClass();
 	}
 
 	private static String getKeyName(Object obj, String suffix) {
