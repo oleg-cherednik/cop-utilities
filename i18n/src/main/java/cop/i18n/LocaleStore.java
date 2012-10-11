@@ -8,9 +8,11 @@
 package cop.i18n;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import cop.i18n.exceptions.DuplicationBundleException;
 import cop.i18n.exceptions.LocaleStoreException;
@@ -63,8 +65,7 @@ import cop.i18n.exceptions.UnknownKeyException;
  * </code>
  * </pre>
  * 
- * Invoking of the following methods will give same result:
- * <code>i18n() == i18n({@link LocaleStore#defaultLocale})</code>.<br>
+ * Invoking of the following methods will give same result: <code>i18n() == i18n({@link LocaleStore#appLocale})</code>.<br>
  * Additionally, there's a way to add extra localizable strings to the same key. E.g. to give <i>long color name</i>
  * using same Color enum. To do so client should give extra <tt>suffix</tt> that will be automatically added to the
  * property key. In the following example property file contains extra long color names under <tt>suffix = "LONG"</tt>
@@ -93,6 +94,8 @@ import cop.i18n.exceptions.UnknownKeyException;
 public final class LocaleStore {
 	public static final String DEFAULT_SUFFIX = "def";
 	public static final String DEFAULT_PATH = "root";
+	public static final String PROP_LOCALE = "locale";
+
 	public static final Locale RUSSIAN = new Locale("ru", "");
 	public static final Locale RUSSIA = new Locale("ru", "RU");
 
@@ -100,12 +103,45 @@ public final class LocaleStore {
 	// key - class loader's hash code
 	private static final Map<Integer, LocaleStore> MAP = new HashMap<Integer, LocaleStore>();
 
+	private static final Set<LocaleSupport> LISTENERS = new HashSet<LocaleSupport>();
+
 	/**
-	 * Default (or system) locale will be used if using methods with no specified locale.<br>
+	 * Application locale will be used if using methods with no specified locale.<br>
 	 */
-	private static Locale defaultLocale = Locale.getDefault();
+	private static Locale appLocale;
+
+	static {
+		String languageTag;
+
+		try {
+			if ((languageTag = System.getenv(PROP_LOCALE)) != null && languageTag.length() != 0)
+				appLocale = Locale.forLanguageTag(languageTag);
+		} catch (Throwable e) {
+			try {
+				if ((languageTag = System.getProperty(PROP_LOCALE)) != null && languageTag.length() != 0)
+					appLocale = Locale.forLanguageTag(languageTag);
+			} catch (Throwable e1) {
+				appLocale = Locale.getDefault();
+			}
+		}
+	}
 
 	private final Map<Class<?>, String> paths = new HashMap<Class<?>, String>();
+
+	public static void addListener(LocaleSupport listener) {
+		if (listener != null)
+			LISTENERS.add(listener);
+	}
+
+	public static void removeListener(LocaleSupport listener) {
+		if (listener != null)
+			LISTENERS.remove(listener);
+	}
+
+	public static void fireChangeListener(Locale locale) {
+		for (LocaleSupport listener : LISTENERS)
+			listener.setLocale(locale);
+	}
 
 	/**
 	 * Register new bundle in the locale store. Bundle can be registered only once.
@@ -171,16 +207,20 @@ public final class LocaleStore {
 		return name + (isEmpty(suffix) || DEFAULT_SUFFIX.equals(suffix) ? "" : '_' + suffix);
 	}
 
-	public static Locale getDefaultLocale() {
-		return defaultLocale;
+	public static Locale getAppLocale() {
+		return appLocale;
 	}
 
-	public static void setDefaultLocale(Locale locale) {
-		defaultLocale = locale;
+	public static void setAppLocale(Locale locale) {
+		if (locale == null || appLocale.equals(locale))
+			return;
+
+		appLocale = locale;
+		fireChangeListener(locale);
 	}
 
 	public static <T> String i18n(Object obj, T key) {
-		return i18n(obj, key, DEFAULT_SUFFIX, defaultLocale);
+		return i18n(obj, key, DEFAULT_SUFFIX, appLocale);
 	}
 
 	public static <T> String i18n(Object obj, T key, Locale locale) {
@@ -188,7 +228,7 @@ public final class LocaleStore {
 	}
 
 	public static <T> String i18n(Object obj, T key, String suffix) {
-		return i18n(obj, key, suffix, defaultLocale);
+		return i18n(obj, key, suffix, appLocale);
 	}
 
 	public static <T> String i18n(Object obj, T key, String suffix, Locale locale) {
@@ -196,7 +236,7 @@ public final class LocaleStore {
 	}
 
 	public static String[] i18n(Localizable[] objs) {
-		return i18n(objs, defaultLocale);
+		return i18n(objs, appLocale);
 	}
 
 	public static String[] i18n(Localizable[] objs, Locale locale) {
