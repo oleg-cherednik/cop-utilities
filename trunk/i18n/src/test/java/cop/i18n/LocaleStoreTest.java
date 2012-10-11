@@ -45,7 +45,7 @@ public class LocaleStoreTest {
 	@Test
 	@SuppressWarnings("static-method")
 	public void testDefaultEnglishLocale() {
-		LocaleStore.setDefaultLocale(Locale.ENGLISH);
+		LocaleStore.setAppLocale(Locale.ENGLISH);
 
 		for (Count count : Count.values()) {
 			assertEquals(PROP.getProperty(count.name()), count.i18n());
@@ -62,7 +62,7 @@ public class LocaleStoreTest {
 	@Test
 	@SuppressWarnings("static-method")
 	public void testDefaultGermanLocale() {
-		LocaleStore.setDefaultLocale(Locale.GERMAN);
+		LocaleStore.setAppLocale(Locale.GERMAN);
 
 		for (Count count : Count.values()) {
 			assertEquals(PROP.getProperty(count.name()), count.i18n(Locale.ENGLISH));
