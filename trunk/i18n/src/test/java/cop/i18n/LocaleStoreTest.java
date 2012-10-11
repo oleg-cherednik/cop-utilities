@@ -7,7 +7,6 @@
  */
 package cop.i18n;
 
-//import java.io.File;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
