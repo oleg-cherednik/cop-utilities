@@ -25,9 +25,7 @@ public enum Count implements Localizable {
 	NINE,
 	TEN;
 
-	/*
-	 * Localizable
-	 */
+	// ========== Localizable ==========
 
 	public String i18n() {
 		return LocaleStore.i18n(this, name());
@@ -37,9 +35,7 @@ public enum Count implements Localizable {
 		return LocaleStore.i18n(this, name(), locale);
 	}
 
-	/*
-	 * static
-	 */
+	// ========== static ==========
 
 	static {
 		LocaleStore.registerBundle(Count.class, LocaleStoreTest.PATH_I18N);

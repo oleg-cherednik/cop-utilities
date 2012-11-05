@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -43,8 +44,27 @@ public class LocaleStoreTest {
 
 	@Test
 	@SuppressWarnings("static-method")
-	public void testDefaultEnglishLocale() {
+	public void testDefEnglishAppEnglishLocale() {
+		Locale.setDefault(Locale.ENGLISH);
 		LocaleStore.setAppLocale(Locale.ENGLISH);
+
+		for (Count count : Count.values()) {
+			assertEquals(PROP.getProperty(count.name()), count.i18n());
+			assertEquals(PROP.getProperty(count.name()), count.i18n(Locale.ITALY));
+
+			assertEquals(PROP_RU.getProperty(count.name()), count.i18n(LocaleStore.RUSSIAN));
+			assertEquals(PROP_RU.getProperty(count.name()), count.i18n(LocaleStore.RUSSIA));
+
+			assertEquals(PROP_DE.getProperty(count.name()), count.i18n(Locale.GERMAN));
+			assertEquals(PROP_DE.getProperty(count.name()), count.i18n(Locale.GERMANY));
+		}
+	}
+	
+	@Test
+	@SuppressWarnings("static-method")
+	public void testDefEnglishAppRussianLocale() {
+		Locale.setDefault(Locale.ENGLISH);
+		LocaleStore.setAppLocale(LocaleStore.RUSSIAN);
 
 		for (Count count : Count.values()) {
 			assertEquals(PROP.getProperty(count.name()), count.i18n());
@@ -59,6 +79,7 @@ public class LocaleStoreTest {
 	}
 
 	@Test
+	@Ignore
 	@SuppressWarnings("static-method")
 	public void testDefaultGermanLocale() {
 		LocaleStore.setAppLocale(Locale.GERMAN);
@@ -75,9 +96,7 @@ public class LocaleStoreTest {
 		}
 	}
 
-	/*
-	 * static
-	 */
+	// ========== static ==========
 
 	private static void readFile(Properties properties, String fileName) {
 		InputStream in = null;

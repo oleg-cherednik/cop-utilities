@@ -31,6 +31,7 @@ import cop.i18n.exceptions.UnknownKeyException;
  * <blockquote>
  * 
  * <pre>
+ * <code>
  * public enum Color implements Localizable {
  * 	RED,
  * 	BLUE,
@@ -49,6 +50,7 @@ import cop.i18n.exceptions.UnknownKeyException;
  * 		LocaleStore.registerBundle(Color.class, CommonProperty.PATH_I18N);
  * 	}
  * }
+ * </code>
  * </pre>
  * 
  * </blockquote>
@@ -85,6 +87,7 @@ import cop.i18n.exceptions.UnknownKeyException;
  * WHITE_LONG=white (long)
  * ...
  * LocaleStore.i18n(Color.RED, Color.RED, "LONG") = "red (long)";
+ * LocaleStore.i18n(Color.RED, Color.RED, "long") = "red (long)";
  * </code>
  * </pre>
  * 
@@ -106,9 +109,9 @@ public final class LocaleStore {
 	private static final Set<LocaleSupport> LISTENERS = new HashSet<LocaleSupport>();
 
 	/**
-	 * Application locale will be used if using methods with no specified locale.<br>
+	 * Application locale will be used if using methods with no specified locale.
 	 */
-	private static Locale appLocale;
+	private static Locale appLocale = Locale.getDefault();
 
 	static {
 		String languageTag;
@@ -116,13 +119,12 @@ public final class LocaleStore {
 		try {
 			if ((languageTag = System.getenv(PROP_LOCALE)) != null && languageTag.length() != 0)
 				appLocale = Locale.forLanguageTag(languageTag);
-		} catch (Throwable e) {
-			try {
-				if ((languageTag = System.getProperty(PROP_LOCALE)) != null && languageTag.length() != 0)
-					appLocale = Locale.forLanguageTag(languageTag);
-			} catch (Throwable e1) {
+			else if ((languageTag = System.getProperty(PROP_LOCALE)) != null && languageTag.length() != 0)
+				appLocale = Locale.forLanguageTag(languageTag);
+			else
 				appLocale = Locale.getDefault();
-			}
+		} catch (Throwable e) {
+			appLocale = Locale.getDefault();
 		}
 	}
 
@@ -194,18 +196,7 @@ public final class LocaleStore {
 		return ResourceBundle.getBundle(baseName, locale, loader);
 	}
 
-	/*
-	 * static
-	 */
-
-	private static Class<?> getClass(Object obj) {
-		return (obj instanceof Enum) ? ((Enum<?>)obj).getDeclaringClass() : obj.getClass();
-	}
-
-	private static String getKeyName(Object obj, String suffix) {
-		String name = (obj instanceof Enum) ? ((Enum<?>)obj).name() : obj.toString();
-		return name + (isEmpty(suffix) || DEFAULT_SUFFIX.equals(suffix) ? "" : '_' + suffix);
-	}
+	// ========== public static ==========
 
 	public static Locale getAppLocale() {
 		return appLocale;
@@ -249,6 +240,17 @@ public final class LocaleStore {
 			res[i] = objs[i].i18n(locale);
 
 		return res;
+	}
+
+	// ========== private static ==========
+
+	private static Class<?> getClass(Object obj) {
+		return (obj instanceof Enum) ? ((Enum<?>)obj).getDeclaringClass() : obj.getClass();
+	}
+
+	private static String getKeyName(Object obj, String suffix) {
+		String name = (obj instanceof Enum) ? ((Enum<?>)obj).name() : obj.toString();
+		return name + (isEmpty(suffix) || DEFAULT_SUFFIX.equals(suffix) ? "" : '_' + suffix);
 	}
 
 	private static boolean isEmpty(String str) {
