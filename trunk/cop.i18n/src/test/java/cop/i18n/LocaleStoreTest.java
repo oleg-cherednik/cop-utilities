@@ -61,6 +61,7 @@ public class LocaleStoreTest {
 	}
 	
 	@Test
+	@Ignore
 	@SuppressWarnings("static-method")
 	public void testDefEnglishAppRussianLocale() {
 		Locale.setDefault(Locale.ENGLISH);
