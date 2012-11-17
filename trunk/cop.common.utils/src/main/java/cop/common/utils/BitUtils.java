@@ -4,7 +4,7 @@
  * $Id$
  * $HeadURL$
  */
-package cop.utils;
+package cop.common.utils;
 
 /**
  * Class provides different methods to work with bits.
