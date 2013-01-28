@@ -75,7 +75,7 @@ final class ConsoleUtils {
 				if (str.isEmpty())
 					return -1;
 
-				int val = Integer.parseInt(readLine(true));
+				int val = Integer.parseInt(str);
 
 				if (val >= min)
 					return val;

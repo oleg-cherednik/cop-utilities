@@ -68,6 +68,13 @@ final class DatabaseUtils {
 		return DriverManager.getConnection(props.getProperty(PROP_URL), props);
 	}
 
+	/**
+	 * Return set of all tables in given database, including some properites.
+	 * 
+	 * @param conn not <tt>null</tt> database connection
+	 * @return set not <tt>null</tt> set of all database tables
+	 * @throws SQLException
+	 */
 	public Set<Table> getTables(Connection conn) throws SQLException {
 		System.out.println("\n> Read tables info... ");
 
@@ -85,6 +92,13 @@ final class DatabaseUtils {
 		return Collections.unmodifiableSet(tables);
 	}
 
+	/**
+	 * Returns set of database tables names.
+	 * 
+	 * @param metaData database meta data
+	 * @return not <tt>null</tt> set of database tables names
+	 * @throws SQLException
+	 */
 	private Set<String> getTablesNames(DatabaseMetaData metaData) throws SQLException {
 		ResultSet rs = metaData.getTables(null, null, "%", new String[] { "TABLE" });
 
@@ -96,6 +110,14 @@ final class DatabaseUtils {
 		return names.isEmpty() ? Collections.<String> emptySet() : Collections.unmodifiableSet(names);
 	}
 
+	/**
+	 * Returns total amount of given table's indexes
+	 * 
+	 * @param tableName database table name
+	 * @param metaData database meta data
+	 * @return amount of table's indexes
+	 * @throws SQLException
+	 */
 	private int getTotalTableIndexes(String tableName, DatabaseMetaData metaData) throws SQLException {
 		ResultSet rs = metaData.getIndexInfo(null, null, tableName, false, false);
 
