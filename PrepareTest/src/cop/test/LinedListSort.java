@@ -9,16 +9,18 @@ public class LinedListSort {
 		print(node);
 	}
 
-	private static Node sortList(Node parentNode) {
-		Node node1 = parentNode != null ? parentNode.getNext() : null;
+	private static Node sortList(Node parent) {
+		Node node1 = parent != null ? parent.getNext() : null;
 		Node node2 = node1 != null ? node1.getNext() : null;
 
-		if (parentNode == null || node1 == null || node2 == null || node1.getValue() <= node2.getValue())
+		if (parent == null || node1 == null || node2 == null || node1.getValue() <= node2.getValue())
 			return;
 
-		parentNode.setNext(node2);
+		parent.setNext(node2);
 		node2.setNext(node1);
 		node1.setNext(node2.getNext());
+		
+		
 		
 		return merge(node1, node2);
 	}
