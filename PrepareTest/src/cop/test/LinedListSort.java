@@ -13,8 +13,8 @@ public class LinedListSort {
 		Node node1 = parent != null ? parent.getNext() : null;
 		Node node2 = node1 != null ? node1.getNext() : null;
 
-		if (parent == null || node1 == null || node2 == null || node1.getValue() <= node2.getValue())
-			return;
+//		if (parent == null || node1 == null || node2 == null || node1.getValue() <= node2.getValue())
+//			return;
 
 		parent.setNext(node2);
 		node2.setNext(node1);
