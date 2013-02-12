@@ -22,18 +22,19 @@ public class QueueStack2 {
 		queue.add(1);
 		queue.add(2);
 		queue.add(3);
-		System.out.print(" " + queue.get());
-		System.out.print(" " + queue.get());
+		System.out.print(" " + queue.remove());
+		System.out.print(" " + queue.remove());
 		queue.add(4);
 		queue.add(5);
-		System.out.print(" " + queue.get());
-		System.out.print(" " + queue.get());
-		System.out.print(" " + queue.get());
+		System.out.print(" " + queue.remove());
+		System.out.print(" " + queue.remove());
+		System.out.print(" " + queue.remove());
 	}
 
 	private static <T> void print(Queue<T> queue) {
-		while (!queue.isEmpty())
-			System.out.print(" " + queue.get());
+		while (!queue.isEmpty()) {
+			System.out.print(" " + queue.remove());
+		}
 
 		System.out.println();
 	}
@@ -42,11 +43,11 @@ public class QueueStack2 {
 		private final Stack<T> stack1 = new Stack<T>();
 		private final Stack<T> stack2 = new Stack<T>();
 
-		public void add(T item) {
+		public synchronized void add(T item) {
 			stack1.push(item);
 		}
 
-		public T get() {
+		public synchronized T remove() {
 			if (!stack2.isEmpty())
 				return stack2.pop();
 
@@ -56,7 +57,7 @@ public class QueueStack2 {
 			return stack1.pop();
 		}
 
-		public boolean isEmpty() {
+		public synchronized boolean isEmpty() {
 			return stack1.isEmpty() && stack2.isEmpty();
 		}
 	}
