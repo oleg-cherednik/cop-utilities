@@ -11,10 +11,10 @@ import cop.yandex.downloader.DownloadStatus;
 public final class Download extends Observable implements Runnable {
 	private static final int MAX_BUFFER_SIZE = 1024;
 
-	private URL url; // download URL
+	private final URL url; // download URL
 	private int size; // size of download in bytes
 	private int downloaded; // number of bytes downloaded
-	private DownloadStatus status = DownloadStatus.NEW; // current status of download
+	private DownloadStatus status = DownloadStatus.NEW;
 
 	// Constructor for Download.
 	public Download(URL url) {
@@ -77,26 +77,21 @@ public final class Download extends Observable implements Runnable {
 		return fileName.substring(fileName.lastIndexOf('/') + 1);
 	}
 
-	// Download file.
+	// ========== Runnable ==========
+
 	public void run() {
 		status = DownloadStatus.DOWNLOADING;
 		RandomAccessFile file = null;
 		InputStream stream = null;
 
 		try {
-			// Open connection to URL.
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-			// Specify what portion of file to download.
 			connection.setRequestProperty("Range", "bytes=" + downloaded + "-");
-
-			// Connect to server.
 			connection.connect();
 
 			// Make sure response code is in the 200 range.
-			if (connection.getResponseCode() / 100 != 2) {
+			if (connection.getResponseCode() / 100 != 2)
 				error();
-			}
 
 			// Check for valid content length.
 			int contentLength = connection.getContentLength();
@@ -119,8 +114,7 @@ public final class Download extends Observable implements Runnable {
 			stream = connection.getInputStream();
 			while (status == DownloadStatus.DOWNLOADING) {
 				/*
-				 * Size buffer according to how much of the file is left to
-				 * download.
+				 * Size buffer according to how much of the file is left to download.
 				 */
 				byte buffer[];
 				if (size - downloaded > MAX_BUFFER_SIZE) {
@@ -141,8 +135,7 @@ public final class Download extends Observable implements Runnable {
 			}
 
 			/*
-			 * Change status to complete if this point was reached because
-			 * downloading has finished.
+			 * Change status to complete if this point was reached because downloading has finished.
 			 */
 			if (status == DownloadStatus.DOWNLOADING) {
 				status = DownloadStatus.COMPLETE;

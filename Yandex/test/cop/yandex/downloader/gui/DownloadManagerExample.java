@@ -33,7 +33,7 @@ import javax.swing.table.TableCellRenderer;
 import cop.yandex.downloader.DownloadStatus;
 import cop.yandex.downloader.requests.Download;
 
-public class MainModule extends JFrame implements Observer {
+public class DownloadManagerExample extends JFrame implements Observer {
 	private static final int BUTTON_PAUSE = 0x1;
 	private static final int BUTTON_RESUME = 0x2;
 	private static final int BUTTON_CANCEL = 0x4;
@@ -52,7 +52,7 @@ public class MainModule extends JFrame implements Observer {
 
 	private boolean clearing;
 
-	public MainModule() {
+	public DownloadManagerExample() {
 		setTitle("Download Manager");
 		setSize(640, 480);
 		addWindowListener(new WindowAdapter() {
@@ -150,7 +150,7 @@ public class MainModule extends JFrame implements Observer {
 		URL verifiedUrl = verifyUrl(addTextField.getText());
 		if (verifiedUrl != null) {
 			tableModel.addDownload(new Download(verifiedUrl));
-			addTextField.setText(""); // reset add text field
+			addTextField.setText(null);
 		} else {
 			JOptionPane.showMessageDialog(this, "Invalid Download URL", "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -175,11 +175,11 @@ public class MainModule extends JFrame implements Observer {
 
 	private void tableSelectionChanged() {
 		if (selectedDownload != null)
-			selectedDownload.deleteObserver(MainModule.this);
+			selectedDownload.deleteObserver(DownloadManagerExample.this);
 
 		if (!clearing && table.getSelectedRow() > -1) {
 			selectedDownload = tableModel.getDownload(table.getSelectedRow());
-			selectedDownload.addObserver(MainModule.this);
+			selectedDownload.addObserver(DownloadManagerExample.this);
 			updateButtons();
 		}
 	}
@@ -227,7 +227,7 @@ public class MainModule extends JFrame implements Observer {
 
 	// Run the Download Manager.
 	public static void main(String[] args) {
-		MainModule manager = new MainModule();
+		DownloadManagerExample manager = new DownloadManagerExample();
 		manager.setVisible(true);
 	}
 
@@ -251,7 +251,7 @@ public class MainModule extends JFrame implements Observer {
 			this.availableButtons = availableButtons;
 		}
 
-		public final void updateButtons(MainModule panel) {
+		public final void updateButtons(DownloadManagerExample panel) {
 			panel.pauseButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
 			panel.resumeButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
 			panel.cancelButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
