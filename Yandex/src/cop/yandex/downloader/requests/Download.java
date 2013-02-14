@@ -11,14 +11,6 @@ import cop.yandex.downloader.DownloadStatus;
 public final class Download extends Observable implements Runnable {
 	private static final int MAX_BUFFER_SIZE = 1024;
 
-	public static final String STATUSES[] = { "Downloading", "Paused", "Complete", "Cancelled", "Error" };
-
-	public static final int DOWNLOADING = 0;
-	public static final int PAUSED = 1;
-	public static final int COMPLETE = 2;
-	public static final int CANCELLED = 3;
-	public static final int ERROR = 4;
-
 	private URL url; // download URL
 	private int size; // size of download in bytes
 	private int downloaded; // number of bytes downloaded
