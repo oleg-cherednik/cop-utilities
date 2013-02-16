@@ -20,7 +20,7 @@ public enum Status {
 	DOWNLOADING("Downloading", true) {
 		@Override
 		public boolean isAvailableFrom(Status status) {
-			return status == NEW || status == PAUSED;
+			return status == NEW || status == PAUSED || status == CANCELLED || status == ERROR;
 		}
 	},
 	PAUSED("Paused", true) {

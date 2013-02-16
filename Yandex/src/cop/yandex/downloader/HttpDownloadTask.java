@@ -37,18 +37,18 @@ final class HttpDownloadTask extends DownloadTask {
 
 		conn.setRequestProperty("Range", "bytes=" + bytesDownloaded + "-");
 		conn.connect();
-		
-		if (conn.getResponseCode() / 100 != 2)
-			setStatus(Status.ERROR);
-		else if ((bytesTotal = conn.getContentLength()) < 0)
-			setStatus(Status.ERROR);
+
+		if(conn.getResponseCode() / 100 != 2)
+			setStatus(Status.ERROR, "http error code " + conn.getResponseCode());
+		else if((bytesTotal = conn.getContentLength()) < 0)
+			setStatus(Status.ERROR, "total size " + bytesTotal);
 
 		return getStatus() == Status.DOWNLOADING ? conn.getInputStream() : null;
 	}
 
 	@Override
 	protected void releaseResources() {
-		if (conn != null)
+		if(conn != null)
 			conn.disconnect();
 	}
 

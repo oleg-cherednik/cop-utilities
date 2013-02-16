@@ -46,7 +46,8 @@ public abstract class DownloadTask extends Observable implements Runnable {
 	protected final void setStatus(Status status, String description) {
 		System.out.print("Task: " + id + ", status: " + status.getName());
 		System.out.println(isEmpty(description) ? "" : (", description: " + description));
-		this.setStatus(status);
+		this.status.setStatus(status);
+		this.status.setDescription(description);
 		stateChanged();
 	}
 
@@ -120,7 +121,7 @@ public abstract class DownloadTask extends Observable implements Runnable {
 			if(status.getStatus() == Status.DOWNLOADING)
 				setStatus(Status.COMPLETE);
 		} catch(Exception e) {
-			setStatus(Status.ERROR);
+			setStatus(Status.ERROR, e.getClass().getSimpleName() + ", " + e.getMessage());
 		} finally {
 			close(file);
 			close(in);

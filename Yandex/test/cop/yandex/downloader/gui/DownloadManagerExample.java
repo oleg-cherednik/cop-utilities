@@ -284,8 +284,8 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		DOWNLOADING(Status.DOWNLOADING, BUTTON_PAUSE | BUTTON_CANCEL),
 		PAUSED(Status.PAUSED, BUTTON_RESUME | BUTTON_CANCEL),
 		COMPLETE(Status.COMPLETE, BUTTON_CLEAR),
-		CANCELLED(Status.CANCELLED, BUTTON_CLEAR),
-		FERROR(Status.ERROR, BUTTON_CLEAR);
+		CANCELLED(Status.CANCELLED, BUTTON_CLEAR | BUTTON_RESUME),
+		FERROR(Status.ERROR, BUTTON_CLEAR | BUTTON_RESUME);
 
 		private final Status status;
 		private final int availableButtons;
@@ -307,6 +307,5 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 					return decorator;
 			return NONE;
 		}
-
 	}
 }
