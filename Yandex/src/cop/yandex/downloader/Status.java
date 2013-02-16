@@ -1,5 +1,9 @@
 package cop.yandex.downloader;
 
+/**
+ * @author Oleg Cherednik
+ * @since 16.02.2013
+ */
 public enum Status {
 	NONE("None", true) {
 		@Override

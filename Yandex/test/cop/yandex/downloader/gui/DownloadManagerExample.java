@@ -1,6 +1,8 @@
 package cop.yandex.downloader.gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,6 +16,7 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -27,12 +30,18 @@ import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableCellRenderer;
 
 import cop.yandex.downloader.DownloadManager;
 import cop.yandex.downloader.DownloadManagerListener;
+import cop.yandex.downloader.HttpDownloadRequest;
+import cop.yandex.downloader.LanDownloadRequest;
 import cop.yandex.downloader.Status;
-import cop.yandex.downloader.requests.HttpDownloadRequest;
 
+/**
+ * @author Oleg Cherednik
+ * @since 16.02.2013
+ */
 public class DownloadManagerExample extends JFrame implements Observer, ListSelectionListener, WindowListener,
 		ActionListener, DownloadManagerListener {
 	private static final long serialVersionUID = -1986271889775806286L;
@@ -44,14 +53,18 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 
 	private final DownloadManager manager = new DownloadManager(5);
 	private final DownloadsTableModel tableModel = new DownloadsTableModel(manager);
+	private final JTable table = new JTable(tableModel);
 
-	private final JTextField addTextField = new JTextField(30);
+	private final JTextField srcField = new JTextField(30);
+	private final JTextField destField = new JTextField(30);
 	private final JButton pauseButton = new JButton("Pause");
 	private final JButton resumeButton = new JButton("Resume");
 	private final JButton cancelButton = new JButton("Cancel");
 	private final JButton clearButton = new JButton("Clear");
+	private final JButton addButton = new JButton("Add");
 
-	private JTable table;
+	private final JMenuItem fileExitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
+
 	private int currId = -1;
 
 	public DownloadManagerExample() {
@@ -63,112 +76,114 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
-		JMenuItem fileExitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
-		fileExitMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
 		fileMenu.add(fileExitMenuItem);
 		menuBar.add(fileMenu);
 		setJMenuBar(menuBar);
 
-		// Set up add panel.
-		JPanel addPanel = new JPanel();
-
-		addPanel.add(addTextField);
-		JButton addButton = new JButton("Add Download");
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionAdd();
-			}
-		});
-		addPanel.add(addButton);
-
-		// Set up Downloads table.
-
-		table = new JTable(tableModel);
-
-		table.getSelectionModel().addListSelectionListener(this);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		ProgressRenderer renderer = new ProgressRenderer(0, 100);
-		renderer.setStringPainted(true); // show progress text
-		table.setDefaultRenderer(JProgressBar.class, renderer);
-
-		table.setRowHeight((int)renderer.getPreferredSize().getHeight());
-
-		JPanel downloadsPanel = new JPanel();
-		downloadsPanel.setBorder(BorderFactory.createTitledBorder("Downloads"));
-		downloadsPanel.setLayout(new BorderLayout());
-		downloadsPanel.add(new JScrollPane(table), BorderLayout.CENTER);
-
-		JPanel buttonsPanel = new JPanel();
-
-		pauseButton.setEnabled(false);
-		buttonsPanel.add(pauseButton);
-
-		resumeButton.setEnabled(false);
-		buttonsPanel.add(resumeButton);
-
-		cancelButton.setEnabled(false);
-		buttonsPanel.add(cancelButton);
-		clearButton.setEnabled(false);
-		buttonsPanel.add(clearButton);
+		table.setDefaultRenderer(JProgressBar.class, createProgressRenderer());
 
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(addPanel, BorderLayout.NORTH);
-		getContentPane().add(downloadsPanel, BorderLayout.CENTER);
-		getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+		getContentPane().add(createAddPanel(), BorderLayout.NORTH);
+		getContentPane().add(createDownloadsPanel(), BorderLayout.CENTER);
+		getContentPane().add(createButtonPanel(), BorderLayout.SOUTH);
 
 		addListeners();
+		updateButtons();
+	}
+
+	private JPanel createAddPanel() {
+		JPanel panel = new JPanel(new GridBagLayout());
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.EAST;
+
+		panel.add(new JLabel("Source:"), gbc);
+		gbc.weightx = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		panel.add(srcField, gbc);
+
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
+		panel.add(new JLabel("Destination:"), gbc);
+		gbc.weightx = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		panel.add(destField, gbc);
+
+		panel.add(addButton, gbc);
+
+		return panel;
+	}
+
+	private JPanel createDownloadsPanel() {
+		JPanel panel = new JPanel(new BorderLayout());
+
+		panel.setBorder(BorderFactory.createTitledBorder("Downloads"));
+		panel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+		return panel;
+	}
+
+	private JPanel createButtonPanel() {
+		JPanel panel = new JPanel();
+
+		panel.add(pauseButton);
+		panel.add(resumeButton);
+		panel.add(cancelButton);
+		panel.add(clearButton);
+
+		return panel;
 	}
 
 	private void addListeners() {
 		addWindowListener(this);
 
 		manager.addListener(this);
-		manager.addObserver(this);
+		table.getSelectionModel().addListSelectionListener(this);
+		fileExitMenuItem.addActionListener(this);
 
 		pauseButton.addActionListener(this);
 		resumeButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		clearButton.addActionListener(this);
+		addButton.addActionListener(this);
 	}
 
-	private void actionAdd() {
-		URL verifiedUrl = verifyUrl(addTextField.getText());
+	private void onAddButton() {
+		String src = srcField.getText().trim();
+		String dest = destField.getText().trim();
 
-		if (verifiedUrl != null) {
-			manager.addTask(new HttpDownloadRequest(verifiedUrl, new File("d:/tmp"), 1024));
-			addTextField.setText(null);
-		} else {
-			JOptionPane.showMessageDialog(this, "Invalid Download URL", "Error", JOptionPane.ERROR_MESSAGE);
+		if(src.isEmpty())
+			JOptionPane.showMessageDialog(this, "Source is empty", "Error", JOptionPane.ERROR_MESSAGE);
+		else if(dest.isEmpty())
+			JOptionPane.showMessageDialog(this, "Destination is empty", "Error", JOptionPane.ERROR_MESSAGE);
+		else {
+			if(src.startsWith("http://")) {
+				try {
+					manager.addTask(new HttpDownloadRequest(new URL(src), new File(dest), 1024));
+				} catch(Exception e) {
+					JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				File file = new File(src);
+
+				if(file.isFile())
+					manager.addTask(new LanDownloadRequest(file, new File(dest), 1024));
+				else
+					JOptionPane.showMessageDialog(this, "Can't recognize source file", "Error",
+							JOptionPane.ERROR_MESSAGE);
+			}
+
+			srcField.setText(null);
+			destField.setText(null);
 		}
-	}
-
-	private static URL verifyUrl(String url) {
-		if (!url.toLowerCase().startsWith("http://"))
-			return null;
-
-		URL verifiedUrl = null;
-		try {
-			verifiedUrl = new URL(url);
-		} catch (Exception e) {
-			return null;
-		}
-
-		if (verifiedUrl.getFile().length() < 2)
-			return null;
-
-		return verifiedUrl;
 	}
 
 	private void updateButtons() {
 		DownloadStatusDecorator status = DownloadStatusDecorator.NONE;
 
-		if (currId >= 0)
-			status = DownloadStatusDecorator.parseStatus(manager.getTaskStatus(currId));
+		if(currId >= 0)
+			status = DownloadStatusDecorator.parseStatus(manager.getTaskStatus(currId).getStatus());
 
 		pauseButton.setEnabled(isBitSet(status.availableButtons, BUTTON_PAUSE));
 		resumeButton.setEnabled(isBitSet(status.availableButtons, BUTTON_RESUME));
@@ -176,27 +191,24 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		clearButton.setEnabled(isBitSet(status.availableButtons, BUTTON_CLEAR));
 	}
 
-	public void update(Observable o, Object arg) {
-		// Update buttons if the selected download has changed.
-		// if (selectedDownload != null && selectedDownload.equals(o))
-		updateButtons();
+	private void onExitMenu() {
+		manager.dispose();
+		System.exit(0);
 	}
 
-	// Run the Download Manager.
-	public static void main(String[] args) {
-		DownloadManagerExample manager = new DownloadManagerExample();
-		manager.setVisible(true);
+	// ========== Observer ==========
+
+	public void update(Observable o, Object arg) {
+		updateButtons();
 	}
 
 	// ========== ListSelectionListener ==========
 
 	public void valueChanged(ListSelectionEvent event) {
-		if (event.getSource() != table.getSelectionModel())
+		if(event.getSource() != table.getSelectionModel())
 			return;
 
-		int row = table.getSelectedRow();
-		System.out.println(row);
-		currId = tableModel.getTaskId(row);
+		currId = tableModel.getTaskId(table.getSelectedRow());
 		updateButtons();
 	}
 
@@ -207,8 +219,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 
 	@Override
 	public void windowClosing(WindowEvent event) {
-		manager.dispose();
-		System.exit(0);
+		onExitMenu();
 	}
 
 	@Override
@@ -218,10 +229,10 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	public void windowIconified(WindowEvent event) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent eventvent) {}
+	public void windowDeiconified(WindowEvent event) {}
 
 	@Override
-	public void windowActivated(WindowEvent e) {}
+	public void windowActivated(WindowEvent event) {}
 
 	@Override
 	public void windowDeactivated(WindowEvent event) {}
@@ -229,20 +240,40 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	// ========== ActionListener ==========
 
 	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == pauseButton)
+		if(event.getSource() == pauseButton)
 			manager.pauseTask(currId);
-		else if (event.getSource() == resumeButton)
+		else if(event.getSource() == resumeButton)
 			manager.resumeTask(currId);
-		else if (event.getSource() == cancelButton)
+		else if(event.getSource() == cancelButton)
 			manager.cancelTask(currId);
-		else if (event.getSource() == clearButton)
+		else if(event.getSource() == addButton)
+			onAddButton();
+		else if(event.getSource() == clearButton)
 			tableModel.remove(manager.removeNotActiveTasks());
+		else if(event.getSource() == fileExitMenuItem)
+			onExitMenu();
 	}
 
 	// ========== DownloadManagerListener ==========
 
 	public void onTaskUpdate(int id) {
 		updateButtons();
+	}
+
+	// ========== static ==========
+
+	private static boolean isBitSet(int val, int mask) {
+		return (val & mask) != 0;
+	}
+
+	private static TableCellRenderer createProgressRenderer() {
+		ProgressRenderer renderer = new ProgressRenderer(0, 100);
+		renderer.setStringPainted(true);
+		return renderer;
+	}
+
+	public static void main(String[] args) {
+		new DownloadManagerExample().setVisible(true);
 	}
 
 	// ========== enum ==========
@@ -271,17 +302,11 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		// ========== static ==========
 
 		public static DownloadStatusDecorator parseStatus(Status status) {
-			for (DownloadStatusDecorator decorator : values())
-				if (decorator.status == status)
+			for(DownloadStatusDecorator decorator : values())
+				if(decorator.status == status)
 					return decorator;
 			return NONE;
 		}
 
-	}
-
-	// ========== static ==========
-
-	private static boolean isBitSet(int val, int mask) {
-		return (val & mask) != 0;
 	}
 }

@@ -10,6 +10,10 @@ import javax.swing.table.AbstractTableModel;
 import cop.yandex.downloader.DownloadManager;
 import cop.yandex.downloader.DownloadManagerListener;
 
+/**
+ * @author Oleg Cherednik
+ * @since 16.02.2013
+ */
 class DownloadsTableModel extends AbstractTableModel implements DownloadManagerListener {
 	private static final long serialVersionUID = 2547586107231907732L;
 
@@ -38,7 +42,7 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 	}
 
 	public void remove(Set<Integer> ids) {
-		if (ids == null)
+		if(ids == null)
 			return;
 		this.ids.removeAll(ids);
 		fireTableDataChanged();
@@ -63,7 +67,7 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 	public Object getValueAt(int row, int col) {
 		int id = ids.get(row);
 
-		switch (col) {
+		switch(col) {
 		case COL_SRC:
 			return manager.getTaskSrc(id);
 		case COL_SIZE:
@@ -71,10 +75,9 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 		case COL_PROGRESS:
 			long total = manager.getBytesTotal(id);
 			long downloaded = manager.getBytesDownloaded(id);
-
 			return total < 0 || downloaded < 0 ? 0 : ((double)downloaded / total) * 100;
 		case COL_STATUS:
-			return manager.getTaskStatus(id).getName();
+			return manager.getTaskStatus(id).getInfo();
 		}
 
 		return "";
@@ -84,7 +87,7 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 
 	@Override
 	public void onTaskUpdate(int id) {
-		if (ids.contains(id)) {
+		if(ids.contains(id)) {
 			int pos = ids.indexOf(id);
 			fireTableRowsUpdated(pos, pos);
 		} else {
