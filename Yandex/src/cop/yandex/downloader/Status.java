@@ -1,6 +1,6 @@
 package cop.yandex.downloader;
 
-public enum DownloadStatus {
+public enum Status {
 	NONE("None"),
 	NEW("New"),
 	DOWNLOADING("Downloading"),
@@ -11,7 +11,7 @@ public enum DownloadStatus {
 
 	private final String name;
 
-	DownloadStatus(String name) {
+	Status(String name) {
 		this.name = name;
 	}
 	

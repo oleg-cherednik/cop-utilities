@@ -1,5 +1,11 @@
 package cop.yandex.downloader.requests;
 
-public interface DownloadRequest {
+import cop.yandex.downloader.DownloadTask;
 
+public interface DownloadRequest {
+	DownloadTask createTask();
+
+	String getSrc();
+
+	String getDest();
 }
