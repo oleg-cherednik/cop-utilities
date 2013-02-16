@@ -7,55 +7,37 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
 public final class HttpDownloadTask extends DownloadTask {
-	private static final int MAX_BUFFER_SIZE = 1024;
-
 	private final URL url;
 	private final File dest;
-	private int size; // size of download in bytes
-	private int downloaded; // number of bytes downloaded
+	private final int buffSize;
 
-	// Constructor for Download.
-	public HttpDownloadTask(URL src, File dest) {
+	public HttpDownloadTask(URL src, File dest, int buffSize) {
 		this.url = src;
 		this.dest = dest;
-		size = -1;
-		downloaded = 0;
+		this.buffSize = buffSize;
+
+		bytesTotal = -1;
+		bytesDownloaded = 0;
 
 		// Begin the download.
 		download();
 	}
 
-	// Get this download's URL.
-	public String getUrl() {
-		return url.toString();
-	}
-
-	@Override
-	public int getSize() {
-		return size;
-	}
-
 	@Override
 	public float getProgress() {
-		return ((float)downloaded / size) * 100;
+		return ((float)bytesDownloaded / bytesTotal) * 100;
 	}
-	
+
 	@Override
 	public String getSrc() {
 		return url.toString();
 	}
 
-	public void pause() {
-		status = Status.PAUSED;
+	@Override
+	public void setStatus(Status status) {
+		super.setStatus(status);
 		stateChanged();
-	}
-
-	public void resume() {
-		status = Status.DOWNLOADING;
-		stateChanged();
-		download();
 	}
 
 	public void cancel() {
@@ -82,63 +64,55 @@ public final class HttpDownloadTask extends DownloadTask {
 	// ========== Runnable ==========
 
 	public void run() {
-		status = Status.DOWNLOADING;
+		setStatus(Status.DOWNLOADING);
+
 		RandomAccessFile file = null;
-		InputStream stream = null;
+		InputStream in = null;
+		HttpURLConnection conn = null;
 
 		try {
-			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestProperty("Range", "bytes=" + downloaded + "-");
-			connection.connect();
+			conn = (HttpURLConnection)url.openConnection();
+
+			conn.setRequestProperty("Range", "bytes=" + bytesDownloaded + "-");
+			conn.connect();
 
 			// Make sure response code is in the 200 range.
-			if (connection.getResponseCode() / 100 != 2)
+			if (conn.getResponseCode() / 100 != 2)
 				error();
 
-			// Check for valid content length.
-			int contentLength = connection.getContentLength();
-			if (contentLength < 1) {
-				error();
-			}
+			int contentLength = conn.getContentLength();
 
-			/*
-			 * Set the size for this download if it hasn't been already set.
-			 */
-			if (size == -1) {
-				size = contentLength;
+			if (contentLength < 1)
+				error();
+
+			if (bytesTotal == -1) {
+				bytesTotal = contentLength;
 				stateChanged();
 			}
 
-			// Open file and seek to the end of it.
 			file = new RandomAccessFile(new File(dest, getFileName(url)), "rw");
-			file.seek(downloaded);
+			file.seek(bytesDownloaded = file.length());
 
-			stream = connection.getInputStream();
+			in = conn.getInputStream();
+
+			final byte buff[] = new byte[Math.max(512, buffSize)];
+
 			while (status == Status.DOWNLOADING) {
-				/*
-				 * Size buffer according to how much of the file is left to download.
-				 */
-				byte buffer[];
-				if (size - downloaded > MAX_BUFFER_SIZE) {
-					buffer = new byte[MAX_BUFFER_SIZE];
-				} else {
-					buffer = new byte[size - downloaded];
+				if (Thread.currentThread().isInterrupted()) {
+					setStatus(Status.PAUSED);
+					break;
 				}
 
-				// Read from server into buffer.
-				int read = stream.read(buffer);
+				int read = in.read(buff);
+
 				if (read == -1)
 					break;
 
-				// Write buffer to file.
-				file.write(buffer, 0, read);
-				downloaded += read;
+				file.write(buff, 0, read);
+				bytesDownloaded += read;
 				stateChanged();
 			}
 
-			/*
-			 * Change status to complete if this point was reached because downloading has finished.
-			 */
 			if (status == Status.DOWNLOADING) {
 				status = Status.COMPLETE;
 				stateChanged();
@@ -147,7 +121,10 @@ public final class HttpDownloadTask extends DownloadTask {
 			error();
 		} finally {
 			close(file);
-			close(stream);
+			close(in);
+
+			if (conn != null)
+				conn.disconnect();
 		}
 	}
 

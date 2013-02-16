@@ -8,7 +8,6 @@ import javax.swing.table.AbstractTableModel;
 
 import cop.yandex.downloader.DownloadManager;
 import cop.yandex.downloader.DownloadManagerListener;
-import cop.yandex.downloader.DownloadTask;
 
 class DownloadsTableModel extends AbstractTableModel implements DownloadManagerListener {
 	private static final long serialVersionUID = 2547586107231907732L;
@@ -18,8 +17,8 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 	private static final int COL_PROGRESS = 2;
 	private static final int COL_STATUS = 3;
 
-	private static final String[] columnNames = { "Source", "Size", "Progress", "Status" };
-	private static final Class[] columnClasses = { String.class, String.class, JProgressBar.class, String.class };
+	private static final String[] COL_NAMES = { "Source", "Size", "Progress", "Status" };
+	private static final Class<?>[] COL_CLASSES = { String.class, String.class, JProgressBar.class, String.class };
 
 	private final List<Integer> ids = new ArrayList<Integer>();
 	private final DownloadManager manager;
@@ -29,35 +28,29 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 		manager.addListener(this);
 	}
 
-	public void addDownload(DownloadTask download) {
-		// download.addObserver(this);
-		// downloadList.add(download);
-		// fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
-	}
-
-	// public DownloadTask getDownload(int row) {
-	// return downloadList.get(row);
-	// }
-
 	public void clearDownload(int row) {
 		// downloadList.remove(row);
 		// fireTableRowsDeleted(row, row);
 	}
 
 	public int getColumnCount() {
-		return columnNames.length;
+		return COL_NAMES.length;
+	}
+
+	public int getTaskId(int pos) {
+		return pos >= 0 && pos < ids.size() ? ids.get(pos) : -1;
 	}
 
 	// ========== TableModel ==========
 
 	@Override
 	public String getColumnName(int col) {
-		return columnNames[col];
+		return COL_NAMES[col];
 	}
 
 	@Override
-	public Class getColumnClass(int col) {
-		return columnClasses[col];
+	public Class<?> getColumnClass(int col) {
+		return COL_CLASSES[col];
 	}
 
 	public int getRowCount() {
@@ -71,11 +64,14 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 		case COL_SRC:
 			return manager.getTaskSrc(id);
 		case COL_SIZE:
-			return getSize(manager.getSize(id));
+			return getSize(manager.getBytesTotal(id));
 		case COL_PROGRESS:
-			return manager.getProgress(id);
+			long total = manager.getBytesTotal(id);
+			long downloaded = manager.getBytesDownloaded(id);
+
+			return total < 0 || downloaded < 0 ? 0 : ((double)downloaded / total) * 100;
 		case COL_STATUS:
-			return manager.getRequestStatus(id).getName();
+			return manager.getTaskStatus(id).getName();
 		}
 
 		return "";
@@ -85,16 +81,19 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 
 	@Override
 	public void onTaskUpdate(int id) {
-		if (!ids.contains(id))
+		if (ids.contains(id)) {
+			int pos = ids.indexOf(id);
+			fireTableRowsUpdated(pos, pos);
+		} else {
 			ids.add(id);
-
-		int index = ids.indexOf(id);
-		fireTableRowsInserted(index, index);
+			int pos = ids.indexOf(id);
+			fireTableRowsInserted(pos, pos);
+		}
 	}
 
 	// ========== static ==========
 
-	private static String getSize(int size) {
-		return size != -1 ? Integer.toString(size) : "N/A";
+	private static String getSize(long size) {
+		return size != -1 ? Long.toString(size) : "N/A";
 	}
 }

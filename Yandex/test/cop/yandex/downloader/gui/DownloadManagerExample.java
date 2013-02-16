@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.net.URL;
 import java.util.Observable;
@@ -24,15 +24,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import cop.yandex.downloader.DownloadManager;
-import cop.yandex.downloader.DownloadTask;
+import cop.yandex.downloader.DownloadManagerListener;
 import cop.yandex.downloader.Status;
 import cop.yandex.downloader.requests.HttpDownloadRequest;
 
-public class DownloadManagerExample extends JFrame implements Observer {
+public class DownloadManagerExample extends JFrame implements Observer, ListSelectionListener, WindowListener,
+		ActionListener, DownloadManagerListener {
 	private static final long serialVersionUID = -1986271889775806286L;
 
 	private static final int BUTTON_PAUSE = 0x1;
@@ -42,29 +44,25 @@ public class DownloadManagerExample extends JFrame implements Observer {
 
 	private final DownloadManager manager = new DownloadManager(5);
 	private DownloadsTableModel tableModel = new DownloadsTableModel(manager);
-	
-	private JTextField addTextField = new JTextField(30);
 
-	
+	private final JTextField addTextField = new JTextField(30);
+	private final JButton pauseButton = new JButton("Pause");
+	private final JButton resumeButton = new JButton("Resume");
+	private final JButton cancelButton = new JButton("Cancel");
+	private final JButton clearButton = new JButton("Clear");
 
 	private JTable table;
 
-	private JButton pauseButton = new JButton("Pause");
-	private JButton resumeButton = new JButton("Resume");
-	private JButton cancelButton, clearButton;
-	private DownloadTask selectedDownload;
-
 	private boolean clearing;
 
+	private int currId = -1;
+
 	public DownloadManagerExample() {
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 		setTitle("Download Manager");
 		setSize(640, 480);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
+
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
@@ -93,11 +91,8 @@ public class DownloadManagerExample extends JFrame implements Observer {
 		// Set up Downloads table.
 
 		table = new JTable(tableModel);
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				tableSelectionChanged();
-			}
-		});
+
+		table.getSelectionModel().addListSelectionListener(this);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		ProgressRenderer renderer = new ProgressRenderer(0, 100);
@@ -113,30 +108,15 @@ public class DownloadManagerExample extends JFrame implements Observer {
 
 		JPanel buttonsPanel = new JPanel();
 
-		pauseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPause();
-			}
-		});
 		pauseButton.setEnabled(false);
 		buttonsPanel.add(pauseButton);
 
-		resumeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionResume();
-			}
-		});
 		resumeButton.setEnabled(false);
 		buttonsPanel.add(resumeButton);
-		cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionCancel();
-			}
-		});
+
+		cancelButton.addActionListener(this);
 		cancelButton.setEnabled(false);
 		buttonsPanel.add(cancelButton);
-		clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionClear();
@@ -154,14 +134,20 @@ public class DownloadManagerExample extends JFrame implements Observer {
 	}
 
 	private void addListeners() {
+		addWindowListener(this);
+
+		manager.addListener(this);
 		manager.addObserver(this);
+
+		pauseButton.addActionListener(this);
+		resumeButton.addActionListener(this);
 	}
 
 	private void actionAdd() {
 		URL verifiedUrl = verifyUrl(addTextField.getText());
 
 		if (verifiedUrl != null) {
-			manager.addTask(new HttpDownloadRequest(verifiedUrl, new File("d:/tmp")));
+			manager.addTask(new HttpDownloadRequest(verifiedUrl, new File("d:/tmp"), 1024));
 			addTextField.setText(null);
 		} else {
 			JOptionPane.showMessageDialog(this, "Invalid Download URL", "Error", JOptionPane.ERROR_MESSAGE);
@@ -185,56 +171,30 @@ public class DownloadManagerExample extends JFrame implements Observer {
 		return verifiedUrl;
 	}
 
-	private void tableSelectionChanged() {
-		if (selectedDownload != null)
-			selectedDownload.deleteObserver(DownloadManagerExample.this);
-
-		if (!clearing && table.getSelectedRow() > -1) {
-//			selectedDownload = tableModel.getDownload(table.getSelectedRow());
-//			selectedDownload.addObserver(DownloadManagerExample.this);
-//			updateButtons();
-		}
-	}
-
-	private void actionPause() {
-//		selectedDownload.pause();
-		updateButtons();
-	}
-
-	private void actionResume() {
-//		selectedDownload.resume();
-		updateButtons();
-	}
-
-	private void actionCancel() {
-//		selectedDownload.cancel();
-		updateButtons();
-	}
-
 	private void actionClear() {
 		clearing = true;
 		tableModel.clearDownload(table.getSelectedRow());
 		clearing = false;
-		selectedDownload = null;
+		// selectedDownload = null;
 		updateButtons();
 	}
 
 	private void updateButtons() {
 		DownloadStatusDecorator status = DownloadStatusDecorator.NONE;
 
-		if (selectedDownload != null)
-			status = DownloadStatusDecorator.parseStatus(selectedDownload.getStatus());
+		if (currId >= 0)
+			status = DownloadStatusDecorator.parseStatus(manager.getTaskStatus(currId));
 
 		pauseButton.setEnabled(isBitSet(status.availableButtons, BUTTON_PAUSE));
-		resumeButton.setEnabled(isBitSet(status.availableButtons, BUTTON_PAUSE));
-		cancelButton.setEnabled(isBitSet(status.availableButtons, BUTTON_PAUSE));
-		clearButton.setEnabled(isBitSet(status.availableButtons, BUTTON_PAUSE));
+		resumeButton.setEnabled(isBitSet(status.availableButtons, BUTTON_RESUME));
+		cancelButton.setEnabled(isBitSet(status.availableButtons, BUTTON_CANCEL));
+		clearButton.setEnabled(isBitSet(status.availableButtons, BUTTON_CLEAR));
 	}
 
 	public void update(Observable o, Object arg) {
 		// Update buttons if the selected download has changed.
-		if (selectedDownload != null && selectedDownload.equals(o))
-			updateButtons();
+		// if (selectedDownload != null && selectedDownload.equals(o))
+		updateButtons();
 	}
 
 	// Run the Download Manager.
@@ -243,16 +203,69 @@ public class DownloadManagerExample extends JFrame implements Observer {
 		manager.setVisible(true);
 	}
 
+	// ========== ListSelectionListener ==========
+
+	public void valueChanged(ListSelectionEvent event) {
+		if (event.getSource() != table.getSelectionModel())
+			return;
+
+		int row = table.getSelectedRow();
+		System.out.println(row);
+		currId = tableModel.getTaskId(row);
+		updateButtons();
+	}
+
+	// ========== WindowListener ==========
+
+	@Override
+	public void windowOpened(WindowEvent event) {}
+
+	@Override
+	public void windowClosing(WindowEvent event) {
+		manager.dispose();
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent event) {}
+
+	@Override
+	public void windowIconified(WindowEvent event) {}
+
+	@Override
+	public void windowDeiconified(WindowEvent eventvent) {}
+
+	@Override
+	public void windowActivated(WindowEvent e) {}
+
+	@Override
+	public void windowDeactivated(WindowEvent event) {}
+
+	// ========== ActionListener ==========
+
+	public void actionPerformed(ActionEvent event) {
+		if (event.getSource() == pauseButton)
+			manager.pauseTask(currId);
+		else if (event.getSource() == resumeButton)
+			manager.resumeTask(currId);
+		else if (event.getSource() == cancelButton)
+			manager.cancelTask(currId);
+	}
+
+	public void onTaskUpdate(int id) {
+		updateButtons();
+	}
+
 	// ========== enum ==========
 
 	private enum DownloadStatusDecorator {
 		NONE(Status.NONE),
 		NEW(Status.NEW),
-		DOWNLOADING(Status.NEW, BUTTON_PAUSE | BUTTON_CANCEL),
-		PAUSED(Status.NEW, BUTTON_RESUME | BUTTON_CANCEL),
-		COMPLETE(Status.NEW, BUTTON_CLEAR),
-		CANCELLED(Status.NEW, BUTTON_CLEAR),
-		FERROR(Status.NEW, BUTTON_RESUME | BUTTON_CLEAR);
+		DOWNLOADING(Status.DOWNLOADING, BUTTON_PAUSE | BUTTON_CANCEL),
+		PAUSED(Status.PAUSED, BUTTON_RESUME | BUTTON_CANCEL),
+		COMPLETE(Status.COMPLETE, BUTTON_CLEAR),
+		CANCELLED(Status.CANCELLED, BUTTON_CLEAR),
+		FERROR(Status.ERROR, BUTTON_RESUME | BUTTON_CLEAR);
 
 		private final Status status;
 		private final int availableButtons;
@@ -264,13 +277,6 @@ public class DownloadManagerExample extends JFrame implements Observer {
 		private DownloadStatusDecorator(Status status, int availableButtons) {
 			this.status = status;
 			this.availableButtons = availableButtons;
-		}
-
-		public final void updateButtons(DownloadManagerExample panel) {
-			panel.pauseButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
-			panel.resumeButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
-			panel.cancelButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
-			panel.clearButton.setEnabled(isBitSet(availableButtons, BUTTON_PAUSE));
 		}
 
 		// ========== static ==========
