@@ -114,14 +114,8 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		resumeButton.setEnabled(false);
 		buttonsPanel.add(resumeButton);
 
-		cancelButton.addActionListener(this);
 		cancelButton.setEnabled(false);
 		buttonsPanel.add(cancelButton);
-		clearButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionClear();
-			}
-		});
 		clearButton.setEnabled(false);
 		buttonsPanel.add(clearButton);
 
@@ -141,6 +135,8 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 
 		pauseButton.addActionListener(this);
 		resumeButton.addActionListener(this);
+		cancelButton.addActionListener(this);
+		clearButton.addActionListener(this);
 	}
 
 	private void actionAdd() {
@@ -169,14 +165,6 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 			return null;
 
 		return verifiedUrl;
-	}
-
-	private void actionClear() {
-		clearing = true;
-		tableModel.clearDownload(table.getSelectedRow());
-		clearing = false;
-		// selectedDownload = null;
-		updateButtons();
 	}
 
 	private void updateButtons() {
@@ -250,7 +238,11 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 			manager.resumeTask(currId);
 		else if (event.getSource() == cancelButton)
 			manager.cancelTask(currId);
+		else if (event.getSource() == clearButton)
+			tableModel.remove(manager.removeNotActiveTasks());
 	}
+
+	// ========== DownloadManagerListener ==========
 
 	public void onTaskUpdate(int id) {
 		updateButtons();
@@ -265,7 +257,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		PAUSED(Status.PAUSED, BUTTON_RESUME | BUTTON_CANCEL),
 		COMPLETE(Status.COMPLETE, BUTTON_CLEAR),
 		CANCELLED(Status.CANCELLED, BUTTON_CLEAR),
-		FERROR(Status.ERROR, BUTTON_RESUME | BUTTON_CLEAR);
+		FERROR(Status.ERROR, BUTTON_CLEAR);
 
 		private final Status status;
 		private final int availableButtons;

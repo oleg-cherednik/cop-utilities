@@ -2,6 +2,7 @@ package cop.yandex.downloader.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JProgressBar;
 import javax.swing.table.AbstractTableModel;
@@ -28,17 +29,19 @@ class DownloadsTableModel extends AbstractTableModel implements DownloadManagerL
 		manager.addListener(this);
 	}
 
-	public void clearDownload(int row) {
-		// downloadList.remove(row);
-		// fireTableRowsDeleted(row, row);
-	}
-
 	public int getColumnCount() {
 		return COL_NAMES.length;
 	}
 
 	public int getTaskId(int pos) {
 		return pos >= 0 && pos < ids.size() ? ids.get(pos) : -1;
+	}
+
+	public void remove(Set<Integer> ids) {
+		if (ids == null)
+			return;
+		this.ids.removeAll(ids);
+		fireTableDataChanged();
 	}
 
 	// ========== TableModel ==========

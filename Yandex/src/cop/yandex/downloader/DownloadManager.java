@@ -1,7 +1,9 @@
 package cop.yandex.downloader;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -54,7 +56,7 @@ public final class DownloadManager extends Observable implements Observer {
 		Node node = nodes.get(id);
 
 		if (node.task != null && Status.PAUSED.isAvailableFrom(node.task.getStatus()))
-			node.future.cancel(true);
+			node.task.setStatus(Status.PAUSED);
 	}
 
 	public void setTaskStatus(int id, Status status) {
@@ -75,7 +77,24 @@ public final class DownloadManager extends Observable implements Observer {
 		Node node = nodes.get(id);
 
 		if (node.task != null && Status.CANCELLED.isAvailableFrom(node.task.getStatus()))
-			node.future.cancel(true);
+			node.task.setStatus(Status.CANCELLED);
+	}
+
+	public Set<Integer> removeNotActiveTasks() {
+		Set<Integer> ids = new HashSet<Integer>();
+		Iterator<Node> it = nodes.values().iterator();
+
+		while (it.hasNext()) {
+			Node node = it.next();
+
+			if (node.task.getStatus().isActive())
+				continue;
+
+			it.remove();
+			ids.add(node.task.getId());
+		}
+
+		return ids.isEmpty() ? Collections.<Integer>emptySet() : Collections.unmodifiableSet(ids);
 	}
 
 	public void dispose() {
