@@ -43,7 +43,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	private static final int BUTTON_CLEAR = 0x8;
 
 	private final DownloadManager manager = new DownloadManager(5);
-	private DownloadsTableModel tableModel = new DownloadsTableModel(manager);
+	private final DownloadsTableModel tableModel = new DownloadsTableModel(manager);
 
 	private final JTextField addTextField = new JTextField(30);
 	private final JButton pauseButton = new JButton("Pause");
@@ -52,9 +52,6 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	private final JButton clearButton = new JButton("Clear");
 
 	private JTable table;
-
-	private boolean clearing;
-
 	private int currId = -1;
 
 	public DownloadManagerExample() {
