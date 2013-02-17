@@ -11,16 +11,26 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import cop.yandex.downloader.requests.DownloadRequest;
+import cop.yandex.downloader.tasks.DownloadTask;
+
 /**
  * @author Oleg Cherednik
  * @since 16.02.2013
  */
 public final class DownloadManager implements Observer {
-	private final Map<Integer, DownloadTask> tasks = new HashMap<Integer, DownloadTask>();
+	private static final Logger log = LoggerFactory.getLogger(DownloadManager.class);
+
 	private final ExecutorService pool;
+	private final Map<Integer, DownloadTask> tasks = new HashMap<Integer, DownloadTask>();
 	private final Set<DownloadManagerListener> listeners = new HashSet<DownloadManagerListener>();
 
 	public DownloadManager(int maxActiveTasks) {
+		log.debug("create download manager, max active tasks {}", maxActiveTasks);
+
 		pool = Executors.newFixedThreadPool(maxActiveTasks > 0 ? maxActiveTasks : 10);
 	}
 
@@ -37,41 +47,72 @@ public final class DownloadManager implements Observer {
 	 * @return task id
 	 */
 	public int addTask(DownloadRequest request) {
-		if(request == null)
+		log.debug("addTask())");
+
+		if(request == null) {
+			log.error("Request can't be 'null'");
 			throw new IllegalArgumentException("Request can't be 'null'");
+		}
 
 		DownloadTask task = request.createTask();
 		task.addObserver(this);
-		pool.execute(task);
+		addTaskToPool(task);
 		tasks.put(task.getId(), task);
 
 		fireOnTaskUpdate(task.getId());
 
+		log.debug("task {} is created", task);
+
 		return task.getId();
 	}
 
+	private void addTaskToPool(DownloadTask task) {
+		log.debug("addTaskToPool(id={})", task.getId());
+		pool.execute(task);
+	}
+
 	public void pauseTask(int id) {
+		log.debug("pauseTask({})", id);
+
 		DownloadTask task = tasks.get(id);
 
-		if(task != null && Status.PAUSED.isAvailableFrom(task.getStatus()))
+		if(task == null)
+			log.debug("task id={} is not found", id);
+		else if(!Status.PAUSED.isAvailableFrom(task.getStatus()))
+			log.debug("can't change status {} from {}", task.getStatus().getName(), Status.PAUSED.getName());
+		else
 			task.setStatus(Status.PAUSED);
 	}
 
 	public void resumeTask(int id) {
+		log.debug("resumeTask({})", id);
+
 		DownloadTask task = tasks.get(id);
 
-		if(task != null && Status.DOWNLOADING.isAvailableFrom(task.getStatus()))
-			pool.execute(task);
+		if(task == null)
+			log.debug("task id={} is not found", id);
+		else if(!Status.DOWNLOADING.isAvailableFrom(task.getStatus()))
+			log.debug("can't change status {} from {}", task.getStatus().getName(), Status.DOWNLOADING.getName());
+		else
+			addTaskToPool(task);
 	}
 
 	public void cancelTask(int id) {
+		log.debug("cancelTask({})", id);
+
 		DownloadTask task = tasks.get(id);
 
-		if(task != null && Status.CANCELLED.isAvailableFrom(task.getStatus()))
+		if(task == null)
+			log.debug("task id={} is not found", id);
+		else if(!Status.CANCELLED.isAvailableFrom(task.getStatus()))
+			log.debug("can't change status {} from {}", task.getStatus().getName(), Status.CANCELLED.getName());
+		else
 			task.setStatus(Status.CANCELLED);
 	}
 
 	public Set<Integer> removeNotActiveTasks() {
+		log.debug("removeNotActiveTasks()");
+
 		Set<Integer> ids = new HashSet<Integer>();
 		Iterator<DownloadTask> it = tasks.values().iterator();
 
@@ -85,31 +126,59 @@ public final class DownloadManager implements Observer {
 			ids.add(task.getId());
 		}
 
+		log.debug("task removed: {}", ids.size());
+
 		return ids.isEmpty() ? Collections.<Integer> emptySet() : Collections.unmodifiableSet(ids);
 	}
 
 	public void dispose() {
+		log.debug("dispose()");
+
 		for(Integer id : tasks.keySet())
 			cancelTask(id);
 	}
 
 	public TaskStatus getTaskStatus(int id) {
+		log.trace("getTaskStatus({})", id);
+
 		DownloadTask task = tasks.get(id);
+
+		if(task == null)
+			log.debug("task id={} is not found", id);
+
 		return task != null ? task.getTaskStatus() : TaskStatus.createBuilder().setStatus(Status.NONE).createStatus();
 	}
 
 	public long getBytesTotal(int id) {
+		log.trace("getBytesTotal({})", id);
+
 		DownloadTask task = tasks.get(id);
+
+		if(task == null)
+			log.debug("task id={} is not found", id);
+
 		return task != null ? task.getBytesTotal() : -1;
 	}
 
 	public long getBytesDownloaded(int id) {
+		log.trace("getBytesDownloaded({})", id);
+
 		DownloadTask task = tasks.get(id);
+
+		if(task == null)
+			log.debug("task id={} is not found", id);
+
 		return task != null ? task.getBytesDownloaded() : -1;
 	}
 
 	public String getTaskSrc(int id) {
+		log.trace("getTaskSrc({})", id);
+
 		DownloadTask task = tasks.get(id);
+
+		if(task == null)
+			log.debug("task id={} is not found", id);
+
 		return task != null ? task.getSrc() : null;
 	}
 

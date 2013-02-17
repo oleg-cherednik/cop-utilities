@@ -1,5 +1,7 @@
 package cop.yandex.downloader;
 
+import cop.yandex.downloader.tasks.DownloadTask;
+
 /**
  * @author Oleg Cherednik
  * @since 16.02.2013

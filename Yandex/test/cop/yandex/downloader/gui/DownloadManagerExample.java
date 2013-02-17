@@ -32,11 +32,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ru.ritcon.utils.ftp.FtpClientConfig;
+
 import cop.yandex.downloader.DownloadManager;
 import cop.yandex.downloader.DownloadManagerListener;
-import cop.yandex.downloader.HttpDownloadRequest;
-import cop.yandex.downloader.LanDownloadRequest;
 import cop.yandex.downloader.Status;
+import cop.yandex.downloader.requests.HttpDownloadRequest;
+import cop.yandex.downloader.requests.LanDownloadRequest;
 
 /**
  * @author Oleg Cherednik
@@ -45,7 +50,7 @@ import cop.yandex.downloader.Status;
 public class DownloadManagerExample extends JFrame implements Observer, ListSelectionListener, WindowListener,
 		ActionListener, DownloadManagerListener {
 	private static final long serialVersionUID = -1986271889775806286L;
-
+	
 	private static final int BUTTON_PAUSE = 0x1;
 	private static final int BUTTON_RESUME = 0x2;
 	private static final int BUTTON_CANCEL = 0x4;
@@ -285,7 +290,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		PAUSED(Status.PAUSED, BUTTON_RESUME | BUTTON_CANCEL),
 		COMPLETE(Status.COMPLETE, BUTTON_CLEAR),
 		CANCELLED(Status.CANCELLED, BUTTON_CLEAR | BUTTON_RESUME),
-		FERROR(Status.ERROR, BUTTON_CLEAR | BUTTON_RESUME);
+		ERROR(Status.ERROR, BUTTON_CLEAR | BUTTON_RESUME);
 
 		private final Status status;
 		private final int availableButtons;
