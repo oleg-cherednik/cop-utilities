@@ -32,11 +32,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ru.ritcon.utils.ftp.FtpClientConfig;
-
 import cop.yandex.downloader.DownloadManager;
 import cop.yandex.downloader.DownloadManagerListener;
 import cop.yandex.downloader.Status;
@@ -50,7 +45,7 @@ import cop.yandex.downloader.requests.LanDownloadRequest;
 public class DownloadManagerExample extends JFrame implements Observer, ListSelectionListener, WindowListener,
 		ActionListener, DownloadManagerListener {
 	private static final long serialVersionUID = -1986271889775806286L;
-	
+
 	private static final int BUTTON_PAUSE = 0x1;
 	private static final int BUTTON_RESUME = 0x2;
 	private static final int BUTTON_CANCEL = 0x4;
@@ -158,21 +153,21 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		String src = srcField.getText().trim();
 		String dest = destField.getText().trim();
 
-		if(src.isEmpty())
+		if (src.isEmpty())
 			JOptionPane.showMessageDialog(this, "Source is empty", "Error", JOptionPane.ERROR_MESSAGE);
-		else if(dest.isEmpty())
+		else if (dest.isEmpty())
 			JOptionPane.showMessageDialog(this, "Destination is empty", "Error", JOptionPane.ERROR_MESSAGE);
 		else {
-			if(src.startsWith("http://")) {
+			if (src.startsWith("http://")) {
 				try {
 					manager.addTask(new HttpDownloadRequest(new URL(src), new File(dest), 1024));
-				} catch(Exception e) {
+				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				File file = new File(src);
 
-				if(file.isFile())
+				if (file.isFile())
 					manager.addTask(new LanDownloadRequest(file, new File(dest), 1024));
 				else
 					JOptionPane.showMessageDialog(this, "Can't recognize source file", "Error",
@@ -187,7 +182,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	private void updateButtons() {
 		DownloadStatusDecorator status = DownloadStatusDecorator.NONE;
 
-		if(currId >= 0)
+		if (currId >= 0)
 			status = DownloadStatusDecorator.parseStatus(manager.getTaskStatus(currId).getStatus());
 
 		pauseButton.setEnabled(isBitSet(status.availableButtons, BUTTON_PAUSE));
@@ -210,7 +205,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	// ========== ListSelectionListener ==========
 
 	public void valueChanged(ListSelectionEvent event) {
-		if(event.getSource() != table.getSelectionModel())
+		if (event.getSource() != table.getSelectionModel())
 			return;
 
 		currId = tableModel.getTaskId(table.getSelectedRow());
@@ -245,17 +240,17 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	// ========== ActionListener ==========
 
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == pauseButton)
+		if (event.getSource() == pauseButton)
 			manager.pauseTask(currId);
-		else if(event.getSource() == resumeButton)
+		else if (event.getSource() == resumeButton)
 			manager.resumeTask(currId);
-		else if(event.getSource() == cancelButton)
+		else if (event.getSource() == cancelButton)
 			manager.cancelTask(currId);
-		else if(event.getSource() == addButton)
+		else if (event.getSource() == addButton)
 			onAddButton();
-		else if(event.getSource() == clearButton)
+		else if (event.getSource() == clearButton)
 			tableModel.remove(manager.removeNotActiveTasks());
-		else if(event.getSource() == fileExitMenuItem)
+		else if (event.getSource() == fileExitMenuItem)
 			onExitMenu();
 	}
 
@@ -307,8 +302,8 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 		// ========== static ==========
 
 		public static DownloadStatusDecorator parseStatus(Status status) {
-			for(DownloadStatusDecorator decorator : values())
-				if(decorator.status == status)
+			for (DownloadStatusDecorator decorator : values())
+				if (decorator.status == status)
 					return decorator;
 			return NONE;
 		}

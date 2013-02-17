@@ -8,7 +8,7 @@ import java.io.InputStream;
  * @author Oleg Cherednik
  * @since 16.02.2013
  */
-public final class LanDownloadTask extends DownloadTask {
+public final class LanDownloadTask extends DefaultDownloadTask {
 	private final File src;
 
 	public LanDownloadTask(File src, File dest, int buffSize) {
@@ -23,6 +23,8 @@ public final class LanDownloadTask extends DownloadTask {
 	public String getSrc() {
 		return src.getAbsolutePath();
 	}
+
+	// ========== DefaultDownloadTask =========
 
 	@Override
 	protected File createDestFile() {

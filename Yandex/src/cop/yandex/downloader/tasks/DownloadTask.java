@@ -54,7 +54,7 @@ public abstract class DownloadTask extends Observable implements Runnable {
 	}
 
 	public final void setStatus(Status status, String description) {
-		if(status == Status.ERROR)
+		if (status == Status.ERROR)
 			log.error("setStatus(id={}, {}, {})", new String[] { Integer.toString(id), status.getName(),
 					isEmpty(description) ? description : "---" });
 		else
@@ -81,83 +81,12 @@ public abstract class DownloadTask extends Observable implements Runnable {
 		notifyObservers();
 	}
 
-	public Status getStatus() {
+	public final Status getStatus() {
 		log.trace("getStatus(id={}, {})", id, status.getStatus().getName());
 		return status.getStatus();
 	}
 
-	// ========== abstract ==========
-
 	public abstract String getSrc();
-
-	protected abstract File createDestFile();
-
-	/**
-	 * Create input stream based on current connection
-	 * 
-	 * @return input stream object or <tt>null</tt> if it can't be created
-	 * @throws Exception
-	 */
-	protected abstract InputStream createInputStream() throws Exception;
-
-	protected void releaseResources() {}
-
-	// ========== Runnable ==========
-
-	public void run() {
-		setStatus(Status.DOWNLOADING);
-
-		RandomAccessFile file = null;
-		InputStream in = null;
-
-		try {
-			File dest = createDestFile();
-			log.debug("Open destination: id={}, {}", id, dest);
-
-			file = new RandomAccessFile(createDestFile(), "rw");
-
-			file.seek(bytesDownloaded = file.length());
-			stateChanged();
-
-			in = createInputStream();
-			in.skip(bytesDownloaded);
-
-			log.debug("Skip bytes: id={}, {}", id, bytesDownloaded);
-
-			final byte buff[] = new byte[Math.max(512, buffSize)];
-
-			while(status.getStatus() == Status.DOWNLOADING) {
-				if(Thread.currentThread().isInterrupted())
-					setStatus(Status.PAUSED);
-				else if(bytesDownloaded > bytesTotal)
-					log.error("too many bytes downloaded, {} > {}", bytesDownloaded, bytesTotal);
-				else {
-					int read = in.read(buff);
-					log.debug("id={}, read {} bytes", read);
-
-					if(read == -1)
-						break;
-
-					file.write(buff, 0, read);
-					bytesDownloaded += read;
-					stateChanged();
-
-					continue;
-				}
-
-				break;
-			}
-
-			if(status.getStatus() == Status.DOWNLOADING)
-				setStatus(Status.COMPLETE);
-		} catch(Exception e) {
-			setStatus(Status.ERROR, e.getClass().getSimpleName() + ", " + e.getMessage());
-		} finally {
-			close(file);
-			close(in);
-			releaseResources();
-		}
-	}
 
 	// ========== Object ==========
 
@@ -171,14 +100,14 @@ public abstract class DownloadTask extends Observable implements Runnable {
 
 	@Override
 	public final boolean equals(Object obj) {
-		if(this == obj)
+		if (this == obj)
 			return true;
-		if(obj == null)
+		if (obj == null)
 			return false;
-		if(getClass() != obj.getClass())
+		if (getClass() != obj.getClass())
 			return false;
 		DownloadTask other = (DownloadTask)obj;
-		if(id != other.id)
+		if (id != other.id)
 			return false;
 		return true;
 	}
@@ -191,10 +120,10 @@ public abstract class DownloadTask extends Observable implements Runnable {
 	// ========== static ==========
 
 	protected static void close(Closeable obj) {
-		if(obj != null) {
+		if (obj != null) {
 			try {
 				obj.close();
-			} catch(Exception ignored) {}
+			} catch (Exception ignored) {}
 		}
 	}
 

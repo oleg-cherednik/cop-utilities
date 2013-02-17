@@ -11,7 +11,7 @@ import cop.yandex.downloader.Status;
  * @author Oleg Cherednik
  * @since 16.02.2013
  */
-public final class HttpDownloadTask extends DownloadTask {
+public final class HttpDownloadTask extends DefaultDownloadTask {
 	private final URL src;
 	private HttpURLConnection conn;
 
@@ -24,13 +24,15 @@ public final class HttpDownloadTask extends DownloadTask {
 	// ========== DownloadTask ==========
 
 	@Override
-	protected File createDestFile() {
-		return dest.isFile() ? dest : new File(dest, getFileName(src));
-	}
-
-	@Override
 	public String getSrc() {
 		return src.toString();
+	}
+
+	// ========== DefaultDownloadTask ==========
+
+	@Override
+	protected File createDestFile() {
+		return dest.isFile() ? dest : new File(dest, getFileName(src));
 	}
 
 	@Override
@@ -40,9 +42,9 @@ public final class HttpDownloadTask extends DownloadTask {
 		conn.setRequestProperty("Range", "bytes=" + bytesDownloaded + "-");
 		conn.connect();
 
-		if(conn.getResponseCode() / 100 != 2)
+		if (conn.getResponseCode() / 100 != 2)
 			setStatus(Status.ERROR, "http error code " + conn.getResponseCode());
-		else if((bytesTotal = conn.getContentLength()) < 0)
+		else if ((bytesTotal = conn.getContentLength()) < 0)
 			setStatus(Status.ERROR, "total size " + bytesTotal);
 
 		return getStatus() == Status.DOWNLOADING ? conn.getInputStream() : null;
@@ -50,7 +52,7 @@ public final class HttpDownloadTask extends DownloadTask {
 
 	@Override
 	protected void releaseResources() {
-		if(conn != null)
+		if (conn != null)
 			conn.disconnect();
 	}
 
