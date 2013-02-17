@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import cop.yandex.downloader.Status;
 
+/**
+ * @author Oleg Cherednik
+ * @since 16.02.2013
+ */
 public abstract class DefaultDownloadTask extends DownloadTask {
 	private static final Logger log = LoggerFactory.getLogger(DefaultDownloadTask.class);
 
@@ -59,7 +63,7 @@ public abstract class DefaultDownloadTask extends DownloadTask {
 					log.error("too many bytes downloaded, {} > {}", bytesDownloaded, bytesTotal);
 				else {
 					int read = in.read(buff);
-					log.debug("id={}, read {} bytes", read);
+					log.trace("id={}, read {} bytes", read);
 
 					if (read == -1)
 						break;
@@ -74,7 +78,9 @@ public abstract class DefaultDownloadTask extends DownloadTask {
 				break;
 			}
 
-			if (getStatus() == Status.DOWNLOADING)
+			if (bytesDownloaded > bytesTotal)
+				setStatus(Status.ERROR, "too many bytes downloaded, " + bytesDownloaded + " > " + bytesTotal);
+			else if (getStatus() == Status.DOWNLOADING)
 				setStatus(Status.COMPLETE);
 		} catch (Exception e) {
 			setStatus(Status.ERROR, e.getClass().getSimpleName() + ", " + e.getMessage());
