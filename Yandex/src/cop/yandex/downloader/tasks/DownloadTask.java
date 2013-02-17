@@ -2,8 +2,6 @@ package cop.yandex.downloader.tasks;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.util.Observable;
 
 import org.slf4j.Logger;
