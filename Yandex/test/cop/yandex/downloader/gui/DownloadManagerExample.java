@@ -105,7 +105,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 
 		gbc.gridwidth = 1;
 		gbc.weightx = 0;
-		panel.add(new JLabel("Destination:"), gbc);
+		panel.add(new JLabel("Destination path:"), gbc);
 		gbc.weightx = 1;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(destField, gbc);

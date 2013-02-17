@@ -32,7 +32,7 @@ public final class HttpDownloadTask extends DefaultDownloadTask {
 
 	@Override
 	protected File createDestFile() {
-		return dest.isFile() ? dest : new File(dest, getFileName(src));
+		return new File(dest, getFileName(src));
 	}
 
 	@Override

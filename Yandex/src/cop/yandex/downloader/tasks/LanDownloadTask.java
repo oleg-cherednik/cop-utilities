@@ -28,7 +28,7 @@ public final class LanDownloadTask extends DefaultDownloadTask {
 
 	@Override
 	protected File createDestFile() {
-		return dest.isFile() ? dest : new File(dest, src.getName());
+		return new File(dest, src.getName());
 	}
 
 	@Override
