@@ -35,7 +35,7 @@ public final class DownloadManager implements Observer {
 	}
 
 	public void addListener(DownloadManagerListener listener) {
-		if(listener != null)
+		if (listener != null)
 			listeners.add(listener);
 	}
 
@@ -49,7 +49,7 @@ public final class DownloadManager implements Observer {
 	public int addTask(DownloadRequest request) {
 		log.debug("addTask())");
 
-		if(request == null) {
+		if (request == null) {
 			log.error("Request can't be 'null'");
 			throw new IllegalArgumentException("Request can't be 'null'");
 		}
@@ -76,9 +76,9 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
-		else if(!Status.PAUSED.isAvailableFrom(task.getStatus()))
+		else if (!Status.PAUSED.isAvailableFrom(task.getStatus()))
 			log.debug("can't change status {} from {}", task.getStatus().getName(), Status.PAUSED.getName());
 		else
 			task.setStatus(Status.PAUSED);
@@ -89,9 +89,9 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
-		else if(!Status.DOWNLOADING.isAvailableFrom(task.getStatus()))
+		else if (!Status.DOWNLOADING.isAvailableFrom(task.getStatus()))
 			log.debug("can't change status {} from {}", task.getStatus().getName(), Status.DOWNLOADING.getName());
 		else
 			addTaskToPool(task);
@@ -102,9 +102,9 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
-		else if(!Status.CANCELLED.isAvailableFrom(task.getStatus()))
+		else if (!Status.CANCELLED.isAvailableFrom(task.getStatus()))
 			log.debug("can't change status {} from {}", task.getStatus().getName(), Status.CANCELLED.getName());
 		else
 			task.setStatus(Status.CANCELLED);
@@ -116,10 +116,10 @@ public final class DownloadManager implements Observer {
 		Set<Integer> ids = new HashSet<Integer>();
 		Iterator<DownloadTask> it = tasks.values().iterator();
 
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			DownloadTask task = it.next();
 
-			if(task.getStatus().isActive())
+			if (task.getStatus().isActive())
 				continue;
 
 			it.remove();
@@ -134,8 +134,9 @@ public final class DownloadManager implements Observer {
 	public void dispose() {
 		log.debug("dispose()");
 
-		for(Integer id : tasks.keySet())
-			cancelTask(id);
+		for (DownloadTask task : tasks.values())
+			if (task.getStatus().isActive())
+				cancelTask(task.getId());
 	}
 
 	public TaskStatus getTaskStatus(int id) {
@@ -143,7 +144,7 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
 
 		return task != null ? task.getTaskStatus() : TaskStatus.createBuilder().setStatus(Status.NONE).createStatus();
@@ -154,7 +155,7 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
 
 		return task != null ? task.getBytesTotal() : -1;
@@ -165,7 +166,7 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
 
 		return task != null ? task.getBytesDownloaded() : -1;
@@ -176,14 +177,14 @@ public final class DownloadManager implements Observer {
 
 		DownloadTask task = tasks.get(id);
 
-		if(task == null)
+		if (task == null)
 			log.debug("task id={} is not found", id);
 
 		return task != null ? task.getSrc() : null;
 	}
 
 	private void fireOnTaskUpdate(int id) {
-		for(DownloadManagerListener listener : listeners)
+		for (DownloadManagerListener listener : listeners)
 			listener.onTaskUpdate(id);
 	}
 
@@ -191,7 +192,7 @@ public final class DownloadManager implements Observer {
 
 	@Override
 	public void update(Observable obj, Object arg) {
-		if(obj instanceof DownloadTask)
+		if (obj instanceof DownloadTask)
 			fireOnTaskUpdate(((DownloadTask)obj).getId());
 	}
 }
