@@ -51,7 +51,7 @@ public class DownloadManagerExample extends JFrame implements Observer, ListSele
 	private static final int BUTTON_CANCEL = 0x4;
 	private static final int BUTTON_CLEAR = 0x8;
 
-	private final DownloadManager manager = new DownloadManager(5);
+	private final DownloadManager manager = new DownloadManager(10);
 	private final DownloadsTableModel tableModel = new DownloadsTableModel(manager);
 	private final JTable table = new JTable(tableModel);
 
