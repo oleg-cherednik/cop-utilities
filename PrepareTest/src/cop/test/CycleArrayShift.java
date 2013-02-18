@@ -36,5 +36,4 @@ public class CycleArrayShift {
 			arr[j] = tmp;
 		}
 	}
-
 }
