@@ -1,4 +1,4 @@
-package cop.test;
+package cop.test.lists;
 
 /**
  * Swap linked list elements
@@ -8,11 +8,11 @@ package cop.test;
  */
 public class ReverseLinkedList {
 	public static void main(String... args) {
-		LinkedListNode node = createList();
+		LinkedListNode node = ListUtils.createList(20, false);
 
-		print(node);
+		ListUtils.print(node);
 		node = reverseList(node);
-		print(node);
+		ListUtils.print(node);
 	}
 
 	private static LinkedListNode reverseList(LinkedListNode node) {
@@ -35,31 +35,4 @@ public class ReverseLinkedList {
 
 		return node1;
 	}
-
-	private static LinkedListNode createList() {
-		LinkedListNode parent = null;
-		LinkedListNode prv = null;
-
-		for (int i = 1; i <= 20; i++) {
-			LinkedListNode node = new LinkedListNode(i);
-
-			if (prv != null)
-				prv.setNext(node);
-
-			prv = node;
-			parent = parent == null ? node : parent;
-		}
-
-		return parent;
-	}
-
-	private static void print(LinkedListNode node) {
-		do {
-			System.out.printf(" %2d", node.getValue());
-			node = node.getNext();
-		} while (node != null);
-
-		System.out.println();
-	}
-
 }

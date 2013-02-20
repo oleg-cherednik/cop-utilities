@@ -1,17 +1,20 @@
-package cop.test;
+package cop.test.lists;
 
-public class LinedListSort {
+public class LinkedListSort {
 	public static void main(String... args) {
-		LinkedListNode node = createList();
+		LinkedListNode node = ListUtils.createList(20, true);
 
-		print(node);
+		ListUtils.print(node);
 		node = sortList(node);
-		print(node);
+		ListUtils.print(node);
 	}
 
 	private static LinkedListNode sortList(LinkedListNode parent) {
 		LinkedListNode node1 = parent != null ? parent.getNext() : null;
 		LinkedListNode node2 = node1 != null ? node1.getNext() : null;
+
+		// if (parent == null || node1 == null || node2 == null || node1.getValue() <= node2.getValue())
+		// return;
 
 		parent.setNext(node2);
 		node2.setNext(node1);
@@ -54,31 +57,5 @@ public class LinedListSort {
 			prv.setNext(node1);
 
 		return first;
-	}
-
-	private static LinkedListNode createList() {
-		LinkedListNode parent = null;
-		LinkedListNode prv = null;
-
-		for (int i = 0; i < 20; i++) {
-			LinkedListNode node = new LinkedListNode((int)(Math.random() * 100));// , prv);
-
-			if (prv != null)
-				prv.setNext(node);
-
-			prv = node;
-			parent = parent == null ? node : parent;
-		}
-
-		return parent;
-	}
-
-	private static void print(LinkedListNode node) {
-		do {
-			System.out.print(node.getValue() + " ");
-			node = node.getNext();
-		} while (node != null);
-
-		System.out.println();
 	}
 }

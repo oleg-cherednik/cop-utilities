@@ -1,6 +1,6 @@
-package cop.test;
+package cop.test.lists;
 
-public final class DLinkedListNode {
+final class DLinkedListNode {
 	private final int value;
 	private DLinkedListNode next;
 	private DLinkedListNode prv;
