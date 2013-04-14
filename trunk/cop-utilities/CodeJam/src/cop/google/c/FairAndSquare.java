@@ -59,6 +59,51 @@ public class FairAndSquare {
 			}
 		}
 	}
+	
+	private void foo() {
+		for (int i = 0; i <= 9; i++) {
+			FAIR_AND_SQUARE.add(Math.pow(i, 2));
+			
+			
+//			char[] arr = Integer.toString(i).toCharArray();
+//			double val = Double.parseDouble(str);
+
+//			if (isSquare(arr, val))
+//				total++;
+		}
+		
+		for (int digits = 2; digits <= 50; digits++) {
+			int max1 = (int)Math.pow(10, digits / 2) - 1;
+
+			if ((digits & 0x1) != 1) {
+				for (int i = 1; i <= max1; i++) {
+					String str = "" + reverse(i) + i;
+					char[] arr = str.toCharArray();
+					double val = Double.parseDouble(str);
+
+//					if (Double.compare(val, min) < 0 || Double.compare(val, max) > 0)
+//						continue;
+
+					if (isSquare(arr, val))
+						total++;
+				}
+			} else {
+				for (int i = 1; i <= max1; i++) {
+					for (int j = 0; j <= 9; j++) {
+						String str = "" + reverse(i) + j + i;
+						char[] arr = str.toCharArray();
+						double val = Double.parseDouble(str);
+
+//						if (Double.compare(val, min) < 0 || Double.compare(val, max) > 0)
+//							continue;
+
+						if (isSquare(arr, val))
+							total++;
+					}
+				}
+			}
+		}
+	}
 
 	private void calc() {
 		int minDigit = Math.min(minStr.length(), maxStr.length());
@@ -119,6 +164,8 @@ public class FairAndSquare {
 	}
 
 	private void run(String fileName) throws Exception {
+		foo();
+		
 		BufferedReader in = null;
 		BufferedWriter out = null;
 
