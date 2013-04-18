@@ -3,6 +3,7 @@ package cop.cs.shop.store;
 import cop.cs.shop.data.DateRange;
 import cop.cs.shop.data.Price;
 import cop.cs.shop.data.PriceKey;
+import cop.cs.shop.exceptions.ProductNotFoundException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ final class PriceStore implements PriceProvider {
 
 	// ========== PriceProvider ==========
 
-	public void addPrice(Price price) {
+	public void addPrice(Price price) throws ProductNotFoundException {
 		if (price == null || price == Price.NULL)
 			return;
 
