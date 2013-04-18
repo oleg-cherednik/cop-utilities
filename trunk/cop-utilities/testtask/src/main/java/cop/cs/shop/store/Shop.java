@@ -49,7 +49,12 @@ public final class Shop implements ProductProvider, PriceProvider {
 	// ========== PriceProvider ==========
 
 	@Override
-	public void addPrice(Price price) {
+	public void addPrice(Price price) throws ProductNotFoundException {
+		if (price == null || price == Price.NULL)
+			return;
+		if (productProvider.getProduct(price.getProductCode()) == null)
+			throw new ProductNotFoundException(price.getProductCode());
+
 		priceProvider.addPrice(price);
 	}
 }
