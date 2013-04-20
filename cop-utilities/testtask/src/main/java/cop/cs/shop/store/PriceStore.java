@@ -4,6 +4,7 @@ import cop.cs.shop.data.DateRange;
 import cop.cs.shop.data.Price;
 import cop.cs.shop.data.PriceKey;
 import cop.cs.shop.data.Product;
+import cop.cs.shop.exceptions.PriceNotFoundException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
 
 import java.util.Collections;
@@ -94,18 +95,18 @@ public final class PriceStore implements PriceProvider {
 	}
 
 	@Override
-	public Price getPrice(String productCode, long date, int department, int number) {
+	public long getPrice(String productCode, long date, int department, int number) throws PriceNotFoundException {
 		Map<DateRange, Map<PriceKey, Price>> byProductCode = map.get(productCode);
 
 		if (byProductCode == null || byProductCode.isEmpty())
-			return Price.NULL;
+			throw new PriceNotFoundException(productCode, date, department, number);
 
 		for (Map.Entry<DateRange, Map<PriceKey, Price>> entry1 : byProductCode.entrySet())
 			if (entry1.getKey().contains(date))
 				for (Map.Entry<PriceKey, Price> entry2 : entry1.getValue().entrySet())
 					if (entry2.getKey().getDepartment() == department && entry2.getKey().getNumber() == number)
-						return entry2.getValue();
+						return entry2.getValue().getValue();
 
-		return Price.NULL;
+		throw new PriceNotFoundException(productCode, date, department, number);
 	}
 }

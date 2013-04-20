@@ -2,6 +2,7 @@ package cop.cs.shop;
 
 import cop.cs.shop.data.Price;
 import cop.cs.shop.data.Product;
+import cop.cs.shop.exceptions.PriceNotFoundException;
 import cop.cs.shop.exceptions.ProductExistsException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
 import cop.cs.shop.store.PriceProvider;
@@ -68,7 +69,8 @@ public final class Shop implements ProductProvider, PriceProvider {
 	}
 
 	@Override
-	public Price getPrice(String productCode, long date, int department, int number) throws ProductNotFoundException {
+	public long getPrice(String productCode, long date, int department, int number)
+			throws ProductNotFoundException, PriceNotFoundException {
 		productProvider.getProduct(productCode);
 		return priceProvider.getPrice(productCode, date, department, number);
 	}
