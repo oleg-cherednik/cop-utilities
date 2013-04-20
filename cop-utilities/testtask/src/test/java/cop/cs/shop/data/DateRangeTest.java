@@ -1,6 +1,5 @@
-package cop.cs.shop;
+package cop.cs.shop.data;
 
-import cop.cs.shop.data.DateRange;
 import cop.cs.shop.exceptions.IllegalDateRangeException;
 import org.junit.Test;
 
@@ -35,22 +34,22 @@ public class DateRangeTest {
 
 	@Test
 	public void testValidDate() throws IllegalDateRangeException {
-		long dateBegin = System.currentTimeMillis();
-		long dateEnd = dateBegin + 10000;
+		final long dateBegin = System.currentTimeMillis();
+		final long dateEnd = dateBegin + 10000;
 
 		DateRange dateRange1 = DateRange.createDateRange(dateBegin, dateEnd);
 		DateRange dateRange2 = DateRange.createDateRange(dateBegin);
 
-		assertEquals(dateBegin, dateRange1.getDateBegin());
-		assertEquals(dateEnd, dateRange1.getDateEnd());
-		assertEquals(dateBegin, dateRange2.getDateBegin());
-		assertEquals(dateBegin, dateRange2.getDateEnd());
+		assertEquals("dateRange1.getDateBegin()", dateBegin, dateRange1.getDateBegin());
+		assertEquals("dateRange1.getDateEnd()", dateEnd, dateRange1.getDateEnd());
+		assertEquals("dateRange2.getDateBegin()", dateBegin, dateRange2.getDateBegin());
+		assertEquals("dateRange2.getDateEnd()", dateBegin, dateRange2.getDateEnd());
 	}
 
 	@Test
 	public void testSameDateInstance() throws IllegalDateRangeException {
-		long dateBegin = System.currentTimeMillis();
-		long dateEnd = dateBegin + 10000;
+		final long dateBegin = System.currentTimeMillis();
+		final long dateEnd = dateBegin + 10000;
 
 		DateRange dateRange1 = DateRange.createDateRange(dateBegin, dateEnd);
 		DateRange dateRange2 = DateRange.createDateRange(dateBegin, dateEnd);
@@ -58,15 +57,16 @@ public class DateRangeTest {
 		DateRange dateRange4 = DateRange.createDateRange(dateBegin, dateBegin);
 		DateRange dateRange5 = DateRange.createDateRange(0, 0);
 
-		assertTrue(dateRange1 == dateRange2);
-		assertTrue(dateRange3 == dateRange4);
-		assertTrue(DateRange.NULL == dateRange5);
+		assertTrue("dateRange1 == dateRange2", dateRange1 == dateRange2);
+		assertTrue("dateRange3 == dateRange4", dateRange3 == dateRange4);
+		assertTrue("DateRange.NULL == dateRange5", DateRange.NULL == dateRange5);
 	}
 
 	@Test
 	public void testEquals() throws IllegalDateRangeException {
-		long dateBegin = System.currentTimeMillis();
-		long dateEnd = dateBegin + 10000;
+		final DateRange nullObj = null;
+		final long dateBegin = System.currentTimeMillis();
+		final long dateEnd = dateBegin + 10000;
 
 		DateRange dateRange1 = DateRange.createDateRange(dateBegin, dateEnd);
 		DateRange dateRange2 = DateRange.createDateRange(dateBegin, dateEnd);
@@ -77,9 +77,9 @@ public class DateRangeTest {
 		assertTrue("dateRange2.equals(dateRange1)", dateRange2.equals(dateRange1));
 		assertTrue("dateRange2.equals(dateRange3)", dateRange2.equals(dateRange3));
 		assertTrue("dateRange3.equals(dateRange3)", dateRange3.equals(dateRange3));
-		assertFalse("dateRange1.equals(null)", dateRange1.equals(null));
+		assertFalse("dateRange1.equals(null)", dateRange1.equals(nullObj));
 		assertFalse("dateRange1.equals(DateRange.NULL)", dateRange1.equals(DateRange.NULL));
 		assertTrue("DateRange.NULL.equals(DateRange.NULL)", DateRange.NULL.equals(DateRange.NULL));
-		assertTrue("DateRange.NULL.equals(null)", DateRange.NULL.equals(null));
+		assertTrue("DateRange.NULL.equals(null)", DateRange.NULL.equals(nullObj));
 	}
 }

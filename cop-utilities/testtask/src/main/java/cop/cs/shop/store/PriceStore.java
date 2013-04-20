@@ -15,7 +15,7 @@ import java.util.TreeSet;
  * @author Oleg Cherednik
  * @since 18.04.2013
  */
-final class PriceStore implements PriceProvider {
+public final class PriceStore implements PriceProvider {
 	private final Map<String, Map<DateRange, Map<PriceKey, Long>>> map = new HashMap<>();
 
 	private Set<DateRange> getCrossDateRange(String productCode, DateRange dateRange) {

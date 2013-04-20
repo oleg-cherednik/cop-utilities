@@ -1,23 +1,26 @@
 package cop.cs.shop.store;
 
 import cop.cs.shop.data.Product;
+import cop.cs.shop.exceptions.IllegalProductException;
 import cop.cs.shop.exceptions.ProductExistsException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Oleg Cherednik
  * @since 18.04.2013
  */
-final class ProductStore implements ProductProvider {
+public final class ProductStore implements ProductProvider {
 	private final Map<String, Product> map = new HashMap<>();
 
 	// ========== ProductProvider ==========
 
 	public void addProduct(Product product) throws ProductExistsException {
-		if (product == null)
+		if (product == null || product == Product.NULL)
 			return;
 		if (map.containsKey(product.getCode()))
 			throw new ProductExistsException(product.getCode());
@@ -32,5 +35,9 @@ final class ProductStore implements ProductProvider {
 
 	public void removeProduct(String code) {
 		map.remove(code);
+	}
+
+	public Set<String> getProductCodes() {
+		return map.isEmpty() ? Collections.<String>emptySet() : Collections.unmodifiableSet(map.keySet());
 	}
 }

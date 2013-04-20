@@ -97,6 +97,8 @@ public final class DateRange implements Comparable<DateRange> {
 
 	@Override
 	public String toString() {
+		if (this == NULL)
+			return "<empty>";
 		if (dateBegin == dateEnd)
 			return "dateBegin = dateEnd = " + dateBegin;
 		return "dateBegin=" + dateBegin + ", dateEnd=" + dateEnd;
