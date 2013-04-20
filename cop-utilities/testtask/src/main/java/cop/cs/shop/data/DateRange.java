@@ -10,9 +10,9 @@ import java.util.Map;
  * @since 19.04.2013
  */
 public final class DateRange implements Comparable<DateRange> {
-	public static final DateRange NULL = new DateRange(0, 0);
-
 	private static final Map<Integer, DateRange> map = new HashMap<>();
+
+	public static final DateRange NULL = new DateRange(0, 0);
 
 	private final long dateBegin;
 	private final long dateEnd;
@@ -26,8 +26,10 @@ public final class DateRange implements Comparable<DateRange> {
 		DateRange dateRange = map.get(hashCode);
 
 		if (dateRange == null) {
-			if (dateBegin > dateEnd || (dateBegin == 0 && dateEnd == 0))
-				throw new IllegalDateRangeException(dateBegin, dateEnd);
+			assert dateBegin != 0 || dateEnd != 0;
+
+			if (dateBegin > dateEnd || dateBegin <= 0 || dateEnd <= 0)
+				throw new IllegalDateRangeException("dateBegin > dateEnd || dateBegin <= 0 || dateEnd <= 0");
 			dateRange = new DateRange(dateBegin, dateEnd);
 		}
 
@@ -78,6 +80,8 @@ public final class DateRange implements Comparable<DateRange> {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (this == NULL && obj == null)
+			return true;
 		if (!(obj instanceof DateRange))
 			return false;
 
@@ -91,11 +95,16 @@ public final class DateRange implements Comparable<DateRange> {
 		return hashCode(dateBegin, dateEnd);
 	}
 
+	@Override
+	public String toString() {
+		if (dateBegin == dateEnd)
+			return "dateBegin = dateEnd = " + dateBegin;
+		return "dateBegin=" + dateBegin + ", dateEnd=" + dateEnd;
+	}
+
 	// ========== static ==========
 
 	private static int hashCode(long dateBegin, long dateEnd) {
-		int result = (int)(dateBegin ^ (dateBegin >>> 32));
-		result = 31 * result + (int)(dateEnd ^ (dateEnd >>> 32));
-		return result;
+		return ("" + dateBegin + '_' + dateEnd).hashCode();
 	}
 }
