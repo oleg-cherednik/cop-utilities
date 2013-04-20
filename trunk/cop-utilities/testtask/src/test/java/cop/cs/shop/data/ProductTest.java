@@ -2,6 +2,7 @@ package cop.cs.shop.data;
 
 import cop.cs.shop.exceptions.IllegalDateRangeException;
 import cop.cs.shop.exceptions.IllegalProductException;
+import cop.cs.shop.utils.ProductCodeGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,15 +26,15 @@ public class ProductTest {
 
 	@Test
 	public void testValidProduct() throws IllegalProductException {
-		final String productCode = "test product code";
+		final String productCode = ProductCodeGenerator.get();
 		final String description = "test description";
 		Product product1 = Product.createProduct(productCode, description);
 		Product product2 = Product.createProduct(description);
 
-		assertEquals("product1.getCode()", productCode, product1.getCode());
-		assertEquals("product1.getDescription()", description, product1.getDescription());
-		assertTrue("Product.isCodeValid(product2.getCode())", Product.isCodeValid(product2.getCode()));
-		assertEquals("product2.getDescription()", description, product2.getDescription());
+		assertEquals(productCode, product1.getCode());
+		assertEquals(description, product1.getDescription());
+		assertTrue(Product.isCodeValid(product2.getCode()));
+		assertEquals(description, product2.getDescription());
 	}
 
 	@Test
@@ -54,14 +55,14 @@ public class ProductTest {
 		Product product2 = Product.createProduct(product1);
 		Product product3 = Product.createProduct(product1);
 
-		assertTrue("product1.equals(product1)", product1.equals(product1));
-		assertTrue("product1.equals(product2)", product1.equals(product2));
-		assertTrue("product2.equals(product1)", product2.equals(product1));
-		assertTrue("product2.equals(product3)", product2.equals(product3));
-		assertTrue("product3.equals(product3)", product3.equals(product3));
-		assertFalse("product1.equals(null)", product1.equals(nullObj));
-		assertFalse("product1.equals(Product.NULL)", product1.equals(Product.NULL));
-		assertTrue("Product.NULL.equals(Product.NULL)", Product.NULL.equals(Product.NULL));
-		assertTrue("Product.NULL.equals(null)", Product.NULL.equals(nullObj));
+		assertTrue(product1.equals(product1));
+		assertTrue(product1.equals(product2));
+		assertTrue(product2.equals(product1));
+		assertTrue(product2.equals(product3));
+		assertTrue(product3.equals(product3));
+		assertFalse(product1.equals(nullObj));
+		assertFalse(product1.equals(Product.NULL));
+		assertTrue(Product.NULL.equals(Product.NULL));
+		assertTrue(Product.NULL.equals(nullObj));
 	}
 }

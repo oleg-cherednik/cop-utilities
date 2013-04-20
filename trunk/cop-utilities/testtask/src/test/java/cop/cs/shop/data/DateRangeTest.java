@@ -145,5 +145,4 @@ public class DateRangeTest {
 		assertFalse(dateRange.isCrossing(DateRange.createDateRange(date - 3, date - 1)));
 		assertFalse(dateRange.isCrossing(DateRange.createDateRange(date + 1, date + 3)));
 	}
-
 }
