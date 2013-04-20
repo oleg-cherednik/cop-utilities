@@ -50,13 +50,15 @@ public final class Price {
 	public static class Builder {
 		private long id;
 		private String productCode;
-		private PriceKey key;
-		private DateRange dateRange;
+		private PriceKey key = PriceKey.NULL;
+		private DateRange dateRange = DateRange.NULL;
 		private long value;
 
 		private Builder() {}
 
 		public Price createPrice() {
+			if (key == PriceKey.NULL || dateRange == DateRange.NULL || id <= 0)
+				return Price.NULL;
 			return new Price(this);
 		}
 
@@ -71,12 +73,12 @@ public final class Price {
 		}
 
 		public Builder setKey(PriceKey key) {
-			this.key = key;
+			this.key = key != null ? key : PriceKey.NULL;
 			return this;
 		}
 
 		public Builder setDateRange(DateRange dateRange) {
-			this.dateRange = dateRange;
+			this.dateRange = dateRange != null ? dateRange : DateRange.NULL;
 			return this;
 		}
 

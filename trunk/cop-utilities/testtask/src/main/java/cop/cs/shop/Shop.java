@@ -62,9 +62,20 @@ public final class Shop implements ProductProvider, PriceProvider {
 	public void addPrice(Price price) throws ProductNotFoundException {
 		if (price == null || price == Price.NULL)
 			return;
-		if (productProvider.getProduct(price.getProductCode()) == null)
-			throw new ProductNotFoundException(price.getProductCode());
 
+		productProvider.getProduct(price.getProductCode());
 		priceProvider.addPrice(price);
+	}
+
+	@Override
+	public Price getPrice(String productCode, long date, int department, int number) throws ProductNotFoundException {
+		productProvider.getProduct(productCode);
+		return priceProvider.getPrice(productCode, date, department, number);
+	}
+
+	@Override
+	public List<Price> getPriceHistory(String productCode, int department) throws ProductNotFoundException {
+		productProvider.getProduct(productCode);
+		return priceProvider.getPriceHistory(productCode, department);
 	}
 }

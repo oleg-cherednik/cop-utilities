@@ -2,16 +2,11 @@ package cop.cs.shop.data;
 
 import cop.cs.shop.exceptions.IllegalDateRangeException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Oleg Cherednik
  * @since 19.04.2013
  */
 public final class DateRange implements Comparable<DateRange> {
-	private static final Map<Integer, DateRange> map = new HashMap<>();
-
 	public static final DateRange NULL = new DateRange(0, 0);
 
 	private final long dateBegin;
@@ -22,24 +17,17 @@ public final class DateRange implements Comparable<DateRange> {
 	}
 
 	public static DateRange createDateRange(long dateBegin, long dateEnd) throws IllegalDateRangeException {
-		int hashCode = hashCode(dateBegin, dateEnd);
-		DateRange dateRange = map.get(hashCode);
+		if (dateBegin == NULL.getDateBegin() && dateEnd == NULL.dateEnd)
+			return NULL;
+		if (dateBegin > dateEnd || dateBegin <= 0 || dateEnd <= 0)
+			throw new IllegalDateRangeException("dateBegin > dateEnd || dateBegin <= 0 || dateEnd <= 0");
 
-		if (dateRange == null) {
-			assert dateBegin != 0 || dateEnd != 0;
-
-			if (dateBegin > dateEnd || dateBegin <= 0 || dateEnd <= 0)
-				throw new IllegalDateRangeException("dateBegin > dateEnd || dateBegin <= 0 || dateEnd <= 0");
-			dateRange = new DateRange(dateBegin, dateEnd);
-		}
-
-		return dateRange;
+		return new DateRange(dateBegin, dateEnd);
 	}
 
 	private DateRange(long dateBegin, long dateEnd) {
 		this.dateBegin = dateBegin;
 		this.dateEnd = dateEnd;
-		map.put(hashCode(), this);
 	}
 
 	public long getDateBegin() {
@@ -56,6 +44,10 @@ public final class DateRange implements Comparable<DateRange> {
 		if (dateBegin <= dateRange.dateBegin)
 			return dateEnd >= dateRange.dateBegin;
 		return dateBegin <= dateRange.dateEnd;
+	}
+
+	public boolean contains(long date) {
+		return dateBegin <= date && date <= dateEnd;
 	}
 
 	// ========== Comparable ==========
@@ -92,7 +84,7 @@ public final class DateRange implements Comparable<DateRange> {
 
 	@Override
 	public int hashCode() {
-		return hashCode(dateBegin, dateEnd);
+		return ("" + dateBegin + '_' + dateEnd).hashCode();
 	}
 
 	@Override
@@ -102,11 +94,5 @@ public final class DateRange implements Comparable<DateRange> {
 		if (dateBegin == dateEnd)
 			return "dateBegin = dateEnd = " + dateBegin;
 		return "dateBegin=" + dateBegin + ", dateEnd=" + dateEnd;
-	}
-
-	// ========== static ==========
-
-	private static int hashCode(long dateBegin, long dateEnd) {
-		return ("" + dateBegin + '_' + dateEnd).hashCode();
 	}
 }
