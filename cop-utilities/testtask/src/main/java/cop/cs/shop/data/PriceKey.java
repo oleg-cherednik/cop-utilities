@@ -13,12 +13,13 @@ public final class PriceKey {
 	private final int department;
 	private final int number;
 
-//	public static PriceKey createPriceKey(int department, int number) {
-//		if(department == NULL.g)
-//
-//	}
+	public static PriceKey createPriceKey(int department, int number) {
+		if (department <= 0 || number < 0)
+			return NULL;
+		return new PriceKey(department, number);
+	}
 
-	public PriceKey(int department, int number) {
+	private PriceKey(int department, int number) {
 		this.department = department;
 		this.number = number;
 	}
@@ -31,5 +32,31 @@ public final class PriceKey {
 		return number;
 	}
 
+	// ========== Object ==========
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (this == NULL && obj == null)
+			return true;
+		if (!(obj instanceof PriceKey))
+			return false;
+
+		PriceKey priceKey = (PriceKey)obj;
+
+		return department == priceKey.department && number == priceKey.number;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = department;
+		result = 31 * result + number;
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return this == NULL ? "<empty>" : "department='" + department + "', number='" + number + '\'';
+	}
 }

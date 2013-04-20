@@ -15,7 +15,7 @@ public final class ProductCodeGenerator {
 	private ProductCodeGenerator() {}
 
 	private String get(int length) {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 
 		while (buf.length() < length) {
 			buf.append(alphanumeric[Math.abs((rand.nextInt() % alphanumeric.length))]);
@@ -25,13 +25,15 @@ public final class ProductCodeGenerator {
 	}
 
 	private char[] alphanumeric() {
-		StringBuffer buf = new StringBuffer(128);
+		StringBuilder buf = new StringBuilder(128);
+
 		for (int i = 48; i <= 57; i++)
 			buf.append((char)i);
 		for (int i = 65; i <= 90; i++)
 			buf.append((char)i);
 		for (int i = 97; i <= 122; i++)
 			buf.append((char)i);
+
 		return buf.toString().toCharArray();
 	}
 

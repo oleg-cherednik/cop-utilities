@@ -46,7 +46,16 @@ public final class Product {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this == NULL && obj == null || obj instanceof Product && code.equals(((Product)obj).code);
+		if (this == obj)
+			return true;
+		if (this == NULL && obj == null)
+			return true;
+		if (!(obj instanceof Product))
+			return false;
+
+		Product product = (Product)obj;
+
+		return code.equals(product.code);
 	}
 
 	@Override
@@ -56,13 +65,13 @@ public final class Product {
 
 	@Override
 	public String toString() {
-		return "code='" + code + "', description='" + description + '\'';
+		return this == NULL ? "<empty>" : "code='" + code + "', description='" + description + '\'';
 	}
 
 	// ========== static ==========
 
 	public static boolean isCodeValid(String code) {
-		return code != null && !code.trim().isEmpty();
+		return !isEmpty(code);
 	}
 
 	private static boolean isEmpty(String str) {
