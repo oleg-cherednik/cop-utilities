@@ -1,12 +1,17 @@
-package cop.cs.shop.store;
+package cop.cs.shop;
 
 import cop.cs.shop.data.Price;
 import cop.cs.shop.data.Product;
 import cop.cs.shop.exceptions.ProductExistsException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
+import cop.cs.shop.store.PriceProvider;
+import cop.cs.shop.store.PriceStore;
+import cop.cs.shop.store.ProductProvider;
+import cop.cs.shop.store.ProductStore;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Oleg Cherednik
@@ -44,6 +49,11 @@ public final class Shop implements ProductProvider, PriceProvider {
 	@Override
 	public void removeProduct(String productCode) {
 		productProvider.removeProduct(productCode);
+	}
+
+	@Override
+	public Set<String> getProductCodes() {
+		return productProvider.getProductCodes();
 	}
 
 	// ========== PriceProvider ==========
