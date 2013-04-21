@@ -1,5 +1,6 @@
 package cop.cs.shop;
 
+import cop.cs.shop.data.DateRange;
 import cop.cs.shop.data.Price;
 import cop.cs.shop.data.Product;
 import cop.cs.shop.exceptions.PriceNotFoundException;
@@ -12,6 +13,7 @@ import cop.cs.shop.store.ProductStore;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,13 +28,6 @@ public final class Shop implements ProductProvider, PriceProvider {
 
 	public Shop(String name) {
 		this.name = name;
-	}
-
-	public List<Price> getProductPriceHistory(String productCode) {
-		if (productCode == null || productCode.isEmpty())
-			return Collections.emptyList();
-
-		return null;
 	}
 
 	// ========== ProductProvider ==========
@@ -76,8 +71,12 @@ public final class Shop implements ProductProvider, PriceProvider {
 	}
 
 	@Override
-	public List<Price> getPriceHistory(String productCode, int department) throws ProductNotFoundException {
+	public Map<DateRange, Long> getPriceHistory(String productCode, int department, int number)
+			throws ProductNotFoundException {
+		if (productCode == null || productCode.isEmpty())
+			return Collections.emptyMap();
+
 		productProvider.getProduct(productCode);
-		return priceProvider.getPriceHistory(productCode, department);
+		return priceProvider.getPriceHistory(productCode, department, number);
 	}
 }

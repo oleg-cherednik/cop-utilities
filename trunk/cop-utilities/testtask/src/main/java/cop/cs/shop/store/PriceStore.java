@@ -6,7 +6,6 @@ import cop.cs.shop.data.PriceKey;
 import cop.cs.shop.data.Product;
 import cop.cs.shop.exceptions.IllegalDateRangeException;
 import cop.cs.shop.exceptions.PriceNotFoundException;
-import cop.cs.shop.exceptions.ProductNotFoundException;
 import cop.cs.shop.exceptions.ShopException;
 
 import java.util.ArrayList;
@@ -208,32 +207,26 @@ public final class PriceStore implements PriceProvider {
 		byPriceKey.putAll(res);
 	}
 
-	public List<Price> getPriceHistory(String productCode, int department) {
+	public Map<DateRange, Long> getPriceHistory(String productCode, int department, int number) {
 		if (!Product.isCodeValid(productCode))
-			return Collections.emptyList();
+			return Collections.emptyMap();
 
-		Map<DateRange, Price> res = new TreeMap<>();
-		//		Map<DateRange, Map<PriceKey, Price>> byProductCode = map.get(productCode);
-		//
-		//		if(byProductCode == null || byProductCode.isEmpty())
-		//			return
+		Map<PriceKey, Map<DateRange, Price>> byProductCode = map.get(productCode);
 
-		//		for(Map.Entry<DateRange, Map<PriceKey, Long>> entry : map.get(productCode).entrySet()) {
-		//			DateRange dateRange = entry.getKey();
-		//
-		//			for(PriceKey key : entry.getValue().keySet()) {
-		//				if(key.getDepartment() != department)
-		//					continue;
-		//
-		//				Price.Builder builder = Price.createBuilder();
-		//				builder.setId()
-		//					res.put(entry.getKey(), new Price())
-		//
-		//
-		//			}
-		//		}
+		if (byProductCode == null || byProductCode.isEmpty())
+			return Collections.emptyMap();
 
-		return null;
+		Map<DateRange, Price> byPriceKey = byProductCode.get(PriceKey.createPriceKey(department, number));
+
+		if (byPriceKey == null || byPriceKey.isEmpty())
+			return Collections.emptyMap();
+
+		Map<DateRange, Long> res = new TreeMap<>();
+
+		for (Map.Entry<DateRange, Price> entry : byPriceKey.entrySet())
+			res.put(entry.getKey(), entry.getValue().getValue());
+
+		return Collections.unmodifiableMap(res);
 	}
 
 	@Override
