@@ -29,6 +29,10 @@ public final class PriceKey {
 		return number;
 	}
 
+	public boolean equals(int department, int number) {
+		return this.department == department && this.number == number;
+	}
+
 	// ========== Object ==========
 
 	@Override
