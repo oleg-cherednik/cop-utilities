@@ -186,7 +186,10 @@ public final class PriceStore implements PriceProvider {
 
 	private static Set<Long> getSignificantPoints(DateRange priceDateRange, List<DateRange> dateRanges) {
 		assert priceDateRange != null && priceDateRange != DateRange.NULL;
-		assert dateRanges != null && !dateRanges.isEmpty();
+		assert dateRanges != null;
+
+		if (dateRanges.isEmpty())
+			return Collections.emptySet();
 
 		Set<Long> dates = new TreeSet<>();
 
@@ -219,8 +222,8 @@ public final class PriceStore implements PriceProvider {
 			if (range.contains(priceDateRange.getDateBegin()) || range.contains(priceDateRange.getDateEnd()))
 				res.add(range);
 
-		assert res.size() == 1 || res.size() == 2;
+		assert res.size() <= 2;
 
-		return Collections.unmodifiableList(res);
+		return res.isEmpty() ? Collections.<DateRange>emptyList() : Collections.unmodifiableList(res);
 	}
 }
