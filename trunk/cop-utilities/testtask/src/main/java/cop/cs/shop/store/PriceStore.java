@@ -7,6 +7,7 @@ import cop.cs.shop.data.Product;
 import cop.cs.shop.exceptions.IllegalDateRangeException;
 import cop.cs.shop.exceptions.PriceNotFoundException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
+import cop.cs.shop.exceptions.ShopException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,6 +81,68 @@ public final class PriceStore implements PriceProvider {
 		throw new PriceNotFoundException(productCode, date, department, number);
 	}
 
+	private void removeDateRanges(Map<DateRange, Map<PriceKey, Price>> byProductCode, List<DateRange> crossDateRange) {
+		for (DateRange dateRange : crossDateRange)
+			byProductCode.remove(dateRange);
+	}
+
+	private void addDateRanges(Map<DateRange, Map<PriceKey, Price>> byProductCode, Map<DateRange, Price> dateRanges) {
+		for (Map.Entry<DateRange, Price> entry : dateRanges.entrySet()) {
+			Map<PriceKey, Price> byDateRange = byProductCode.get(entry.getKey());
+
+			if (byDateRange == null)
+				byProductCode.put(entry.getKey(), byDateRange = new HashMap<>());
+
+			byDateRange.put(entry.getValue().getKey(), entry.getValue());
+		}
+	}
+
+	private Map<DateRange, Price> getNewDateRanges(List<DateRange> crossDateRange, Price price) {
+		Map<DateRange, Price> res = new HashMap<>();
+
+		List<DateRange> dateRanges = getCrossLimitOnly(price.getDateRange(), crossDateRange);
+		Set<Long> dates = getSignificantPoints(price.getDateRange(), dateRanges);
+
+		for (long date : dates) {
+			if (date < price.getDateRange().getDateBegin())
+				addDateRangeBefore(res, price, date);
+			else if (date > price.getDateRange().getDateEnd())
+				addDateRangeAfter(res, price, date);
+			else
+				assert false : "dates containes illegal values";
+		}
+
+		if (res.isEmpty())
+			return Collections.emptyMap();
+		return Collections.unmodifiableMap(res);
+	}
+
+	private void addDateRangeBefore(Map<DateRange, Price> map, Price price, long date) {
+		String productCode = price.getProductCode();
+		int department = price.getKey().getDepartment();
+		int number = price.getKey().getNumber();
+
+		try {
+			Price tmp = getPriceInt(productCode, date, department, number);
+			map.put(DateRange.createDateRange(date, price.getDateRange().getDateBegin() - 1), tmp);
+		} catch (ShopException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addDateRangeAfter(Map<DateRange, Price> map, Price price, long date) {
+		String productCode = price.getProductCode();
+		int department = price.getKey().getDepartment();
+		int number = price.getKey().getNumber();
+
+		try {
+			Price tmp = getPriceInt(productCode, date, department, number);
+			map.put(DateRange.createDateRange(price.getDateRange().getDateEnd() + 1, date), tmp);
+		} catch (ShopException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// ========== PriceProvider ==========
 
 	public void addPrice(Price price) {
@@ -87,63 +150,14 @@ public final class PriceStore implements PriceProvider {
 			return;
 
 		final DateRange priceDateRange = price.getDateRange();
-		List<DateRange> crossDateRange = getCrossDateRange(price, priceDateRange);
+		final List<DateRange> crossDateRange = getCrossDateRange(price, priceDateRange);
 
 		if (!crossDateRange.isEmpty()) {
-			Map<DateRange, Price> res = new HashMap<>();
-
-			//			res.put(price.getDateRange(), price);
-
-			List<DateRange> dateRanges = getCrossLimitOnly(priceDateRange, crossDateRange);
-			Set<Long> dates = getSignificantPoints(priceDateRange, dateRanges);
-
-			for (long date : dates) {
-				if (date < priceDateRange.getDateBegin()) {
-					String productCode = price.getProductCode();
-					int department = price.getKey().getDepartment();
-					int number = price.getKey().getNumber();
-
-					try {
-						Price tmp = getPriceInt(productCode, date, department, number);
-						res.put(DateRange.createDateRange(date, priceDateRange.getDateBegin() - 1), tmp);
-					} catch (PriceNotFoundException e) {
-						e.printStackTrace();
-					} catch (IllegalDateRangeException e) {
-						e.printStackTrace();
-					}
-				} else if (date > priceDateRange.getDateEnd()) {
-					String productCode = price.getProductCode();
-					int department = price.getKey().getDepartment();
-					int number = price.getKey().getNumber();
-
-					try {
-						Price tmp = getPriceInt(productCode, date, department, number);
-						res.put(DateRange.createDateRange(priceDateRange.getDateEnd() + 1, date), tmp);
-					} catch (PriceNotFoundException e) {
-						e.printStackTrace();
-					} catch (IllegalDateRangeException e) {
-						e.printStackTrace();
-					}
-				} else {
-					int a = 0;
-					a++;
-
-				}
-			}
-
+			Map<DateRange, Price> newDateRanges = getNewDateRanges(crossDateRange, price);
 			Map<DateRange, Map<PriceKey, Price>> byProductCode = map.get(price.getProductCode());
 
-			for (DateRange dateRange : crossDateRange)
-				byProductCode.remove(dateRange);
-
-			for (Map.Entry<DateRange, Price> entry : res.entrySet()) {
-				Map<PriceKey, Price> byDateRange = byProductCode.get(entry.getKey());
-
-				if (byDateRange == null)
-					byProductCode.put(entry.getKey(), byDateRange = new HashMap<>());
-
-				byDateRange.put(price.getKey(), entry.getValue());
-			}
+			removeDateRanges(byProductCode, crossDateRange);
+			addDateRanges(byProductCode, newDateRanges);
 		}
 
 		addPriceInt(price);

@@ -68,23 +68,20 @@ public class PriceStoreTest {
 
 	@Test
 	public void testInnerPrice1() throws IllegalDateRangeException, PriceNotFoundException {
-		final long dateBegin = System.currentTimeMillis();
-		final long dateEnd = dateBegin + 10000;
-		final long value1 = 111;
-		final long value2 = 222;
-		final Price price1 = createPrice(dateBegin, dateEnd, 1, value1);
-		final Price price2 = createPrice(dateBegin + 2000, dateEnd - 2000, 1, value2);
+		final long date = 100;
+		final Price price1 = createPrice(date, date + 100, 1, 111);
+		final Price price2 = createPrice(date + 20, date + 80, 1, 222);
 
 		store.addPrice(price1);
 		store.addPrice(price2);
 
-		assertEquals(value1, store.getPrice(PRODUCT_A, dateBegin, DEPARTMENT1, 1));
-		assertEquals(value1, store.getPrice(PRODUCT_A, dateBegin + 1000, DEPARTMENT1, 1));
-		assertEquals(value2, store.getPrice(PRODUCT_A, dateBegin + 2000, DEPARTMENT1, 1));
-		assertEquals(value2, store.getPrice(PRODUCT_A, dateBegin + 3000, DEPARTMENT1, 1));
-		assertEquals(value2, store.getPrice(PRODUCT_A, dateEnd - 2000, DEPARTMENT1, 1));
-		assertEquals(value2, store.getPrice(PRODUCT_A, dateBegin + 5000, DEPARTMENT1, 1));
-		assertEquals(value2, store.getPrice(PRODUCT_A, dateBegin + 5000, DEPARTMENT1, 1));
+		assertEquals(111, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
+		assertEquals(111, store.getPrice(PRODUCT_A, date + 10, DEPARTMENT1, 1));
+		assertEquals(222, store.getPrice(PRODUCT_A, date + 20, DEPARTMENT1, 1));
+		assertEquals(222, store.getPrice(PRODUCT_A, date + 30, DEPARTMENT1, 1));
+		assertEquals(222, store.getPrice(PRODUCT_A, date + 80, DEPARTMENT1, 1));
+		assertEquals(222, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 1));
+		assertEquals(222, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 1));
 	}
 
 	@Test

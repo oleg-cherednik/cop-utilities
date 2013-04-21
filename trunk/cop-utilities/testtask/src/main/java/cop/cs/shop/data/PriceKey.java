@@ -1,8 +1,5 @@
 package cop.cs.shop.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Oleg Cherednik
  * @since 18.04.2013
