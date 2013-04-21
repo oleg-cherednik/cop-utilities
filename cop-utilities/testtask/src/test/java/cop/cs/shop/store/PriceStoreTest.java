@@ -30,50 +30,33 @@ public class PriceStoreTest {
 
 	@Test
 	public void testAddPriceNumber() throws IllegalDateRangeException, PriceNotFoundException {
-		final long dateBegin = 100;
-		final long dateEnd = dateBegin + 100;
-		final long value1 = 111;
-		final long value2 = 222;
-		final long value3 = 333;
-		final Price price1 = createPrice(dateBegin, dateEnd, 1, value1);
-		final Price price2 = createPrice(dateBegin, dateEnd, 2, value2);
-		final Price price3 = createPrice(dateBegin, dateEnd, 3, value3);
+		final long date = 100;
 
-		store.addPrice(price1);
-		store.addPrice(price2);
-		store.addPrice(price3);
+		store.addPrice(createPrice(date, date + 100, 1, 111));
+		store.addPrice(createPrice(date, date + 100, 2, 222));
+		store.addPrice(createPrice(date, date + 100, 3, 333));
 
-		assertEquals(value1, store.getPrice(PRODUCT_A, dateBegin + 50, DEPARTMENT1, 1));
-		assertEquals(value2, store.getPrice(PRODUCT_A, dateBegin + 50, DEPARTMENT1, 2));
-		assertEquals(value3, store.getPrice(PRODUCT_A, dateBegin + 50, DEPARTMENT1, 3));
+		assertEquals(111, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 1));
+		assertEquals(222, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 2));
+		assertEquals(333, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 3));
 	}
 
 	@Test(expected = PriceNotFoundException.class)
 	public void testUnknownDepartmentPrice() throws IllegalDateRangeException, PriceNotFoundException {
-		final long dateBegin = 100;
-		final long dateEnd = dateBegin + 100;
-		final long value1 = 111;
-		final long value2 = 222;
-		final long value3 = 333;
-		final Price price1 = createPrice(dateBegin, dateEnd, 1, value1);
-		final Price price2 = createPrice(dateBegin, dateEnd, 2, value2);
-		final Price price3 = createPrice(dateBegin, dateEnd, 3, value3);
+		final long date = 100;
 
-		store.addPrice(price1);
-		store.addPrice(price2);
-		store.addPrice(price3);
-
-		store.getPrice(PRODUCT_A, dateBegin + 50, DEPARTMENT2, 2);
+		store.addPrice(createPrice(date, date + 100, 1, 111));
+		store.addPrice(createPrice(date, date + 100, 2, 222));
+		store.addPrice(createPrice(date, date + 100, 3, 333));
+		store.getPrice(PRODUCT_A, date + 50, DEPARTMENT2, 2);
 	}
 
 	@Test
 	public void testInnerPrice1() throws IllegalDateRangeException, PriceNotFoundException {
 		final long date = 100;
-		final Price price1 = createPrice(date, date + 100, 1, 111);
-		final Price price2 = createPrice(date + 20, date + 80, 1, 222);
 
-		store.addPrice(price1);
-		store.addPrice(price2);
+		store.addPrice(createPrice(date, date + 100, 1, 111));
+		store.addPrice(createPrice(date + 20, date + 80, 1, 222));
 
 		assertEquals(111, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(111, store.getPrice(PRODUCT_A, date + 10, DEPARTMENT1, 1));
@@ -87,23 +70,20 @@ public class PriceStoreTest {
 	@Test
 	public void testInnerPrice2() throws IllegalDateRangeException, PriceNotFoundException {
 		final long date = 100;
-		final Price price1 = createPrice(date, date + 70, 1, 100);
-		final Price price2 = createPrice(date + 70, date + 100, 1, 120);
-		final Price price3 = createPrice(date + 50, date + 80, 1, 110);
 
-		store.addPrice(price1);
+		store.addPrice(createPrice(date, date + 70, 1, 100));
 		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 70, DEPARTMENT1, 1));
 
-		store.addPrice(price2);
+		store.addPrice(createPrice(date + 70, date + 100, 1, 120));
 		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 69, DEPARTMENT1, 1));
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 70, DEPARTMENT1, 1));
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 71, DEPARTMENT1, 1));
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 100, DEPARTMENT1, 1));
 
-		store.addPrice(price3);
+		store.addPrice(createPrice(date + 50, date + 80, 1, 110));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 20, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 49, DEPARTMENT1, 1));
 		assertEquals(110, store.getPrice(PRODUCT_A, date + 50, DEPARTMENT1, 1));
@@ -119,15 +99,10 @@ public class PriceStoreTest {
 	@Test
 	public void testInnerPrice3() throws IllegalDateRangeException, PriceNotFoundException {
 		final long date = 100;
-		final Price price1 = createPrice(date, date + 40, 1, 100);
-		final Price price2 = createPrice(date + 40, date + 80, 1, 110);
-		final Price price3 = createPrice(date + 80, date + 100, 1, 120);
-		final Price price4 = createPrice(date + 20, date + 60, 1, 100);
-		final Price price5 = createPrice(date + 60, date + 90, 1, 130);
 
-		store.addPrice(price1);
-		store.addPrice(price2);
-		store.addPrice(price3);
+		store.addPrice(createPrice(date, date + 40, 1, 100));
+		store.addPrice(createPrice(date + 40, date + 80, 1, 110));
+		store.addPrice(createPrice(date + 80, date + 100, 1, 120));
 		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 39, DEPARTMENT1, 1));
 		assertEquals(110, store.getPrice(PRODUCT_A, date + 40, DEPARTMENT1, 1));
@@ -137,10 +112,10 @@ public class PriceStoreTest {
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 81, DEPARTMENT1, 1));
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 100, DEPARTMENT1, 1));
 
-		store.addPrice(price4);
+		store.addPrice(createPrice(date + 20, date + 60, 1, 100));
 		assertEquals(3, store.getPriceHistory(PRODUCT_A, DEPARTMENT1, 1).size());
 
-		store.addPrice(price5);
+		store.addPrice(createPrice(date + 60, date + 90, 1, 130));
 		assertEquals(3, store.getPriceHistory(PRODUCT_A, DEPARTMENT1, 1).size());
 		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 59, DEPARTMENT1, 1));
@@ -153,15 +128,38 @@ public class PriceStoreTest {
 	}
 
 	@Test
+	public void testInnerPrice4() throws IllegalDateRangeException, PriceNotFoundException {
+		final long date = 100;
+
+		store.addPrice(createPrice(date, date + 20, 1, 100));
+		store.addPrice(createPrice(date + 40, date + 60, 1, 110));
+		store.addPrice(createPrice(date + 80, date + 100, 1, 120));
+		store.addPrice(createPrice(date + 10, date + 39, 1, 130));
+		store.addPrice(createPrice(date + 30, date + 59, 1, 140));
+		store.addPrice(createPrice(date + 61, date + 90, 1, 150));
+
+		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
+		assertEquals(100, store.getPrice(PRODUCT_A, date + 9, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 10, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 11, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 29, DEPARTMENT1, 1));
+		assertEquals(140, store.getPrice(PRODUCT_A, date + 30, DEPARTMENT1, 1));
+		assertEquals(140, store.getPrice(PRODUCT_A, date + 31, DEPARTMENT1, 1));
+		assertEquals(140, store.getPrice(PRODUCT_A, date + 59, DEPARTMENT1, 1));
+		assertEquals(110, store.getPrice(PRODUCT_A, date + 60, DEPARTMENT1, 1));
+		assertEquals(150, store.getPrice(PRODUCT_A, date + 61, DEPARTMENT1, 1));
+		assertEquals(150, store.getPrice(PRODUCT_A, date + 90, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 91, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 100, DEPARTMENT1, 1));
+	}
+
+	@Test
 	public void testBigNewPrice() throws IllegalDateRangeException, PriceNotFoundException {
 		final long date = 100;
-		final Price price1 = createPrice(date + 20, date + 40, 1, 100);
-		final Price price2 = createPrice(date + 60, date + 80, 1, 110);
-		final Price price3 = createPrice(date, date + 100, 1, 120);
 
-		store.addPrice(price1);
-		store.addPrice(price2);
-		store.addPrice(price3);
+		store.addPrice(createPrice(date + 20, date + 40, 1, 100));
+		store.addPrice(createPrice(date + 60, date + 80, 1, 110));
+		store.addPrice(createPrice(date, date + 100, 1, 120));
 
 		assertEquals(120, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 19, DEPARTMENT1, 1));
