@@ -3,18 +3,12 @@ package cop.cs.shop;
 import cop.cs.shop.data.DateRange;
 import cop.cs.shop.data.Price;
 import cop.cs.shop.data.PriceKey;
-import cop.cs.shop.data.Product;
 import cop.cs.shop.exceptions.IllegalDateRangeException;
 import cop.cs.shop.exceptions.PriceNotFoundException;
-import cop.cs.shop.exceptions.ProductExistsException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
-import cop.cs.shop.store.PriceStore;
 import cop.cs.shop.utils.ProductCodeGenerator;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * @author Oleg Cherednik
