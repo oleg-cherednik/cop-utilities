@@ -45,6 +45,21 @@ public final class Price {
 		return value;
 	}
 
+	// ========== Object ==========
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+
+		buf.append("id=").append(id);
+		buf.append(", productCode='").append(productCode).append('\'');
+		buf.append(", key[").append(key).append(']');
+		buf.append(", dateRange[").append(dateRange).append(']');
+		buf.append(", value=").append(value);
+
+		return buf.toString();
+	}
+
 	// ========== builder ==========
 
 	public static class Builder {

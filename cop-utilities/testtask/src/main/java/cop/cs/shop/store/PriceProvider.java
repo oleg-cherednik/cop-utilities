@@ -1,6 +1,7 @@
 package cop.cs.shop.store;
 
 import cop.cs.shop.data.Price;
+import cop.cs.shop.exceptions.IllegalDateRangeException;
 import cop.cs.shop.exceptions.PriceNotFoundException;
 import cop.cs.shop.exceptions.ProductNotFoundException;
 

@@ -57,6 +57,6 @@ public final class PriceKey {
 
 	@Override
 	public String toString() {
-		return this == NULL ? "<empty>" : "department='" + department + "', number='" + number + '\'';
+		return this == NULL ? "<empty>" : "department=" + department + ", number=" + number;
 	}
 }
