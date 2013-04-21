@@ -117,6 +117,39 @@ public class PriceStoreTest {
 	}
 
 	@Test
+	public void testInnerPrice3() throws IllegalDateRangeException, PriceNotFoundException {
+		final long date = 100;
+		final Price price1 = createPrice(date, date + 40, 1, 100);
+		final Price price2 = createPrice(date + 40, date + 80, 1, 110);
+		final Price price3 = createPrice(date + 80, date + 100, 1, 120);
+		final Price price4 = createPrice(date + 20, date + 60, 1, 100);
+		final Price price5 = createPrice(date + 60, date + 90, 1, 130);
+
+		store.addPrice(price1);
+		store.addPrice(price2);
+		store.addPrice(price3);
+		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
+		assertEquals(100, store.getPrice(PRODUCT_A, date + 39, DEPARTMENT1, 1));
+		assertEquals(110, store.getPrice(PRODUCT_A, date + 40, DEPARTMENT1, 1));
+		assertEquals(110, store.getPrice(PRODUCT_A, date + 41, DEPARTMENT1, 1));
+		assertEquals(110, store.getPrice(PRODUCT_A, date + 79, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 80, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 81, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 100, DEPARTMENT1, 1));
+
+		store.addPrice(price4);
+		store.addPrice(price5);
+		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
+		assertEquals(100, store.getPrice(PRODUCT_A, date + 59, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 60, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 61, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 89, DEPARTMENT1, 1));
+		assertEquals(130, store.getPrice(PRODUCT_A, date + 90, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 91, DEPARTMENT1, 1));
+		assertEquals(120, store.getPrice(PRODUCT_A, date + 100, DEPARTMENT1, 1));
+	}
+
+	@Test
 	public void testBigNewPrice() throws IllegalDateRangeException, PriceNotFoundException {
 		final long date = 100;
 		final Price price1 = createPrice(date + 20, date + 40, 1, 100);
