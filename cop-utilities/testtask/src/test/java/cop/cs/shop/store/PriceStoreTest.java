@@ -138,7 +138,10 @@ public class PriceStoreTest {
 		assertEquals(120, store.getPrice(PRODUCT_A, date + 100, DEPARTMENT1, 1));
 
 		store.addPrice(price4);
+		assertEquals(3, store.getPriceHistory(PRODUCT_A, DEPARTMENT1, 1).size());
+
 		store.addPrice(price5);
+		assertEquals(3, store.getPriceHistory(PRODUCT_A, DEPARTMENT1, 1).size());
 		assertEquals(100, store.getPrice(PRODUCT_A, date, DEPARTMENT1, 1));
 		assertEquals(100, store.getPrice(PRODUCT_A, date + 59, DEPARTMENT1, 1));
 		assertEquals(130, store.getPrice(PRODUCT_A, date + 60, DEPARTMENT1, 1));
