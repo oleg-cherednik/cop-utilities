@@ -1,4 +1,4 @@
-package cop.google.b;
+package cop.google.qualify.b;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
