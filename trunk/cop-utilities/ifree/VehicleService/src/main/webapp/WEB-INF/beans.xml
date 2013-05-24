@@ -18,7 +18,7 @@
 
     <jaxrs:server id="restContainer" address="/vehicleService">
         <jaxrs:serviceBeans>
-            <ref bean="customersService"/>
+            <!--<ref bean="customersService"/>-->
             <ref bean="orderService"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>

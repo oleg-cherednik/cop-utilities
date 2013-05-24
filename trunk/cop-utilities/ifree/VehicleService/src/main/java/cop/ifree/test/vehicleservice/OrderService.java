@@ -2,9 +2,11 @@ package cop.ifree.test.vehicleservice;
 
 import com.test.services.customers.rest.exceptions.Error;
 import com.test.services.entities.Customer;
-import com.test.services.rest.response.ResponseCreator;
+import cop.ifree.test.vehicleservice.rest.response.ResponseCreator;
 import cop.ifree.test.vehicleservice.dao.IOrderDAO;
 import cop.ifree.test.vehicleservice.data.Order;
+import cop.ifree.test.vehicleservice.rest.to.OrderTO;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,7 @@ import java.util.List;
  * @since 12.05.2013
  */
 @Service("orderService")
+@Path("/order")
 public class OrderService implements IOrderService {
 	@Resource(name = "orderDAO")
 	private IOrderDAO daoOrder;
@@ -119,7 +123,7 @@ public class OrderService implements IOrderService {
 	//	}
 
 	@GET
-	@Path("orderVehiclePart")
+	@Path("/vehiclePart")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response orderVehiclePart(@QueryParam("customerId") long customerId,
@@ -127,7 +131,7 @@ public class OrderService implements IOrderService {
 
 		try {
 			Order order = daoOrder.createOrder(customerId, vehiclePartId);
-			ResponseCreator.success(getHeaderVersion(), order);
+			return ResponseCreator.success("header", new OrderTO(order));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -142,15 +146,34 @@ public class OrderService implements IOrderService {
 
 		List<Customer> listCust = new ArrayList<Customer>();
 		Customer customer = new Customer();
-		customer.setFirst_name("Oleg");
-		customer.setLast_name("Cherednik");
+		customer.setFirstName("Oleg");
+		customer.setLastName("Cherednik");
 		customer.setId("id");
 		listCust.add(customer);
 		if (listCust != null) {
 			GenericEntity<List<Customer>> entity = new GenericEntity<List<Customer>>(listCust) {};
-			return ResponseCreator.success(getHeaderVersion(), entity);
+			return ResponseCreator.success("header", entity);
 		} else {
-			return ResponseCreator.error(404, Error.NOT_FOUND.getCode(), getHeaderVersion());
+			return ResponseCreator.error(404, Error.NOT_FOUND.getCode(), "header");
 		}
+		
+//			public StreamingOutput getPaymentReportTemplate(String template) {
+//		template = StringUtils.isNotBlank(template) ? template.trim() : null;
+//		String path = template != null ? BOServerSettings.getConfiguration().getPaymentReportTemplate(template) : null;
+//		final File file = path != null ? new File(path) : null;
+//
+//		if (file == null || file.length() <= 0) {
+//			String description = "Шаблон '" + template + "' не найден";
+//			throw new JSONRuntimeException(new JSONResponse(OperationOutputCodes.NOT_FOUND, description), 
+//					Response.Status.NOT_FOUND);
+//		}
+//
+//		return new AbstractStreamingOutput(file.getPath()) {
+//			@Override
+//			public void write(OutputStream output) throws IOException {
+//				FileUtils.copyFile(file, output);
+//			}
+//		};
+//	}
 	}
 }

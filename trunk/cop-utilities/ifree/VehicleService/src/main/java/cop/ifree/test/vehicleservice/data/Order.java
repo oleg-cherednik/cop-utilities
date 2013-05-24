@@ -1,11 +1,13 @@
 package cop.ifree.test.vehicleservice.data;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Oleg Cherednik
  * @since 12.05.2013
  */
+@XmlRootElement(name = "order")
 public final class Order {
 	private final long id;
 	private final long customerId;

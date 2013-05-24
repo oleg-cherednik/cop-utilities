@@ -17,28 +17,28 @@ public class Customer extends Entity {
 	 * `contract_expire_date` date DEFAULT NULL
 	 */
 
-	private String first_name;
-	private String last_name;
+	private String firstName;
+	private String lastName;
 	private String phone;
 	private String mail;
-	private String adress;
-	private String contract_id;
-	private Date contract_expire_date;	
+	private String address;
+	private String contractId;
+	private Date contractExpireDate;	
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPhone() {
@@ -57,28 +57,28 @@ public class Customer extends Entity {
 		this.mail = mail;
 	}
 
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getContract_id() {
-		return contract_id;
+	public String getContractId() {
+		return contractId;
 	}
 
-	public void setContract_id(String contract_id) {
-		this.contract_id = contract_id;
+	public void setContractId(String contractId) {
+		this.contractId = contractId;
 	}
 
 	@XmlJavaTypeAdapter(JaxBDateAdapter.class)
-	public Date getContract_expire_date() {
-		return contract_expire_date;
+	public Date getContractExpireDate() {
+		return contractExpireDate;
 	}
 
-	public void setContract_expire_date(Date contract_expire_date) {
-		this.contract_expire_date = contract_expire_date;
+	public void setContractExpireDate(Date contractExpireDate) {
+		this.contractExpireDate = contractExpireDate;
 	}
 }

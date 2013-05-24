@@ -48,26 +48,37 @@ public class OrderDAO implements IOrderDAO {
 	}
 
 	public Order createOrder(long customerId, long vehiclePartId) throws SQLException, NamingException {
+		Order.Builder builder = Order.createBuilder();
 
-		Context initCtx = new InitialContext();
-		Context envCtx = (Context)initCtx.lookup("java:comp/env");
-		DataSource ds = (DataSource)envCtx.lookup("jdbc/EmployeeDB");
-		Connection con = ds.getConnection();
+		builder.setId(666);
+		builder.setCustomerId(customerId);
+		builder.setVehiclePartId(vehiclePartId);
+		builder.setCreateTime(System.currentTimeMillis());
+		builder.setUpdateTime(System.currentTimeMillis());
+		builder.setStatus(OrderStatus.NEW);
 
-		PreparedStatement pp = con.prepareStatement(SQL_CREATE_ORDER);
+		return builder.createOrder();
+		
 
-		try (PreparedStatement ps = createPS(SQL_CREATE_ORDER)) {
-			int i = 1;
-			long time = System.currentTimeMillis();
-
-			ps.setLong(i++, customerId);
-			ps.setLong(i++, vehiclePartId);
-			ps.setTimestamp(i++, new Timestamp(time));
-			ps.setTimestamp(i++, new Timestamp(time));
-			ps.setString(i, OrderStatus.NEW.getId());
-
-			return createOrder(ps.executeQuery());
-		}
+//		Context initCtx = new InitialContext();
+//		Context envCtx = (Context)initCtx.lookup("java:comp/env");
+//		DataSource ds = (DataSource)envCtx.lookup("jdbc/EmployeeDB");
+//		Connection con = ds.getConnection();
+//
+//		PreparedStatement pp = con.prepareStatement(SQL_CREATE_ORDER);
+//
+//		try (PreparedStatement ps = createPS(SQL_CREATE_ORDER)) {
+//			int i = 1;
+//			long time = System.currentTimeMillis();
+//
+//			ps.setLong(i++, customerId);
+//			ps.setLong(i++, vehiclePartId);
+//			ps.setTimestamp(i++, new Timestamp(time));
+//			ps.setTimestamp(i++, new Timestamp(time));
+//			ps.setString(i, OrderStatus.NEW.getId());
+//
+//			return createOrder(ps.executeQuery());
+//		}
 	}
 
 	public Customer getCustomer(String id) {
@@ -76,15 +87,15 @@ public class OrderDAO implements IOrderDAO {
 					.queryForObject("SELECT * FROM customer WHERE id = '" + id + "'", new RowMapper<Customer>() {
 						public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 							Customer Customer = new Customer();
-							Customer.setFirst_name(rs.getString("first_name"));
-							Customer.setLast_name(rs.getString("last_name"));
+							Customer.setFirstName(rs.getString("first_name"));
+							Customer.setLastName(rs.getString("last_name"));
 							Customer.setPhone(rs.getString("phone"));
 							Customer.setMail(rs.getString("mail"));
-							Customer.setAdress(rs.getString("adress"));
-							Customer.setContract_id(rs.getString("contract_id"));
+							Customer.setAddress(rs.getString("adress"));
+							Customer.setContractId(rs.getString("contract_id"));
 							if (rs.getString("contract_expire_date") != "" && rs
 									.getString("contract_expire_date") != null)
-								Customer.setContract_expire_date(Date.valueOf(rs.getString("contract_expire_date")));
+								Customer.setContractExpireDate(Date.valueOf(rs.getString("contract_expire_date")));
 
 							return Customer;
 						}
@@ -102,17 +113,17 @@ public class OrderDAO implements IOrderDAO {
 			String uuid = UUID.randomUUID().toString();
 			customer.setId(uuid);
 			parameters.put("id", uuid);
-			if (customer.getFirst_name() != null)
-				parameters.put("first_name", customer.getFirst_name());
-			if (customer.getLast_name() != null)
-				parameters.put("last_name", customer.getLast_name());
+			if (customer.getFirstName() != null)
+				parameters.put("first_name", customer.getFirstName());
+			if (customer.getLastName() != null)
+				parameters.put("last_name", customer.getLastName());
 			if (customer.getPhone() != null)
 				parameters.put("phone", customer.getPhone());
 			if (customer.getMail() != null)
 				parameters.put("mail", customer.getMail());
-			parameters.put("adress", customer.getAdress());
-			parameters.put("contract_id", customer.getContract_id());
-			parameters.put("contract_expire_date", customer.getContract_expire_date());
+			parameters.put("adress", customer.getAddress());
+			parameters.put("contract_id", customer.getContractId());
+			parameters.put("contract_expire_date", customer.getContractExpireDate());
 			insertCustomer.execute(parameters);
 
 			return customer;
@@ -126,11 +137,11 @@ public class OrderDAO implements IOrderDAO {
 			Customer oldCustomer = getCustomer(customer.getId());
 			String sqlUpdate = String
 					.format("UPDATE customer SET first_name = %s, last_name = %s, phone = %s, mail = %s, adress = %s, contract_id = %s, contract_expire_date = %s WHERE id = %s",
-							"'" + customer.getFirst_name() + "'", "'" + customer.getLast_name() + "'",
+							"'" + customer.getFirstName() + "'", "'" + customer.getLastName() + "'",
 							"'" + customer.getPhone() + "'", "'" + customer.getMail() + "'",
-							"'" + customer.getAdress() + "'", "'" + customer.getContract_id() + "'",
-							((customer.getContract_expire_date() != null) ? "'" + customer
-									.getContract_expire_date() + "'" : "null"), "'" + customer.getId() + "'");
+							"'" + customer.getAddress() + "'", "'" + customer.getContractId() + "'",
+							((customer.getContractExpireDate() != null) ? "'" + customer
+									.getContractExpireDate() + "'" : "null"), "'" + customer.getId() + "'");
 			System.out.println(sqlUpdate);
 			templCustomer.update(sqlUpdate);
 			return oldCustomer;
@@ -153,14 +164,14 @@ public class OrderDAO implements IOrderDAO {
 					public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Customer customer = new Customer();
 						customer.setId(rs.getString("id"));
-						customer.setFirst_name(rs.getString("first_name"));
-						customer.setLast_name(rs.getString("last_name"));
+						customer.setFirstName(rs.getString("first_name"));
+						customer.setLastName(rs.getString("last_name"));
 						customer.setPhone(rs.getString("phone"));
 						customer.setMail(rs.getString("mail"));
-						customer.setAdress(rs.getString("adress"));
-						customer.setContract_id(rs.getString("contract_id"));
+						customer.setAddress(rs.getString("adress"));
+						customer.setContractId(rs.getString("contract_id"));
 						if (rs.getString("contract_expire_date") != "" && rs.getString("contract_expire_date") != null)
-							customer.setContract_expire_date(Date.valueOf(rs.getString("contract_expire_date")));
+							customer.setContractExpireDate(Date.valueOf(rs.getString("contract_expire_date")));
 						return customer;
 					}
 				});
