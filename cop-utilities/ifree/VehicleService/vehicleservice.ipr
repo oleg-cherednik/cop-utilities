@@ -176,7 +176,12 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/json/InvalidParametersCodes.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/json/InvalidParametersInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/json/JSONResponse.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/json/OperationOutputCodes.java" charset="UTF-8" />
+  </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -371,7 +376,7 @@
       <module fileurl="file://$PROJECT_DIR$/vehicleservice.iml" filepath="$PROJECT_DIR$/vehicleservice.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK" />
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
   </component>

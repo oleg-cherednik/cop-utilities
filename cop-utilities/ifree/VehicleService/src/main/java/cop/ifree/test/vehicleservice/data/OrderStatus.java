@@ -6,7 +6,7 @@ package cop.ifree.test.vehicleservice.data;
  */
 public enum OrderStatus {
 	NEW("new"),
-	NOT_FOUND("not_dound"),
+	NOT_FOUND("not_found"),
 	FOUND("found"),
 	DELIVERED("delivered");
 

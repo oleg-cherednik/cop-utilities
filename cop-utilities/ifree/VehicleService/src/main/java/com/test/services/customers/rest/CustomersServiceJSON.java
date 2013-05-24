@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.test.services.dao.data.customers.ICustomersDAO;
 import com.test.services.entities.Customer;
-import com.test.services.rest.response.ResponseCreator;
+import cop.ifree.test.vehicleservice.rest.response.ResponseCreator;
 import com.test.services.customers.rest.exceptions.Error;
 import cop.ifree.test.vehicleservice.dao.IOrderDAO;
 import cop.ifree.test.vehicleservice.data.Order;
@@ -19,8 +19,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Service("customersService")
-@Path("aa")
+//@Service("customersService")
+//@Path("aa")
 public class CustomersServiceJSON implements ICustomersService {
 	@Resource(name = "orderDAO")
 	private IOrderDAO daoOrder;
@@ -126,10 +126,10 @@ public class CustomersServiceJSON implements ICustomersService {
 //		}
 //	}
 
-	@GET
+//	@GET
 //	@Path("orderVehiclePart1111")
-	@Path("aaa")
-	@Consumes(MediaType.APPLICATION_JSON)
+//	@Path("aaa")
+//	@Consumes(MediaType.APPLICATION_JSON)
 //	@Produces(MediaType.APPLICATION_JSON)
 	public Response orderVehiclePart(@QueryParam("customer") long customerId,
 			@QueryParam("vehiclePartId") long vehiclePartId) {
@@ -151,8 +151,8 @@ public class CustomersServiceJSON implements ICustomersService {
 
 		List<Customer> listCust = new ArrayList<Customer>();
 		Customer customer = new Customer();
-		customer.setFirst_name("Oleg");
-		customer.setLast_name("Cherednik");
+		customer.setFirstName("Oleg");
+		customer.setLastName("Cherednik");
 		customer.setId("id");
 		listCust.add(customer);
 		if (listCust != null) {
