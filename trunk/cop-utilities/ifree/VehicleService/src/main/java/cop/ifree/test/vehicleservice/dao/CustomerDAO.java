@@ -3,15 +3,16 @@ package cop.ifree.test.vehicleservice.dao;
 import com.test.services.dao.data.parameters.customer.CustomerListParameters;
 import com.test.services.entities.Customer;
 import cop.ifree.test.vehicleservice.data.Order;
-import cop.ifree.test.vehicleservice.data.OrderFilter;
-import cop.ifree.test.vehicleservice.data.OrderHistory;
 import cop.ifree.test.vehicleservice.data.OrderStatus;
+import cop.ifree.test.vehicleservice.exceptions.VehicleServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -19,15 +20,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Repository
-public class OrderDAO {
+public class CustomerDAO {
+
 	private static final String SQL_CREATE_ORDER = "insert into orders (number, customerId, vehiclePartId, createTime, " + "updateTime, status) values (?,?,?,?,?,?)";
 
 	Map<String, Customer> profsMap = new HashMap<String, Customer>();
@@ -48,84 +49,42 @@ public class OrderDAO {
 		return con.prepareStatement(sql);
 	}
 
+	public void checkCustomer(long id) throws VehicleServiceException {
+//		throw new VehicleServiceException(ErrorCode.UNKNOWN_CUSTOMER_ID, Long.toString(id));
+	}
+
 	public Order createOrder(long customerId, long vehiclePartId) throws SQLException, NamingException {
-		Order.Builder builder = Order.createBuilder();
-
-		builder.setId(666);
-		builder.setNumber(Long.toString(666));
-		builder.setCustomerId(customerId);
-		builder.setVehiclePartId(vehiclePartId);
-		builder.setCreateTime(System.currentTimeMillis());
-		builder.setUpdateTime(System.currentTimeMillis());
-		builder.setStatus(OrderStatus.NEW);
-
-		return builder.createOrder();
-
-		//		Context initCtx = new InitialContext();
-		//		Context envCtx = (Context) initCtx.lookup("java:comp/env");
-		//		DataSource ds = (DataSource) envCtx.lookup("jdbc/EmployeeDB");
-		//		Connection con = ds.getConnection();
+		//		Order.Builder builder = Order.createBuilder();
 		//
-		//		PreparedStatement pp = con.prepareStatement(SQL_CREATE_ORDER);
+		//		builder.setId(666);
+		//		builder.setNumber(Long.toString(666));
+		//		builder.setCustomerId(customerId);
+		//		builder.setVehiclePartId(vehiclePartId);
+		//		builder.setCreateTime(System.currentTimeMillis());
+		//		builder.setUpdateTime(System.currentTimeMillis());
+		//		builder.setStatus(OrderStatus.NEW);
 		//
-		//		try (PreparedStatement ps = createPS(SQL_CREATE_ORDER)) {
-		//			int i = 1;
-		//			long time = System.currentTimeMillis();
-		//
-		//			ps.setLong(i++, customerId);
-		//			ps.setLong(i++, vehiclePartId);
-		//			ps.setTimestamp(i++, new Timestamp(time));
-		//			ps.setTimestamp(i++, new Timestamp(time));
-		//			ps.setString(i, OrderStatus.NEW.getOrderId());
-		//
-		//			return createOrder(ps.executeQuery());
-		//		}
-	}
+		//		return builder.createOrder();
 
-	public List<OrderHistory> getOrderHistory(long orderId, long timeFrom, long timeTo) {
-		List<OrderHistory> history = new ArrayList<>();
-		OrderHistory.Builder builder = OrderHistory.createBuilder();
+		Context initCtx = new InitialContext();
+		Context envCtx = (Context)initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource)envCtx.lookup("jdbc/EmployeeDB");
+		Connection con = ds.getConnection();
 
-		builder.setHistoryId(1);
-		builder.setOrderId(orderId);
+		PreparedStatement pp = con.prepareStatement(SQL_CREATE_ORDER);
 
-		builder.setUpdateTime(System.currentTimeMillis());
-		builder.setStatus(OrderStatus.NEW);
-		history.add(builder.createOrderHistory());
+		try (PreparedStatement ps = createPS(SQL_CREATE_ORDER)) {
+			int i = 1;
+			long time = System.currentTimeMillis();
 
-		builder.setUpdateTime(System.currentTimeMillis());
-		builder.setStatus(OrderStatus.FOUND);
-		history.add(builder.createOrderHistory());
+			ps.setLong(i++, customerId);
+			ps.setLong(i++, vehiclePartId);
+			ps.setTimestamp(i++, new Timestamp(time));
+			ps.setTimestamp(i++, new Timestamp(time));
+			ps.setString(i, OrderStatus.NEW.getId());
 
-		builder.setUpdateTime(System.currentTimeMillis());
-		builder.setStatus(OrderStatus.DELIVERED);
-		history.add(builder.createOrderHistory());
-
-		return Collections.unmodifiableList(history);
-	}
-
-	public List<Order> getOrders(OrderFilter orderFIlter) throws SQLException, NamingException {
-		List<Order> orders = new ArrayList<>();
-		Order.Builder builder = Order.createBuilder();
-
-		builder.setNumber(Long.toString(666));
-		builder.setCustomerId(11);
-		builder.setVehiclePartId(22);
-		builder.setCreateTime(System.currentTimeMillis());
-		builder.setUpdateTime(System.currentTimeMillis());
-		builder.setStatus(OrderStatus.NEW);
-
-		builder.setId(666);
-		builder.setNumber(Long.toString(666));
-		orders.add(builder.createOrder());
-		builder.setId(667);
-		builder.setNumber(Long.toString(667));
-		orders.add(builder.createOrder());
-		builder.setId(668);
-		builder.setNumber(Long.toString(668));
-		orders.add(builder.createOrder());
-
-		return Collections.unmodifiableList(orders);
+			return createOrder(ps.executeQuery());
+		}
 	}
 
 	public Customer getCustomer(String id) {
@@ -141,8 +100,9 @@ public class OrderDAO {
 							Customer.setAddress(rs.getString("adress"));
 							Customer.setContractId(rs.getString("contract_id"));
 							if (rs.getString("contract_expire_date") != "" && rs.getString(
-									"contract_expire_date") != null)
+									"contract_expire_date") != null) {
 								Customer.setContractExpireDate(Date.valueOf(rs.getString("contract_expire_date")));
+							}
 
 							return Customer;
 						}
@@ -160,14 +120,18 @@ public class OrderDAO {
 			String uuid = UUID.randomUUID().toString();
 			customer.setId(uuid);
 			parameters.put("id", uuid);
-			if (customer.getFirstName() != null)
+			if (customer.getFirstName() != null) {
 				parameters.put("first_name", customer.getFirstName());
-			if (customer.getLastName() != null)
+			}
+			if (customer.getLastName() != null) {
 				parameters.put("last_name", customer.getLastName());
-			if (customer.getPhone() != null)
+			}
+			if (customer.getPhone() != null) {
 				parameters.put("phone", customer.getPhone());
-			if (customer.getMail() != null)
+			}
+			if (customer.getMail() != null) {
 				parameters.put("mail", customer.getMail());
+			}
 			parameters.put("adress", customer.getAddress());
 			parameters.put("contract_id", customer.getContractId());
 			parameters.put("contract_expire_date", customer.getContractExpireDate());
@@ -217,8 +181,10 @@ public class OrderDAO {
 						customer.setMail(rs.getString("mail"));
 						customer.setAddress(rs.getString("adress"));
 						customer.setContractId(rs.getString("contract_id"));
-						if (rs.getString("contract_expire_date") != "" && rs.getString("contract_expire_date") != null)
+						if (rs.getString("contract_expire_date") != "" && rs.getString(
+								"contract_expire_date") != null) {
 							customer.setContractExpireDate(Date.valueOf(rs.getString("contract_expire_date")));
+						}
 						return customer;
 					}
 				});

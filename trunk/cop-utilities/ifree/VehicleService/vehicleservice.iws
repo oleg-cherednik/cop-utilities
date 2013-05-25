@@ -5,19 +5,19 @@
     <ignored path="vehicleservice.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/PreInvokeHandler.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369425820890" ignored="false" />
-    <file path="/fragment.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369429085834" ignored="false" />
+    <file path="/fragment.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369497996906" ignored="false" />
     <file path="/beans.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368580892407" ignored="false" />
     <file path="/OrderService.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369491501284" ignored="false" />
     <file path="/CustomersServiceJSON.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368581024941" ignored="false" />
     <file path="/a.dummy" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369433367589" ignored="false" />
-    <file path="/Order.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369395906933" ignored="false" />
+    <file path="/Order.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369498022072" ignored="false" />
     <file path="/CustomerAdapter.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368377396072" ignored="false" />
     <file path="/AdaptedCustomer.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368378218580" ignored="false" />
     <file path="/FileDataSource.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369396049455" ignored="false" />
     <file path="/OrderTable.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368378200999" ignored="false" />
     <file path="/web.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368594119765" ignored="false" />
     <file path="/dao.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368581931930" ignored="false" />
-    <file path="/OrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369430911749" ignored="false" />
+    <file path="/OrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369500252844" ignored="false" />
     <file path="/OrderStatus.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368584646212" ignored="false" />
     <file path="/tblOrders.sql" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368586454973" ignored="false" />
     <file path="/IOrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368585959710" ignored="false" />
@@ -41,7 +41,7 @@
     <file path="/LongAdapter.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369395377383" ignored="false" />
     <file path="/ResponseCreator.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369424880105" ignored="false" />
     <file path="/VehiclePartOrderStatusTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369396678420" ignored="false" />
-    <file path="/ErrorCode.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369400997494" ignored="false" />
+    <file path="/ErrorCode.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369492685855" ignored="false" />
     <file path="/ErrorTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369398907949" ignored="false" />
     <file path="/JAXBErrorCodeAdapter.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369397908776" ignored="false" />
     <file path="/CustomExceptionMapper.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369398660449" ignored="false" />
@@ -51,9 +51,13 @@
     <file path="/VehicleServiceException.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369401179860" ignored="false" />
     <file path="/HeaderUtils.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369424585848" ignored="false" />
     <file path="/OrderFilter.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369430697478" ignored="false" />
-    <file path="/OrderFilterTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369479484101" ignored="false" />
+    <file path="/OrderFilterTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369492618805" ignored="false" />
     <file path="/OrderList.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369482216242" ignored="false" />
     <file path="/OrderListTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369482047560" ignored="false" />
+    <file path="/ReportService.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369500518854" ignored="false" />
+    <file path="/OrderReport.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369495648259" ignored="false" />
+    <file path="/OrderReportData.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369493580206" ignored="false" />
+    <file path="/OrderHistory.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369499631081" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,36 +204,6 @@
         <option name="CONDITION" value="&#13;&#13;JAVA" />
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java" line="62" class="cop.ifree.test.vehicleservice.dao.OrderDAO" package="cop.ifree.test.vehicleservice.dao">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java" line="149" class="cop.ifree.test.vehicleservice.OrderService" package="cop.ifree.test.vehicleservice">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
     </line_breakpoints>
     <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <field_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
@@ -300,57 +274,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="OrderService.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java">
+      <file leaf-file-name="ReportService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/ReportService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="151" column="22" selection-start="5313" selection-end="5313" vertical-scroll-proportion="0.38580248">
+            <state line="218" column="61" selection-start="7194" selection-end="7194" vertical-scroll-proportion="0.7780127">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Response.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/javax/ws/rs/jsr311-api/1.0/jsr311-api-1.0-sources.jar!/javax/ws/rs/core/Response.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="34" selection-start="4918" selection-end="4918" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#26566#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractInvoker.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-core/2.2.3/cxf-rt-core-2.2.3-sources.jar!/org/apache/cxf/service/invoker/AbstractInvoker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="0" selection-start="6700" selection-end="6700" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrderListTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderListTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="11" selection-start="523" selection-end="523" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VehiclePartOrderStatusTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/VehiclePartOrderStatusTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="50" selection-start="1444" selection-end="1444" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -358,7 +288,7 @@
       <file leaf-file-name="OrderFilterTO.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="13" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0">
+            <state line="23" column="31" selection-start="769" selection-end="783" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -366,41 +296,75 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomExceptionMapper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/CustomExceptionMapper.java">
+      <file leaf-file-name="OrderDAO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="50" selection-start="966" selection-end="966" vertical-scroll-proportion="0.0">
+            <state line="84" column="80" selection-start="3040" selection-end="3040" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhaseInterceptorChain.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-api/2.2.3/cxf-api-2.2.3-sources.jar!/org/apache/cxf/phase/PhaseInterceptorChain.java">
+      <file leaf-file-name="Order.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/Order.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="384" column="29" selection-start="14252" selection-end="14252" vertical-scroll-proportion="0.0">
+            <state line="80" column="42" selection-start="1537" selection-end="1537" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderFilter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="19" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContextConfiguration.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/ContextConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="13" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderHistory.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderHistory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="21" selection-start="785" selection-end="785" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderReportData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReportData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="9" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="n#!!doc" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#2392#2401#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OrderTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderTO.java">
+      <file leaf-file-name="OrderStatus.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderStatus.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="36" selection-start="1021" selection-end="1021" vertical-scroll-proportion="0.0">
+            <state line="7" column="4" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ErrorResponseTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ErrorResponseTO.java">
+      <file leaf-file-name="VehicleServiceException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/VehicleServiceException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="15" selection-start="830" selection-end="840" vertical-scroll-proportion="0.0">
+            <state line="17" column="53" selection-start="345" selection-end="354" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -416,22 +380,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/UserDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/ErrorCode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/VehicleServiceException.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/HeaderUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/response/ResponseCreator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/HeaderCode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/CustomerDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/PreInvokeHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilter.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderList.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderListTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/beans.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ReportFilterTO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/ErrorCode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReport.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReportData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/Order.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderHistory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/ReportService.java" />
       </list>
     </option>
   </component>
@@ -1442,44 +1406,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="rest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="response" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vehicleservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VehicleService" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vehicleservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="jaxb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1798,10 +1724,10 @@
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="cop.ifree.test.vehicleservice.data" />
-      <recent name="cop.ifree.test.vehicleservice.dao" />
       <recent name="cop.ifree.test.vehicleservice.rest.to" />
+      <recent name="cop.ifree.test.vehicleservice" />
+      <recent name="cop.ifree.test.vehicleservice.dao" />
       <recent name="cop.ifree.test.vehicleservice.jaxb" />
-      <recent name="cop.ifree.test.vehicleservice.json" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Programming\ifree\ifree\VehicleService\src\main\java\cop\ifree\test\vehicleservice\json" />
@@ -2084,8 +2010,9 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17608517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.6009122" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42014742" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27354628" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2094,7 +2021,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5032175" sideWeight="0.60162604" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26272577" sideWeight="0.5798526" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26272577" sideWeight="0.8239148" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2107,7 +2034,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33428982" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2235,90 +2161,26 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxrs/2.2.3/cxf-rt-frontend-jaxrs-2.2.3-sources.jar!/org/apache/cxf/jaxrs/ext/MessageContextImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="0" selection-start="2098" selection-end="2098" vertical-scroll-proportion="0.0">
+        <state line="20" column="84" selection-start="789" selection-end="789" vertical-scroll-proportion="-13.6">
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
+        <state />
+      </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxrs/2.2.3/cxf-rt-frontend-jaxrs-2.2.3-sources.jar!/org/apache/cxf/jaxrs/utils/multipart/AttachmentUtils.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/beans.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="0" selection-start="2059" selection-end="2059" vertical-scroll-proportion="0.0">
+        <state line="24" column="36" selection-start="1354" selection-end="1354" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxrs/2.2.3/cxf-rt-frontend-jaxrs-2.2.3-sources.jar!/org/apache/cxf/jaxrs/utils/JAXRSUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="560" column="8" selection-start="25171" selection-end="25171" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/lang/NullPointerException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="36" selection-start="1635" selection-end="1635" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/PreInvokeHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="26" selection-start="1265" selection-end="1265" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-api/2.2.3/cxf-api-2.2.3.jar!/org/apache/cxf/phase/PhaseInterceptorChain.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="27" selection-start="2756" selection-end="2756" vertical-scroll-proportion="-14.76">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-api/2.2.3/cxf-api-2.2.3-sources.jar!/org/apache/cxf/phase/PhaseInterceptorChain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="384" column="29" selection-start="14252" selection-end="14252" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2392#2401#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/VehiclePartOrderStatusTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="50" selection-start="1444" selection-end="1444" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ErrorResponseTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="15" selection-start="830" selection-end="840" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-core/2.2.3/cxf-rt-core-2.2.3-sources.jar!/org/apache/cxf/service/invoker/AbstractInvoker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="0" selection-start="6700" selection-end="6700" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/javax/ws/rs/jsr311-api/1.0/jsr311-api-1.0-sources.jar!/javax/ws/rs/core/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="34" selection-start="4918" selection-end="4918" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#26566#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2338,25 +2200,92 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/CustomExceptionMapper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="50" selection-start="966" selection-end="966" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0">
+        <state line="36" column="1" selection-start="1114" selection-end="1114" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/ErrorCode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="22" selection-start="5313" selection-end="5313" vertical-scroll-proportion="0.38580248">
+        <state line="15" column="38" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/VehicleServiceException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="53" selection-start="345" selection-end="354" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="4" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReportData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="9" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="19" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/ContextConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="42" selection-start="1537" selection-end="1537" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderHistory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="21" selection-start="785" selection-end="785" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="31" selection-start="769" selection-end="783" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="80" selection-start="3040" selection-end="3040" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/ReportService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="218" column="61" selection-start="7194" selection-end="7194" vertical-scroll-proportion="0.7780127">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

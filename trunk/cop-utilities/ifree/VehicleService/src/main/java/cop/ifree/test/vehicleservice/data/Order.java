@@ -1,16 +1,13 @@
 package cop.ifree.test.vehicleservice.data;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Oleg Cherednik
  * @since 12.05.2013
  */
-@XmlRootElement(name = "order")
 public final class Order {
-
-	private final long id;
+	private final long orderId;
 	private final String number;
 	private final long customerId;
 	private final long vehiclePartId;
@@ -23,7 +20,7 @@ public final class Order {
 	}
 
 	private Order(Builder builder) {
-		this.id = builder.id;
+		this.orderId = builder.id;
 		this.number = builder.number;
 		this.customerId = builder.customerId;
 		this.vehiclePartId = builder.vehiclePartId;
@@ -32,8 +29,8 @@ public final class Order {
 		this.status = builder.status;
 	}
 
-	public long getId() {
-		return id;
+	public long getOrderId() {
+		return orderId;
 	}
 
 	@NotNull
@@ -66,25 +63,22 @@ public final class Order {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (!(obj instanceof Order)) {
+		if (!(obj instanceof Order))
 			return false;
-		}
 
-		return id == ((Order) obj).id;
+		return orderId == ((Order)obj).orderId;
 	}
 
 	@Override
 	public int hashCode() {
-		return (int) (id ^ (id >>> 32));
+		return (int)(orderId ^ (orderId >>> 32));
 	}
 
 	// ========== builder ==========
 
 	public static final class Builder {
-
 		private long id;
 		private String number;
 		private long customerId;
@@ -93,13 +87,13 @@ public final class Order {
 		private long updateTime;
 		private OrderStatus status = OrderStatus.NEW;
 
+		public Order createOrder() {
+			return new Order(this);
+		}
+
 		public Builder setId(long id) {
 			this.id = id;
 			return this;
-		}
-
-		public Order createOrder() {
-			return new Order(this);
 		}
 
 		public Builder setCustomerId(long customerId) {
