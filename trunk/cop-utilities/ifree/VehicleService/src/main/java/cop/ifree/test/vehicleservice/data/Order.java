@@ -9,7 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "order")
 public final class Order {
+
 	private final long id;
+	private final String number;
 	private final long customerId;
 	private final long vehiclePartId;
 	private final long createTime;
@@ -22,6 +24,7 @@ public final class Order {
 
 	private Order(Builder builder) {
 		this.id = builder.id;
+		this.number = builder.number;
 		this.customerId = builder.customerId;
 		this.vehiclePartId = builder.vehiclePartId;
 		this.createTime = builder.createTime;
@@ -31,6 +34,11 @@ public final class Order {
 
 	public long getId() {
 		return id;
+	}
+
+	@NotNull
+	public String getNumber() {
+		return number;
 	}
 
 	public long getCustomerId() {
@@ -58,44 +66,27 @@ public final class Order {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!(obj instanceof Order))
+		}
+		if (!(obj instanceof Order)) {
 			return false;
+		}
 
-		Order order = (Order)obj;
-
-		if (createTime != order.createTime)
-			return false;
-		if (customerId != order.customerId)
-			return false;
-		if (id != order.id)
-			return false;
-		if (updateTime != order.updateTime)
-			return false;
-		if (vehiclePartId != order.vehiclePartId)
-			return false;
-		if (status != order.status)
-			return false;
-
-		return true;
+		return id == ((Order) obj).id;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (int)(id ^ (id >>> 32));
-		result = 31 * result + (int)(customerId ^ (customerId >>> 32));
-		result = 31 * result + (int)(vehiclePartId ^ (vehiclePartId >>> 32));
-		result = 31 * result + (int)(createTime ^ (createTime >>> 32));
-		result = 31 * result + (int)(updateTime ^ (updateTime >>> 32));
-		result = 31 * result + status.hashCode();
-		return result;
+		return (int) (id ^ (id >>> 32));
 	}
 
 	// ========== builder ==========
 
 	public static final class Builder {
+
 		private long id;
+		private String number;
 		private long customerId;
 		private long vehiclePartId;
 		private long createTime;
@@ -113,6 +104,11 @@ public final class Order {
 
 		public Builder setCustomerId(long customerId) {
 			this.customerId = customerId;
+			return this;
+		}
+
+		public Builder setNumber(String number) {
+			this.number = number;
 			return this;
 		}
 

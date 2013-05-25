@@ -41,9 +41,11 @@ public final class FileDataSource {
 
 	public Order addOrder(long customerId, long vehiclePartId) throws SQLException {
 		long time = System.currentTimeMillis();
+		long id = ORDER_ID++; 
 		Order.Builder builder = Order.createBuilder();
 
-		builder.setId(ORDER_ID++);
+		builder.setId(id);
+		builder.setNumber(Long.toString(id));
 		builder.setCustomerId(customerId);
 		builder.setVehiclePartId(vehiclePartId);
 		builder.setCreateTime(time);
