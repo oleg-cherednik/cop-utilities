@@ -1,27 +1,29 @@
 package cop.ifree.test.vehicleservice;
 
-import com.test.services.customers.rest.exceptions.Error;
-import com.test.services.entities.Customer;
-import cop.ifree.test.vehicleservice.rest.response.ResponseCreator;
-import cop.ifree.test.vehicleservice.dao.IOrderDAO;
+import cop.ifree.test.vehicleservice.dao.CustomerDAO;
+import cop.ifree.test.vehicleservice.dao.OrderDAO;
 import cop.ifree.test.vehicleservice.data.Order;
+import cop.ifree.test.vehicleservice.data.OrderFilter;
+import cop.ifree.test.vehicleservice.rest.to.OrderFilterTO;
 import cop.ifree.test.vehicleservice.rest.to.OrderTO;
-
+import cop.ifree.test.vehicleservice.rest.to.VehiclePartOrderStatusTO;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,18 +32,16 @@ import java.util.List;
  */
 @Service("orderService")
 @Path("/order")
-public class OrderService implements IOrderService {
-	@Resource(name = "orderDAO")
-	private IOrderDAO daoOrder;
+public class OrderService {
 
-	// for retrieving request headers from context
-	// an injectable interface that provides access to HTTP header information.
+	@Resource(name = "orderDAO")
+	private OrderDAO daoOrder;
+
+	@Resource(name = "customerDAO")
+	private CustomerDAO daoCustomer;
+
 	@Context
 	private HttpHeaders requestHeaders;
-
-	private String getHeaderVersion() {
-		return "aa";//requestHeaders.getRequestHeader("version").get(0);
-	}
 
 	// get by id service
 	//	@GET
@@ -123,57 +123,48 @@ public class OrderService implements IOrderService {
 	//	}
 
 	@GET
-	@Path("/vehiclePart")
+	@Path("/orderVehiclePart")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response orderVehiclePart(@QueryParam("customerId") long customerId,
-			@QueryParam("vehiclePartId") long vehiclePartId) {
+	public Response orderVehiclePart(@HeaderParam("customer_id") long customerId,
+			@QueryParam("vehiclePartId") long vehiclePartId) throws Exception {
+		Order order = daoOrder.createOrder(customerId, vehiclePartId);
+		return Response.ok(new VehiclePartOrderStatusTO(order)).build();
+	}
 
-		try {
-			Order order = daoOrder.createOrder(customerId, vehiclePartId);
-			return ResponseCreator.success("header", new OrderTO(order));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	/*
+	{"order_filter": {
+   "@status": "found",
+   "@create_time_to": "1369474545900",
+   "@create_time_from": "1369474545900",
+   "@vehicle_part_id": "22",
+   "@customer_id": "11"
+}}
+	 */
 
-		//		CustomerListParameters parameters = new CustomerListParameters();
-		//		parameters.setKeyword(keyword);
-		//		parameters.setPageNum(pageNum);
-		//		parameters.setPageSize(pageSize);
-		//		parameters.setOrderBy(orderBy);
-		//		parameters.setOrder(OrderOld.fromString(order));
-		//		List<Customer> listCust = customersDAO.getCustomersList(parameters);
+	@POST
+	@Path("/getFilteredOrders")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFilteredOrders(OrderFilterTO filter) throws Exception {
+		List<Order> orders = daoOrder.getOrders(OrderFilter.createBuilder().copyFrom(filter).createFilter());
 
-		List<Customer> listCust = new ArrayList<Customer>();
-		Customer customer = new Customer();
-		customer.setFirstName("Oleg");
-		customer.setLastName("Cherednik");
-		customer.setId("id");
-		listCust.add(customer);
-		if (listCust != null) {
-			GenericEntity<List<Customer>> entity = new GenericEntity<List<Customer>>(listCust) {};
-			return ResponseCreator.success("header", entity);
-		} else {
-			return ResponseCreator.error(404, Error.NOT_FOUND.getCode(), "header");
-		}
-		
-//			public StreamingOutput getPaymentReportTemplate(String template) {
-//		template = StringUtils.isNotBlank(template) ? template.trim() : null;
-//		String path = template != null ? BOServerSettings.getConfiguration().getPaymentReportTemplate(template) : null;
-//		final File file = path != null ? new File(path) : null;
-//
-//		if (file == null || file.length() <= 0) {
-//			String description = "Шаблон '" + template + "' не найден";
-//			throw new JSONRuntimeException(new JSONResponse(OperationOutputCodes.NOT_FOUND, description), 
-//					Response.Status.NOT_FOUND);
-//		}
-//
-//		return new AbstractStreamingOutput(file.getPath()) {
-//			@Override
-//			public void write(OutputStream output) throws IOException {
-//				FileUtils.copyFile(file, output);
-//			}
-//		};
-//	}
+		filter.setVehiclePartId(22L);
+//		return Response.ok(new OrderListTO(convertOrders(orders))).build();
+		return Response.ok(filter).build();
+	}
+
+	// ========== static ==========
+
+	private static List<OrderTO> convertOrders(List<Order> orders) {
+		if (CollectionUtils.isEmpty(orders))
+			return Collections.emptyList();
+
+		List<OrderTO> res = new ArrayList<>(orders.size());
+
+		for (Order order : orders)
+			res.add(new OrderTO(order));
+
+		return res;
 	}
 }
