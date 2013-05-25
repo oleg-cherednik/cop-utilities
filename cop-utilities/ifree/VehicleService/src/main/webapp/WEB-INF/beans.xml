@@ -18,8 +18,8 @@
 
     <jaxrs:server id="restContainer" address="/vehicleService">
         <jaxrs:serviceBeans>
-            <!--<ref bean="customersService"/>-->
             <ref bean="orderService"/>
+			<ref bean="reportService"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="preInvokeHandler"/>
