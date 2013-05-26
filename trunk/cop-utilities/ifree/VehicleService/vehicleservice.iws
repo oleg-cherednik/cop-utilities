@@ -5,7 +5,7 @@
     <ignored path="vehicleservice.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/PreInvokeHandler.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369425820890" ignored="false" />
-    <file path="/fragment.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369588821222" ignored="false" />
+    <file path="/fragment.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601898980" ignored="false" />
     <file path="/beans.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368580892407" ignored="false" />
     <file path="/OrderService.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369588993034" ignored="false" />
     <file path="/CustomersServiceJSON.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368581024941" ignored="false" />
@@ -17,7 +17,7 @@
     <file path="/OrderTable.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368378200999" ignored="false" />
     <file path="/web.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368594119765" ignored="false" />
     <file path="/dao.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368581931930" ignored="false" />
-    <file path="/OrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369592784673" ignored="false" />
+    <file path="/OrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601889133" ignored="false" />
     <file path="/OrderStatus.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368584646212" ignored="false" />
     <file path="/tblOrders.sql" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368586454973" ignored="false" />
     <file path="/IOrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1368585959710" ignored="false" />
@@ -61,6 +61,16 @@
     <file path="/tblOrderHistory.sql" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369580937995" ignored="false" />
     <file path="/ReportTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369588931621" ignored="false" />
     <file path="/ReportFilterTO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369592309495" ignored="false" />
+    <file path="/OrderDaoTest.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601609146" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../Eclipse/BusyComponent/springTransactionalTest/src/test/java/ru/intr13/example/springTransactionalTest/DataDaoTest.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369599531032" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../Eclipse/BusyComponent/springTransactionalTest/pom.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369599330287" ignored="false" />
+    <file path="/DummyFile.xpath" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601180400" ignored="false" />
+    <file path="$PROJECT_DIR$/../VehicleServiceNew/src/test/java/cop/ifree/test/vehicleservice/dao/OrderDaoTest.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601612400" ignored="false" />
+    <file path="$PROJECT_DIR$/../VehicleServiceNew/src/test/resources/context.xml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601495611" ignored="false" />
+    <file path="/Dummy.txt" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601898980" ignored="false" />
+    <file path="$PROJECT_DIR$/../VehicleServiceNew/src/test/java/cop/ifree/test/vehicleservice/dao/ContextConfigurationTest.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601567333" ignored="false" />
+    <file path="$PROJECT_DIR$/../VehicleServiceNew/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601890863" ignored="false" />
+    <file path="$PROJECT_DIR$/../VehicleServiceNew/VehicleService.iml" changelist="f15af881-0dc6-4b1e-ba8f-2063a0badbe3" time="1369601878547" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,8 +163,6 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <field_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
@@ -192,8 +200,9 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <exception_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/test/services/customers/rest/CustomersServiceJSON.java" line="151" class="com.test.services.customers.rest.CustomersServiceJSON" package="com.test.services.customers.rest">
+      <breakpoint url="file://$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/OrderDaoTest.java" line="43" class="cop.ifree.test.vehicleservice.dao.OrderDaoTest" package="cop.ifree.test.vehicleservice.dao">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -205,11 +214,12 @@
         <option name="CONDITION_ENABLED" value="true" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <exception_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -277,86 +287,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ReportService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/ReportService.java">
+      <file leaf-file-name="OrderDaoTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/OrderDaoTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="47" selection-start="3728" selection-end="3728" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ErrorResponseTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ErrorResponseTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="12" selection-start="932" selection-end="932" vertical-scroll-proportion="0.0">
+            <state line="22" column="13" selection-start="766" selection-end="766" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomerDAO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/CustomerDAO.java">
+      <file leaf-file-name="SpringJUnit4ClassRunner.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/context/junit4/SpringJUnit4ClassRunner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="13" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0">
+            <state line="87" column="0" selection-start="3661" selection-end="3661" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OrderFilterTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java">
+      <file leaf-file-name="DirtiesContext.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/annotation/DirtiesContext.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="28" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrderListTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderListTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="15" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResponseCreator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/response/ResponseCreator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="32" selection-start="281" selection-end="286" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomersServiceJSON.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/test/services/customers/rest/CustomersServiceJSON.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="164" column="15" selection-start="5543" selection-end="5543" vertical-scroll-proportion="0.4049844">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JAXBDateAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/jaxb/JAXBDateAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="530" selection-end="545" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportFilterTO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ReportFilterTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="878" selection-end="878" vertical-scroll-proportion="0.0">
+            <state line="61" column="18" selection-start="2457" selection-end="2457" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -365,7 +317,61 @@
       <file leaf-file-name="OrderDAO.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="42" selection-start="5373" selection-end="5373" vertical-scroll-proportion="0.0">
+            <state line="31" column="13" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="32" selection-start="1284" selection-end="1312" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="89" column="27" selection-start="3322" selection-end="3322" vertical-scroll-proportion="0.35957697">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="context.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/context.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="22" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContextLoaderUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/context/ContextLoaderUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="630" column="29" selection-start="30366" selection-end="30366" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.ideaLibSources/spring-core-2.5.5-sources.jar!/org/springframework/util/ClassUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="22" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RunnerBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10-sources.jar!/org/junit/runners/model/RunnerBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="28" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -381,22 +387,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderList.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderListTO.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/beans.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/exceptions/ErrorCode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReport.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/Order.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderHistory.java" />
         <option value="$PROJECT_DIR$/src/main/resources/sql/tblOrderHistory.sql" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ReportTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReportData.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ReportFilterTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/jaxb/JAXBDateAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/ReportService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/CustomerDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java" />
+        <option value="$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/ContextConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/ContextConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/beans.xml" />
+        <option value="$PROJECT_DIR$/src/test/resources/context.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/OrderDaoTest.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -490,8 +496,10 @@
     <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1128" />
-    <option name="height" value="1018" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1034" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -555,7 +563,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -578,11 +586,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: javax.ws.rs:jsr311-api:1.0" />
+              <option name="myItemId" value="Maven: org.springframework:spring-test:3.2.2.RELEASE" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jsr311-api-1.0.jar" />
+              <option name="myItemId" value="spring-test-3.2.2.RELEASE.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -596,15 +612,127 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: javax.ws.rs:jsr311-api:1.0" />
+              <option name="myItemId" value="Maven: org.springframework:spring-test:3.2.2.RELEASE" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jsr311-api-1.0.jar" />
+              <option name="myItemId" value="spring-test-3.2.2.RELEASE.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="rs" />
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="context" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.springframework:spring-test:3.2.2.RELEASE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-test-3.2.2.RELEASE.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="context" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.springframework:spring-test:3.2.2.RELEASE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-test-3.2.2.RELEASE.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="annotation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.springframework:spring-test:3.2.2.RELEASE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-test-3.2.2.RELEASE.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.springframework:spring-test:3.2.2.RELEASE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-test-3.2.2.RELEASE.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -711,6 +839,140 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-core-2.5.5.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-core-2.5.5.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="springframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spring-core-2.5.5.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit-4.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit-4.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit-4.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runners" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit-4.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1188,11 +1450,63 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VehicleService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="autoservice" />
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VehicleService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1291,10 +1605,6 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1314,7 +1624,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1339,10 +1653,18 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vehicleservice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="ProjectViewSettings">
@@ -1354,46 +1676,79 @@
     <view id="ClasspathPane" />
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="preferences.sourceCode.Java" />
-    <property name="last_opened_file_path" value="D:/!!! Oleg !!!/Mcplat/backoffice/trunk" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../VehicleServiceNew/pom.xml" />
+    <property name="project.structure.side.proportion" value="0.33841133" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="Database.TableEditor.Splitter" value="0.9" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cop.ifree.test.vehicleservice.dao" />
       <recent name="cop.ifree.test.vehicleservice.rest.to" />
       <recent name="cop.ifree.test.vehicleservice.data" />
       <recent name="cop.ifree.test.vehicleservice" />
-      <recent name="cop.ifree.test.vehicleservice.dao" />
       <recent name="cop.ifree.test.vehicleservice.jaxb" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\ifree\ifree\VehicleService\src\test\java\cop\ifree\test\vehicleservice\dao" />
+      <recent name="D:\Programming\ifree\ifree\VehicleService\src\test\resources" />
       <recent name="D:\Programming\ifree\ifree\VehicleService\src\main\resources\sql" />
       <recent name="D:\Programming\ifree\ifree\VehicleService\src\main\java\cop\ifree\test\vehicleservice\json" />
       <recent name="D:\Programming\ifree\VehicleService\src\main\resources" />
-      <recent name="D:\Programming\ifree\VehicleService\src\main\java\cop\ifree\test\vehicleservice\dao" />
-      <recent name="D:\Programming\ifree\VehicleService\src\main\java\cop\ifree\test\vehicleservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programming\ifree\VehicleService\src\main\resources\sql" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 7.x">
+  <component name="RunManager" selected="JUnit.OrderDaoTest">
+    <configuration default="false" name="OrderDaoTest" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cop.ifree.test.vehicleservice.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="vehicleservice" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cop.ifree.test.vehicleservice.dao" />
+      <option name="MAIN_CLASS_NAME" value="cop.ifree.test.vehicleservice.dao.OrderDaoTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -1449,6 +1804,12 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
@@ -1514,12 +1875,6 @@
           <option name="PROGRAM_PARAMETERS" value="" />
         </SHUTDOWN>
       </ConfigurationWrapper>
-      <method />
-    </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="Tomcat 7.x" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6.x">
@@ -1598,9 +1953,15 @@
         </option>
       </method>
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7.x" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.OrderDaoTest" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.OrderDaoTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SliceManager">
@@ -1659,22 +2020,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1128" height="1018" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1034" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17537747" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.6009122" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.271777" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27480045" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32760033" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1682,13 +2041,15 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5032175" sideWeight="0.60162604" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295325" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27579737" sideWeight="0.8246225" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23745997" sideWeight="0.7251995" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Aspects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21879022" sideWeight="0.6671449" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21878335" sideWeight="0.7263398" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17217788" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.327252" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1810,125 +2171,113 @@
       </breakpoints-dialog>
     </breakpoint-manager>
   </component>
+  <component name="XPathView.XPathProjectComponent">
+    <history />
+    <find-history />
+  </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderFilter.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/context/TestContext.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="19" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="101" column="28" selection-start="3990" selection-end="3990" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/data/OrderReportData.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/context/TestContextManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="20" selection-start="1157" selection-end="1166" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#2454#2460#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="116" column="0" selection-start="4932" selection-end="4932" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/util/Set.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10-sources.jar!/org/junit/internal/requests/ClassRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="189" column="12" selection-start="7531" selection-end="7531" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="23" column="0" selection-start="543" selection-end="543" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/jaxb/JAXBOrderStatusAdapter.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10-sources.jar!/org/junit/internal/builders/AllDefaultPossibilitiesBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="28" column="0" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderTO.java">
+    <entry file="file://$PROJECT_DIR$/src/test/resources/context.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="46" selection-start="1119" selection-end="1161" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-core/2.2.3/cxf-rt-core-2.2.3-sources.jar!/org/apache/cxf/service/invoker/AbstractInvoker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="33" selection-start="3767" selection-end="3767" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ReportFilterTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="878" selection-end="878" vertical-scroll-proportion="0.0">
+        <state line="28" column="0" selection-start="1499" selection-end="1876" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/OrderDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="42" selection-start="5373" selection-end="5373" vertical-scroll-proportion="0.0">
+        <state line="31" column="13" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/jaxb/JAXBDateAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/OrderService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="530" selection-end="545" vertical-scroll-proportion="0.0">
+        <state line="38" column="32" selection-start="1284" selection-end="1312" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/dao/CustomerDAO.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10-sources.jar!/org/junit/runners/model/RunnerBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="13" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0">
+        <state line="58" column="28" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/ReportService.java">
+    <entry file="jar://$USER_HOME$/.ideaLibSources/spring-core-2.5.5-sources.jar!/org/springframework/util/ClassLoaderUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="47" selection-start="3728" selection-end="3728" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="28" column="22" selection-start="975" selection-end="975" vertical-scroll-proportion="-2.0384614" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/ErrorResponseTO.java">
+    <entry file="jar://$USER_HOME$/.ideaLibSources/spring-core-2.5.5-sources.jar!/org/springframework/util/ClassUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="12" selection-start="932" selection-end="932" vertical-scroll-proportion="0.0">
+        <state line="48" column="22" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderFilterTO.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/context.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="28" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0">
+        <state line="2" column="22" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/to/OrderListTO.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/annotation/DirtiesContext.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="15" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cop/ifree/test/vehicleservice/rest/response/ResponseCreator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="32" selection-start="281" selection-end="286" vertical-scroll-proportion="0.0">
+        <state line="61" column="18" selection-start="2457" selection-end="2457" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/test/services/customers/rest/CustomersServiceJSON.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/context/ContextLoaderUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="15" selection-start="5543" selection-end="5543" vertical-scroll-proportion="0.4049844">
+        <state line="630" column="29" selection-start="30366" selection-end="30366" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/3.2.2.RELEASE/spring-test-3.2.2.RELEASE-sources.jar!/org/springframework/test/context/junit4/SpringJUnit4ClassRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="0" selection-start="3661" selection-end="3661" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/cop/ifree/test/vehicleservice/dao/OrderDaoTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="13" selection-start="766" selection-end="766" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="27" selection-start="3322" selection-end="3322" vertical-scroll-proportion="0.35957697">
           <folding />
         </state>
       </provider>
@@ -1943,7 +2292,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.33841133" />
                 <option value="0.5" />
               </list>
             </option>
@@ -1956,7 +2305,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.33841133" />
               </list>
             </option>
           </splitter-proportions>
@@ -1967,7 +2316,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.33841133" />
               </list>
             </option>
           </splitter-proportions>
@@ -1975,11 +2324,11 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.7u17</last-edited>
+          <last-edited>1.7</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.33841133" />
               </list>
             </option>
           </splitter-proportions>
@@ -1987,7 +2336,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>vehicleservice</last-edited>
+          <last-edited>Spring|vehicleservice</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2003,7 +2352,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.33841133" />
               </list>
             </option>
           </splitter-proportions>

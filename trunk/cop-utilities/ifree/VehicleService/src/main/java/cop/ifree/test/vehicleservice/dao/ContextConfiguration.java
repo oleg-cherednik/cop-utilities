@@ -12,15 +12,14 @@ import javax.sql.DataSource;
  */
 @Configuration
 public class ContextConfiguration {
-//	@Bean
-//	public DataSource dataSource() {
-//		BasicDataSource ds = new BasicDataSource();
-//
-//		ds.setDriverClassName("org.hsqldb.jdbcDriver");
-//		ds.setUrl("jdbc:hsqldb:hsql://localhost/vsdb");
-//		ds.setUsername("sa");
-//
-//		return ds;
-//	}
+	@Bean
+	public DataSource dataSource() {
+		BasicDataSource ds = new BasicDataSource();
 
+		ds.setDriverClassName("org.hsqldb.jdbcDriver");
+		ds.setUrl("jdbc:hsqldb:hsql://localhost/vsdb");
+		ds.setUsername("sa");
+
+		return ds;
+	}
 }
