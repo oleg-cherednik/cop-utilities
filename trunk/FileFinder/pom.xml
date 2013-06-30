@@ -8,13 +8,13 @@
 	<packaging>jar</packaging>
 
 	<name>FileFinder</name>
-	<url>www.copltd.com/filefinder</url>
+	<url>http://code.google.com/p/cop-utilities/wiki/FileFinder</url>
 	<description>FileFinder</description>
 	<inceptionYear>2013</inceptionYear>
 
 	<organization>
-		<name>COP LTD.</name>
-		<url>www.copltd.com</url>
+		<name>oleg.cherednik</name>
+		<url>http://code.google.com/u/oleg.cherednik/</url>
 	</organization>
 
 	<developers>
@@ -22,7 +22,7 @@
 			<id>cop</id>
 			<name>Oleg Cherednik</name>
 			<email>abba-best@yandex.ru</email>
-			<url>www.copltd.com/ocherednik</url>
+			<url>http://code.google.com/u/oleg.cherednik/</url>
 			<organization>${project.organization.name}</organization>
 			<organizationUrl>${project.organization.url}</organizationUrl>
 			<roles>
@@ -37,7 +37,7 @@
 		<contributor>
 			<name>Oleg Cherednik</name>
 			<email>abba-best@yandex.ru</email>
-			<url>www.copltd.com/ocherednik</url>
+			<url>http://code.google.com/u/oleg.cherednik/</url>
 			<organization>${project.organization.name}</organization>
 			<organizationUrl>${project.organization.url}</organizationUrl>
 			<roles>
@@ -308,44 +308,44 @@
 				</executions>
 			</plugin>
 			<!--<plugin>-->
-				<!--<groupId>com.akathist.maven.plugins.launch4j</groupId>-->
-				<!--<artifactId>launch4j-maven-plugin</artifactId>-->
-				<!--<version>1.5.2</version>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<id>l4j-gui</id>-->
-						<!--<phase>install</phase>-->
-						<!--<goals>-->
-							<!--<goal>launch4j</goal>-->
-						<!--</goals>-->
-						<!--<configuration>-->
-							<!--<headerType>gui</headerType>-->
-							<!--<outfile>${project.build.directory}/${project.artifactId}.exe</outfile>-->
-							<!--<jar>${project.build.directory}/${project.build.finalName}-bin.jar</jar>-->
-							<!--<errTitle>${project.name}</errTitle>-->
-							<!--<icon>${exe.icon}</icon>-->
-							<!--<classPath>-->
-								<!--<mainClass>${main.class}</mainClass>-->
-								<!--<addDependencies>true</addDependencies>-->
-								<!--<preCp>anything</preCp>-->
-							<!--</classPath>-->
-							<!--<jre>-->
-								<!--<minVersion>${java.version}.0</minVersion>-->
-							<!--</jre>-->
-							<!--<versionInfo>-->
-								<!--<fileVersion>1.0.0.0</fileVersion>-->
-								<!--<txtFileVersion>${project.version}</txtFileVersion>-->
-								<!--<fileDescription>${project.description}</fileDescription>-->
-								<!--<copyright>${copyright}</copyright>-->
-								<!--<productVersion>1.0.0.0</productVersion>-->
-								<!--<txtProductVersion>${project.version}</txtProductVersion>-->
-								<!--<productName>${project.name}</productName>-->
-								<!--<internalName>${project.groupId}.${project.artifactId}</internalName>-->
-								<!--<originalFilename>${project.artifactId}.exe</originalFilename>-->
-							<!--</versionInfo>-->
-						<!--</configuration>-->
-					<!--</execution>-->
-				<!--</executions>-->
+			<!--<groupId>com.akathist.maven.plugins.launch4j</groupId>-->
+			<!--<artifactId>launch4j-maven-plugin</artifactId>-->
+			<!--<version>1.5.2</version>-->
+			<!--<executions>-->
+			<!--<execution>-->
+			<!--<id>l4j-gui</id>-->
+			<!--<phase>install</phase>-->
+			<!--<goals>-->
+			<!--<goal>launch4j</goal>-->
+			<!--</goals>-->
+			<!--<configuration>-->
+			<!--<headerType>gui</headerType>-->
+			<!--<outfile>${project.build.directory}/${project.artifactId}.exe</outfile>-->
+			<!--<jar>${project.build.directory}/${project.build.finalName}-bin.jar</jar>-->
+			<!--<errTitle>${project.name}</errTitle>-->
+			<!--<icon>${exe.icon}</icon>-->
+			<!--<classPath>-->
+			<!--<mainClass>${main.class}</mainClass>-->
+			<!--<addDependencies>true</addDependencies>-->
+			<!--<preCp>anything</preCp>-->
+			<!--</classPath>-->
+			<!--<jre>-->
+			<!--<minVersion>${java.version}.0</minVersion>-->
+			<!--</jre>-->
+			<!--<versionInfo>-->
+			<!--<fileVersion>1.0.0.0</fileVersion>-->
+			<!--<txtFileVersion>${project.version}</txtFileVersion>-->
+			<!--<fileDescription>${project.description}</fileDescription>-->
+			<!--<copyright>${copyright}</copyright>-->
+			<!--<productVersion>1.0.0.0</productVersion>-->
+			<!--<txtProductVersion>${project.version}</txtProductVersion>-->
+			<!--<productName>${project.name}</productName>-->
+			<!--<internalName>${project.groupId}.${project.artifactId}</internalName>-->
+			<!--<originalFilename>${project.artifactId}.exe</originalFilename>-->
+			<!--</versionInfo>-->
+			<!--</configuration>-->
+			<!--</execution>-->
+			<!--</executions>-->
 			<!--</plugin>-->
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -407,21 +407,6 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>com.google.code.maven-scm-provider-svnjava</groupId>
-						<artifactId>maven-scm-provider-svnjava</artifactId>
-						<version>2.0.3</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.7</version>
 			</plugin>
@@ -433,8 +418,7 @@
 					<useDefaultExcludes>true</useDefaultExcludes>
 					<quiet>true</quiet>
 					<includes>
-						<!--<include>**/ritcon/*.java</include>-->
-						<include>**/ru/ritcon/**/*.java</include>
+						<include>**/cop/utils/file/**/*.java</include>
 					</includes>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<skipExistingHeaders>false</skipExistingHeaders>
@@ -471,11 +455,6 @@
 						<goals>
 							<goal>verify</goal>
 						</goals>
-						<configuration>
-							<excludes>
-								<exclude>com.thoughtworks.xstream:xstream:jar:1.4.4</exclude>
-							</excludes>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -557,4 +536,31 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<scm>
+		<connection>scm:svn:http://cop-utilities.googlecode.com/svn/trunk/FileFinder/</connection>
+		<developerConnection>
+			scm:svn:https://cop-utilities.googlecode.com/svn/trunk/FileFinder/
+		</developerConnection>
+		<url>http://cop-utilities.googlecode.com/svn/trunk/FileFinder/</url>
+	</scm>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>akathist-repository</id>
+			<name>Akathist Repository</name>
+			<url>http://www.9stmaryrd.com/maven</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>mc-release</id>
+			<name>maven-license-plugin release repository</name>
+			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
