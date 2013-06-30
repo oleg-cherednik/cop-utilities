@@ -1,0 +1,4 @@
+${copyright}
+
+The copyright of the computer program is the property of ${project.organization.name} The program may
+be used and/or copied in accordance with the terms and conditions of GNU Leser General Public License.
