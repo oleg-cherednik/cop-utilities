@@ -284,7 +284,7 @@
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
-						<phase>deploy</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -398,7 +398,6 @@
 						</goals>
 						<configuration>
 							<descriptors>
-								<descriptor>etc/assembly-prod.xml</descriptor>
 								<descriptor>etc/assembly-dev.xml</descriptor>
 							</descriptors>
 						</configuration>
