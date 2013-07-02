@@ -33,6 +33,8 @@ public class IconHeader
 	{
 		try
 		{
+			int val = in.readUnsignedShort();
+			val = in.readUnsignedShort();
 			in.skipBytes(2);
 			type = parseIconTypeEnum(in.readUnsignedShort());
 			imageCount = in.readUnsignedShort();
