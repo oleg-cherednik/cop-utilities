@@ -1,37 +1,62 @@
 package cop.icoman;
 
-import java.io.DataInput;
+import cop.icoman.exceptions.IconManagerException;
 
-import static cop.icoman.IconTypeEnum.parseCode;
+import java.io.DataInput;
+import java.io.IOException;
+
+import static cop.icoman.BitmapType.parseCode;
 
 public final class IconHeader {
-	public static final IconHeader NULL = new IconHeader(IconTypeEnum.NONE, 0);
+    public static final IconHeader NULL = new IconHeader(BitmapType.NONE, 0);
+    public static final int SIZE = 6;
 
-	private final IconTypeEnum type; // size: 2, offs: 0x2
-	private final int imageCount; // size: 2, offs: 0x4
+    private final BitmapType type; // size: 2, offs: 0x2
+    private final int imageCount; // size: 2, offs: 0x4
 
-	public static IconHeader readHeader(DataInput in) throws Exception {
-		in.skipBytes(2);
-		return new IconHeader(parseCode(in.readUnsignedShort()), in.readUnsignedShort());
-	}
+    public static IconHeader readHeader(DataInput in) throws IconManagerException, IOException {
+        if (in.readUnsignedShort() != 0)
+            throw new IconManagerException("'header offs:0, size:2' is reserved, should be 0");
 
-	private IconHeader(IconTypeEnum type, int imageCount) {
-		this.type = type != null ? type : IconTypeEnum.NONE;
-		this.imageCount = imageCount >= 0 ? imageCount : 0;
-	}
+        BitmapType type = parseCode(in.readUnsignedShort());
+        int imageCount = in.readUnsignedShort();
 
-	public IconTypeEnum getType() {
-		return type;
-	}
+        check(type, imageCount);
 
-	public int getImageCount() {
-		return imageCount;
-	}
+        return new IconHeader(type, imageCount);
+    }
 
-	// ========== Object ==========
+    private IconHeader(BitmapType type, int imageCount) {
+        assert type != null && type != BitmapType.NONE;
+        assert imageCount > 0;
 
-	@Override
-	public String toString() {
-		return type + ":" + imageCount;
-	}
+        this.type = type;
+        this.imageCount = imageCount;
+    }
+
+    public BitmapType getType() {
+        return type;
+    }
+
+    public int getImageCount() {
+        return imageCount;
+    }
+
+    // ========== Object ==========
+
+    @Override
+    public String toString() {
+        return type + ":" + imageCount;
+    }
+
+    // ========== static ==========
+
+    private static void check(BitmapType type, int imageCount) throws IconManagerException {
+        if (type == null || type == BitmapType.NONE)
+            throw new IconManagerException("'header.type' is not set");
+        if (type != BitmapType.ICO)
+            throw new IconManagerException("'header.type' " + type.name() + " is not supported");
+        if (imageCount < 1)
+            throw new IconManagerException("'header.imageCount' is illegal: " + imageCount);
+    }
 }
