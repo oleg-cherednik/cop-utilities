@@ -1,34 +1,15 @@
 package cop.icoman;
 
-import static cop.icoman.IconTypeEnum.ICO;
+/**
+ * @author Oleg Cherednik
+ * @since 03.07.2013
+ */
+public final class IconImage {
+    private IconImageHeader header;
+    private byte[] data;
 
-import java.io.DataInput;
-import java.io.IOException;
-
-public class IconImage extends BitmapImage
-{
-	public IconImage(DataInput in) throws IOException
-	{
-		read(in);
-	}
-
-	public int getColsorPlanes()
-	{
-		return getPlanesHor();
-	}
-
-	public int getBitsPerPixel()
-	{
-		return getBitCountVer();
-	}
-
-	/*
-	 * Object
-	 */
-
-	@Override
-	public String toString()
-	{
-		return ICO + ":" + super.toString() + " " + getBitsPerPixel() + "bits";
-	}
+    public IconImage(IconImageHeader header, byte[] data) {
+        this.header = header;
+        this.data = data;
+    }
 }

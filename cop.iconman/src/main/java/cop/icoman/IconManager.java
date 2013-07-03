@@ -2,7 +2,7 @@ package cop.icoman;
 
 public final class IconManager
 {
-	public static BitmapImage createBitmaImage(String path)
+	public static IconImageHeader createBitmaImage(String path)
 	{
 		return null;
 	}

@@ -1,5 +1,7 @@
 package cop.icoman;
 
+import cop.icoman.exceptions.IconManagerException;
+
 import java.io.DataInput;
 import java.io.IOException;
 import java.util.Map;
@@ -7,31 +9,30 @@ import java.util.TreeMap;
 
 public class IconImageHolder
 {
-	private IconTypeEnum type;
-	private final Map<ImageKey, BitmapImage> images = new TreeMap<ImageKey, BitmapImage>();
+	private BitmapType type;
+	private final Map<ImageKey, IconImageHeader> images = new TreeMap<ImageKey, IconImageHeader>();
 
-	public void read(DataInput in, int imageCount, IconTypeEnum type) throws IOException
-	{
+	public void read(DataInput in, int imageCount, BitmapType type) throws IOException, IconManagerException {
 		this.type = type;
 		images.clear();
 
-		BitmapImage image;
+		IconImageHeader image;
 
 		for(int i = 0; i < imageCount; i++)
 		{
-			image = type.createBitmapImage(in);
+			image = type.createImageHeader(i, in);
 			images.put(image.getImageKey(), image);
 		}
 	}
 
-	public BitmapImage getImage(ImageKey key)
+	public IconImageHeader getImage(ImageKey key)
 	{
 		return images.get(key);
 	}
 
-	public BitmapImage[] getImages()
+	public IconImageHeader[] getImages()
 	{
-		return images.values().toArray(new BitmapImage[images.size()]);
+		return images.values().toArray(new IconImageHeader[images.size()]);
 	}
 
 	/*
