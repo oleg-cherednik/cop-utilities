@@ -1,21 +1,24 @@
 package cop.icoman;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import nl.ikarus.nxt.priv.imageio.icoreader.obj.ICOFile;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 public class Example {
 	public static void main(String[] arg) {
 		try  {
 			InputStream is = Example.class.getResourceAsStream("/testico.ico");
-//			final ImageInputStream iis = ImageIO.createImageInputStream(fis);
+			final ImageInputStream iis = ImageIO.createImageInputStream(is);
+			iis.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+			IconHeader header = IconHeader.readHeader(iis);
 
-			IconHeader header = new IconHeader();
-			header.read(new DataInputStream(is));
+			BitmapImage image = header.getType().createBitmapImage(iis);
 
 
-//			ICOFile ico = new ICOFile(iis);
+			ICOFile ico = new ICOFile(iis);
 
 			int a = 0;
 			a++;

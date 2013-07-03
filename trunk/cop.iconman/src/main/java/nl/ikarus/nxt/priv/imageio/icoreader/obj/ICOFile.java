@@ -99,7 +99,7 @@ public class ICOFile {
   }
 
   private void readEntries() throws IOException  {
-    for (int i=0;i<imageCount;i++) {
+    for (int i=0;i<imageC                                 ount;i++) {
       try {
 	IconEntry e = new IconEntry(reader);
 	entries.add(e);

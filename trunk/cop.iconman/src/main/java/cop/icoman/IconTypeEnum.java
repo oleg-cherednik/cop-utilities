@@ -4,40 +4,39 @@ import java.io.DataInput;
 import java.io.IOException;
 import java.text.ParseException;
 
-public enum IconTypeEnum
-{
-	ICO(1)
-	{
+public enum IconTypeEnum {
+	NONE(0) {
 		@Override
-		public IconImage createBitmapImage(DataInput in) throws IOException
-		{
+		public IconImage createBitmapImage(DataInput in) throws IOException {
+			return null;
+		}
+	},
+	ICO(1) {
+		@Override
+		public IconImage createBitmapImage(DataInput in) throws IOException {
 			return new IconImage(in);
 		}
 	},
-	CUR(2)
-	{
+	CUR(2) {
 		@Override
-		public CursorImage createBitmapImage(DataInput in) throws IOException
-		{
+		public CursorImage createBitmapImage(DataInput in) throws IOException {
 			return new CursorImage(in);
 		}
 	};
 
-	private int code;
+	private final int code;
 
-	private IconTypeEnum(int code)
-	{
+	IconTypeEnum(int code) {
 		this.code = code;
 	}
 
 	public abstract BitmapImage createBitmapImage(DataInput in) throws IOException;
 
-	public static IconTypeEnum parseIconTypeEnum(int code) throws ParseException
-	{
-		for(IconTypeEnum type : values())
-			if(type.code == code)
+	public static IconTypeEnum parseCode(int code) throws ParseException {
+		for (IconTypeEnum type : values())
+			if (type.code == code)
 				return type;
 
-		throw new ParseException("Unknown icon resource", code);
+		throw new ParseException("Unknown code: " + code, code);
 	}
 }
