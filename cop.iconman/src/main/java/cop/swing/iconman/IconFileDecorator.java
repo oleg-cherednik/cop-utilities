@@ -1,8 +1,10 @@
-package cop.swing.icon;
+package cop.swing.iconman;
 
 import cop.icoman.IconFile;
+import nl.ikarus.nxt.priv.imageio.icoreader.obj.Bitmap;
 
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * @author Oleg Cherednik
@@ -22,5 +24,9 @@ public final class IconFileDecorator {
             icons[id] = new javax.swing.ImageIcon(iconFile.getImage(id).getData());
 
         return icons[id];
+    }
+
+    private Bitmap getBitmap() throws IOException {
+        return Bitmap.getBitmap(this);
     }
 }
