@@ -1,9 +1,9 @@
-package cop.swing.iconman;
+package cop.swing.icoman;
 
 import cop.icoman.IconFile;
 import cop.icoman.IconImage;
 import cop.icoman.exceptions.IconManagerException;
-import cop.swing.iconman.bitmap.Bitmap;
+import cop.swing.icoman.bitmap.Bitmap;
 
 import javax.swing.*;
 import java.io.IOException;

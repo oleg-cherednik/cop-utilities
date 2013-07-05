@@ -1,6 +1,6 @@
 package cop.icoman;
 
-import cop.swing.iconman.IconFileDecorator;
+import cop.swing.icoman.IconFileDecorator;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package cop.swing.iconman.bitmap;
+package cop.swing.icoman.bitmap;
 
 import cop.icoman.IconImage;
 import cop.icoman.exceptions.IconManagerException;
