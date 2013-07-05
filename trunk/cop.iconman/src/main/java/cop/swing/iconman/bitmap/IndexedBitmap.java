@@ -1,23 +1,4 @@
 package cop.swing.iconman.bitmap;
-/**
- * ICOReader (ImageIO compatible class for reading ico files)
- * Copyright (C) 2005 J.B. van der Burgh
- * contact me at: icoreader (at) vdburgh.tmfweb.nl
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Lesser General Public License along
- * with this library; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- */
 
 import cop.icoman.exceptions.IconManagerException;
 
@@ -30,6 +11,10 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 
 public final class IndexedBitmap extends Bitmap {
+    private final byte[] RGBQUAD;
+    private final byte[] XOR;
+    private final byte[] AND;
+
     public static IndexedBitmap read(byte[] data, int width, int height) throws IOException, IconManagerException {
         try (ImageInputStream is = ImageIO.createImageInputStream(new ByteArrayInputStream(data))) {
             is.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -37,69 +22,29 @@ public final class IndexedBitmap extends Bitmap {
         }
     }
 
-    /*  protected int XORmaskSize;
-      protected int ANDMaskSize;
-      protected byte[] RGBQUAD;
-      protected byte[] XOR;
-      protected byte[] AND;
-    */
     private IndexedBitmap(ImageInputStream is, int width, int height) throws IOException, IconManagerException {
         super(is, width, height);
-        init(is);
+
+        int XORmaskSize = biWidth * biHeight / 2 * biBitCount / 8;
+        int ANDMaskSize = Math.max(biWidth, 32) * biHeight / 2 / 8;
+        int RGBQuardSize = biBitCount <= 8 ? (int)Math.pow(2, super.biBitCount) * 4 : 0;
+
+        check(XORmaskSize, ANDMaskSize, RGBQuardSize);
+
+        RGBQUAD = readBytes(is, RGBQuardSize);
+        XOR = readBytes(is, XORmaskSize);
+        AND = readBytes(is, ANDMaskSize);
+
+        readImage(is);
     }
 
-    private void init(ImageInputStream is) throws IOException, IconManagerException {
-//    meta.put("XORmaskSize", ( (Integer) meta.get("biWidth")) * ( (Integer) (meta.get("biHeight")) / 2) * ( (Integer) meta.get("biBitCount")) / 8);
-
-        this.XORmaskSize = biWidth * biHeight / 2 * biBitCount / 8;
-//    this.XORmaskSize = ( (super.biWidth) * ( (Integer) (meta.get("biHeight")) / 2) * ( (Integer) meta.get("biBitCount")) / 8);
-        int tmpL = Math.max(biWidth, 32) * biHeight / 2 / 8; // don't know if max() is the way to round up to long
-        this.ANDMaskSize = (int)tmpL;
-        {
-            int length;
-            if ((super.biBitCount <= 8)) {
-                length = (int)Math.pow(2, super.biBitCount) * 4;
-            } else {
-                length = 0;
-            }
-            if (length > 500000) {
-                throw new IconManagerException("RGBQUAD mask to large... " + length);
-            }
-            this.RGBQUAD = new byte[length];
-            is.read(this.RGBQUAD);
-        }
-        //meta.put("RGBQUAD", CHUNK("RGBQUAD", (long) ( ( (Integer) meta.get("biBitCount") <= 8) ? (Math.pow(2, ( (Integer) meta.get("biBitCount"))) * 4) : 0)));
-
-        if (this.XORmaskSize > 500000) {
-            throw new IconManagerException("XOR mask to large... " + this.XORmaskSize);
-        }
-        this.XOR = new byte[this.XORmaskSize];
-        is.read(this.XOR);
-
-        if (this.ANDMaskSize > 500000) {
-            throw new IconManagerException("AND mask to large... " + this.ANDMaskSize);
-        }
-
-        this.AND = new byte[ANDMaskSize];
-        is.read(this.AND);
-    }
-
-
-    /**
-     * createImage
-     *
-     * @return BufferedImage
-     * @throws java.io.IOException
-     * @todo Implement this nl.ikarus.nxt.priv.imageio.icoreader.obj.Bitmap
-     * method
-     */
-    protected BufferedImage createImage() throws IOException {
-        if (height < 1 || height < 1) {
+    protected BufferedImage createImage(ImageInputStream is) throws IOException {
+        if (width < 1 || height < 1) {
             System.err.println("java.lang.IllegalArgumentException: Width (0) and height (0) cannot be <= 0");
             return null;
         }
         final Color TRANSPARENT = new Color(0, 0, 0, 0);
-        BufferedImage image = new BufferedImage(height, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
         //g.setBackground(Color.white);
 
@@ -142,8 +87,8 @@ public final class IndexedBitmap extends Bitmap {
         int bbyte = yy * this.biWidth + xx; // en alpha es 32 fijo
         int pixelsPerByte = 8 / this.biBitCount; // can be 1 (biBitCount=8), 2 (biBitCount=4) or 8 (biBitCount=1)
         bbyte = (int)(bbyte / pixelsPerByte); // $n=$xx%8 $n => 0..7  7-$n => 7..0        0..7 0..1 0
-        int shift = ((pixelsPerByte - (xx % pixelsPerByte) - 1) * this.biBitCount);
-        int colIdx = (ord(((byte[])this.XOR)[bbyte]) >> shift) & ((1 << (this.biBitCount)) - 1);
+        int shift = (pixelsPerByte - xx % pixelsPerByte - 1) * biBitCount;
+        int colIdx = ord(XOR[bbyte]) >> shift & (1 << biBitCount) - 1;
         // 1 bit   8ppb   0,1,2,3,4,5,6,7   >> 0,1,2,3,4,5,6,7   % 8 = 0,1,2,3,4,5,6,7 * 1
         // 4 bits  2ppb   0,4               >> 0,4               % 2 = 0,1   * 4 = 0,4
         // 8 bits  1ppb   0                 >> 0                 % 1 = 0     * 8 = 0
@@ -179,4 +124,20 @@ public final class IndexedBitmap extends Bitmap {
         return (res == 1);
     }
 
+    // ========== static ==========
+
+    private static byte[] readBytes(ImageInputStream is, int length) throws IOException {
+        byte[] buf = new byte[length];
+        is.read(buf);
+        return buf;
+    }
+
+    private static void check(int XORmaskSize, int ANDMaskSize, int RGBQuardSize) throws IconManagerException {
+        if (XORmaskSize > 500000)
+            throw new IconManagerException("XOR mask to large... " + XORmaskSize);
+        if (ANDMaskSize > 500000)
+            throw new IconManagerException("AND mask to large... " + ANDMaskSize);
+        if (RGBQuardSize > 500000)
+            throw new IconManagerException("RGBQUAD mask to large... " + RGBQuardSize);
+    }
 }

@@ -30,19 +30,28 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 
 public final class RgbBitmap extends Bitmap {
+    private final int readBytes;
+
     public static RgbBitmap read(byte[] data, int readBytes, int width, int height) throws IOException, IconManagerException {
         try (ImageInputStream is = ImageIO.createImageInputStream(new ByteArrayInputStream(data))) {
             is.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-            return new RgbBitmap(is, readBytes, width, height);
+            RgbBitmap bitmap = new RgbBitmap(is, readBytes, width, height);
+
+
+            return bitmap;
         }
     }
 
     private RgbBitmap(ImageInputStream is, int readBytes, int width, int height) throws IOException, IconManagerException {
         super(is, width, height);
-        _cachedImage = createImage(is, readBytes);
+        this.readBytes = readBytes;
+        readImage(is);
     }
 
-    private BufferedImage createImage(ImageInputStream is, int readBytes) throws IOException {
+    // ========== Bitmap ==========
+
+    @Override
+    protected BufferedImage createImage(ImageInputStream is) throws IOException {
         final int w = height;
         final int h = width;
 
@@ -103,10 +112,5 @@ public final class RgbBitmap extends Bitmap {
 
         bIm.setRGB(0, 0, h, w, pixeldata, 0, h);
         return bIm;
-    }
-
-    @Override
-    protected BufferedImage createImage() throws IOException {
-        return _cachedImage;
     }
 }
