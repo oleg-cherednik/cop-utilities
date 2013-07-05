@@ -1,4 +1,4 @@
-package cop.swing.iconman.bitmap;
+package cop.swing.icoman.bitmap;
 
 /**
  * ICOReader (ImageIO compatible class for reading ico files)
