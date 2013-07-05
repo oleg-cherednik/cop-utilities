@@ -1,7 +1,7 @@
 package cop.icoman;
 
 import cop.icoman.exceptions.IconManagerException;
-import cop.swing.icon.IconFileDecorator;
+import cop.swing.iconman.IconFileDecorator;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.nio.ByteOrder;
-//import cop.swing.icon.ImageIcon;
+//import cop.swing.iconman.ImageIcon;
 
 public class Example {
     public static void main(String[] arg) {
@@ -38,7 +38,7 @@ public class Example {
             button2.setIcon(dec.getIcon(0));
 
 
-//            button1.setIcon(new cop.swing.icon.ImageIcon(path));
+//            button1.setIcon(new cop.swing.iconman.ImageIcon(path));
 //            button2.setIcon(new javax.swing.ImageIcon("/db.png"));
 
             parent.add(button1, gbc);

@@ -23,19 +23,19 @@ import java.io.*;
 
 public abstract class VersionData {
   private static Properties data=new Properties();
-  static {
-    try {
-      data.load(VersionData.class.getResourceAsStream("buildnumber.buildnr"));
-    } catch (IOException ex) {
-    }
-  }
+//  static {
+//    try {
+//      data.load(VersionData.class.getResourceAsStream("buildnumber.buildnr"));
+//    } catch (IOException ex) {
+//    }
+//  }
 
   public static String getBuild() {
-    return data.getProperty("build.number");
+    return "1.1";//data.getProperty("build.number");
   }
 
   public static String getVersion() {
-    return data.getProperty("version.number");
+    return "1.1";//data.getProperty("version.number");
   }
 
 }

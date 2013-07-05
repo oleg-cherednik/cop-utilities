@@ -1,4 +1,4 @@
-package cop.swing.icon;
+package cop.swing.iconman;
 
 import cop.icoman.IconFile;
 import cop.icoman.exceptions.IconManagerException;
