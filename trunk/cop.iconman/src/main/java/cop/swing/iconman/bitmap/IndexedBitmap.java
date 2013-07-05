@@ -19,31 +19,41 @@ package cop.swing.iconman.bitmap;
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-import cop.icoman.IconImage;
 import cop.icoman.exceptions.IconManagerException;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
 
-public class IndexedBitmap extends Bitmap {
+public final class IndexedBitmap extends Bitmap {
+    public static IndexedBitmap read(byte[] data, int width, int height) throws IOException, IconManagerException {
+        try (ImageInputStream is = ImageIO.createImageInputStream(new ByteArrayInputStream(data))) {
+            is.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+            return new IndexedBitmap(is, width, height);
+        }
+    }
+
     /*  protected int XORmaskSize;
       protected int ANDMaskSize;
       protected byte[] RGBQUAD;
       protected byte[] XOR;
       protected byte[] AND;
     */
-    protected IndexedBitmap(IconImage entry) throws IOException, IconManagerException {
-        super(entry);
-        init();
+    private IndexedBitmap(ImageInputStream is, int width, int height) throws IOException, IconManagerException {
+        super(is, width, height);
+        init(is);
     }
 
-    private void init() throws IOException, IconManagerException {
+    private void init(ImageInputStream is) throws IOException, IconManagerException {
 //    meta.put("XORmaskSize", ( (Integer) meta.get("biWidth")) * ( (Integer) (meta.get("biHeight")) / 2) * ( (Integer) meta.get("biBitCount")) / 8);
 
-        this.XORmaskSize = ((super.biWidth * (super.biHeight / 2)) * (super.biBitCount) / 8);
+        this.XORmaskSize = biWidth * biHeight / 2 * biBitCount / 8;
 //    this.XORmaskSize = ( (super.biWidth) * ( (Integer) (meta.get("biHeight")) / 2) * ( (Integer) meta.get("biBitCount")) / 8);
-        int tmpL = (Math.max(super.biWidth, 32) * (super.biHeight / 2) / 8); // don't know if max() is the way to round up to long
+        int tmpL = Math.max(biWidth, 32) * biHeight / 2 / 8; // don't know if max() is the way to round up to long
         this.ANDMaskSize = (int)tmpL;
         {
             int length;
@@ -55,19 +65,23 @@ public class IndexedBitmap extends Bitmap {
             if (length > 500000) {
                 throw new IconManagerException("RGBQUAD mask to large... " + length);
             }
-            this.RGBQUAD = Chunk("RGBQUAD", length);
+            this.RGBQUAD = new byte[length];
+            is.read(this.RGBQUAD);
         }
         //meta.put("RGBQUAD", CHUNK("RGBQUAD", (long) ( ( (Integer) meta.get("biBitCount") <= 8) ? (Math.pow(2, ( (Integer) meta.get("biBitCount"))) * 4) : 0)));
 
         if (this.XORmaskSize > 500000) {
             throw new IconManagerException("XOR mask to large... " + this.XORmaskSize);
         }
-        this.XOR = Chunk("XOR", this.XORmaskSize);
+        this.XOR = new byte[this.XORmaskSize];
+        is.read(this.XOR);
 
         if (this.ANDMaskSize > 500000) {
             throw new IconManagerException("AND mask to large... " + this.ANDMaskSize);
         }
-        this.AND = Chunk("AND", this.ANDMaskSize);
+
+        this.AND = new byte[ANDMaskSize];
+        is.read(this.AND);
     }
 
 
@@ -80,14 +94,12 @@ public class IndexedBitmap extends Bitmap {
      * method
      */
     protected BufferedImage createImage() throws IOException {
-        int w = entry.getHeader().getImageKey().getWidth();
-        int h = entry.getHeader().getImageKey().getHeight();
-        if (w < 1 || h < 1) {
+        if (height < 1 || height < 1) {
             System.err.println("java.lang.IllegalArgumentException: Width (0) and height (0) cannot be <= 0");
             return null;
         }
         final Color TRANSPARENT = new Color(0, 0, 0, 0);
-        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(height, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
         //g.setBackground(Color.white);
 
@@ -107,7 +119,7 @@ public class IndexedBitmap extends Bitmap {
                  *  because the icons were missing the bottom line of pixels
                  * I'm not sure this is the correct sollution, but it seems to work.
                  */
-                g.fillRect(x, h - y - 1, 1, 1);
+                g.fillRect(x, height - y - 1, 1, 1);
             }
         }
 //System.out.println("--------");
@@ -142,11 +154,6 @@ public class IndexedBitmap extends Bitmap {
         return new Color(r, g, b);
     }
 
-
-    private byte[] Chunk(String txt, int len) throws IOException {
-//    System.err.println("Reading: " +txt + "  with length: " + len+ " on offset: " + reader.getOffset() + "    total offset: " + (this.entry.getImageOffset() + reader.getOffset()));
-        return reader.readBytes(len);
-    }
 
     /**
      * make unsigned

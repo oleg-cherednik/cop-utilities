@@ -6,8 +6,6 @@ import cop.icoman.exceptions.IconManagerException;
 import cop.swing.iconman.bitmap.Bitmap;
 
 import javax.swing.*;
-import javax.swing.ImageIcon;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -24,10 +22,8 @@ public final class IconFileDecorator {
     }
 
     public Icon getIcon(int id) throws IOException, IconManagerException {
-        if (icons[id] == null) {
-            BufferedImage img = getBitmap(iconFile.getImage(id)).getImage();
-            icons[id] = new ImageIcon(img);
-        }
+        if (icons[id] == null)
+            icons[id] = new ImageIcon(getBitmap(iconFile.getImage(id)).getImage());
 
         return icons[id];
     }

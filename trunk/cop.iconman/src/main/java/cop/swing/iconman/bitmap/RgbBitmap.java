@@ -20,27 +20,37 @@ package cop.swing.iconman.bitmap;
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-import cop.icoman.IconImage;
+import cop.icoman.exceptions.IconManagerException;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 public final class RgbBitmap extends Bitmap {
-    private final int readBytes;
-
-    protected RgbBitmap(IconImage entry, int readBytes) throws IOException {
-        super(entry);
-        this.readBytes = readBytes;
+    public static RgbBitmap read(byte[] data, int readBytes, int width, int height) throws IOException, IconManagerException {
+        try (ImageInputStream is = ImageIO.createImageInputStream(new ByteArrayInputStream(data))) {
+            is.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+            return new RgbBitmap(is, readBytes, width, height);
+        }
     }
 
-    protected BufferedImage createImage() throws IOException {
-        final int w = entry.getHeader().getImageKey().getHeight();
-        final int h = entry.getHeader().getImageKey().getWidth();
+    private RgbBitmap(ImageInputStream is, int readBytes, int width, int height) throws IOException, IconManagerException {
+        super(is, width, height);
+        _cachedImage = createImage(is, readBytes);
+    }
+
+    private BufferedImage createImage(ImageInputStream is, int readBytes) throws IOException {
+        final int w = height;
+        final int h = width;
 
         //boolean debuginf = readBytes > 3 && w == 32;
         int[] pixeldata = new int[h * w];
         for (int rijNr = 0; rijNr < w; rijNr++) {
-            byte[] rij = reader.readBytes(h * readBytes);
+            byte[] rij = new byte[h * readBytes];
+            is.read(rij);
             int rByte = 0;
             int oPos = (w - rijNr - 1) * h;
             for (int colNr = 0; colNr < h; colNr++) {
@@ -95,4 +105,8 @@ public final class RgbBitmap extends Bitmap {
         return bIm;
     }
 
+    @Override
+    protected BufferedImage createImage() throws IOException {
+        return _cachedImage;
+    }
 }
