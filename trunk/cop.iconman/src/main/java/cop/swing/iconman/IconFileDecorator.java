@@ -1,9 +1,13 @@
 package cop.swing.iconman;
 
 import cop.icoman.IconFile;
-import nl.ikarus.nxt.priv.imageio.icoreader.obj.Bitmap;
+import cop.icoman.IconImage;
+import cop.icoman.exceptions.IconManagerException;
+import cop.swing.iconman.bitmap.Bitmap;
 
 import javax.swing.*;
+import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -19,14 +23,16 @@ public final class IconFileDecorator {
         icons = new Icon[iconFile.getHeader().getImageCount()];
     }
 
-    public Icon getIcon(int id) {
-        if (icons[id] == null)
-            icons[id] = new javax.swing.ImageIcon(iconFile.getImage(id).getData());
+    public Icon getIcon(int id) throws IOException, IconManagerException {
+        if (icons[id] == null) {
+            BufferedImage img = getBitmap(iconFile.getImage(id)).getImage();
+            icons[id] = new ImageIcon(img);
+        }
 
         return icons[id];
     }
 
-    private Bitmap getBitmap() throws IOException {
-        return Bitmap.getBitmap(this);
+    private Bitmap getBitmap(IconImage iconImage) throws IOException, IconManagerException {
+        return Bitmap.getBitmap(iconImage);
     }
 }
