@@ -54,11 +54,11 @@ public final class IconImageHeader {
         return key;
     }
 
-    protected int getColorPlanes() {
+    public int getColorPlanes() {
         return colorPlanes;
     }
 
-    protected int getBitsPerPixel() {
+    public int getBitsPerPixel() {
         return bitsPerPixel;
     }
 
