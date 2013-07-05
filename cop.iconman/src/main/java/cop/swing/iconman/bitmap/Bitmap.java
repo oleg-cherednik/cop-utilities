@@ -23,6 +23,7 @@ import cop.icoman.IconImage;
 import cop.icoman.exceptions.IconManagerException;
 import nl.ikarus.nxt.priv.imageio.icoreader.obj.*;
 
+import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -70,23 +71,27 @@ import java.lang.reflect.Field;
  * </pre>
  */
 public abstract class Bitmap {
-    /**
-     * @see BITMAPINFOHEADER http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/bitmaps_1rw2.asp
+    /*
+     * @see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/bitmaps_1rw2.asp
      */
-    private BufferedImage _cachedImage = null;
+    protected BufferedImage _cachedImage = null;
     // protected int _bytesInHeader=0;
-    protected IconImage entry;
-    protected int biWidth;//LONG
-    protected int biHeight; //LONG -> the combined height of the AND & XOR masks
-    protected int biSize; //DWORD, bytes in this struct
-    protected int biPlanes; //WORD
-    protected int biBitCount;//WORD //bits per pixel
-    protected int biCompression;//DWORD
-    protected int biSizeImage;//DWORD //if there is no compression it is valid to set this to 0
-    protected int biXPelsPerMeter;//DWORD
-    protected int biYPelsPerMeter;//DWORD
-    protected int biColorsUsed;//DWORD
-    protected int biColorsImportant;//DWORD
+
+    protected final int width;
+    protected final int height;
+
+    protected final int biSize;
+    protected final int biWidth;
+    protected final int biHeight;
+    protected final int biPlanes;
+    protected final int biBitCount;
+    protected final int biCompression;
+    protected final int biSizeImage;
+    protected final int biXPelsPerMeter;
+    protected final int biYPelsPerMeter;
+    protected final int biColorsUsed;
+    protected final int biColorsImportant;
+
     protected int XORmaskSize;
     protected int ANDMaskSize;
     protected byte[] RGBQUAD;
@@ -96,86 +101,63 @@ public abstract class Bitmap {
     // protected byte[] icXOR; //XOR mask
     //protected byte[] icAND; //AND mask
 
-    protected MyReader reader;
-
-    protected static int readBitCountFromData(byte[] data) throws IOException {
-        MyReader reader = new MyReader(new DataInputStream(new ByteArrayInputStream(data)));
-        reader.readDWORD();
-        reader.readLONG();
-        reader.readLONG();
-        reader.readWORD();
-        int bitcount = reader.readWORD();
-//    System.err.println("bibitcount: " + bitcount+"     COMPRESSION: " + compression);
-        return bitcount;
-    }
-
-    protected class Compression {
-        public final static int BI_BITFIELDS = 3;
-        public final static int BI_JPEG = 4;
-        public final static int BI_PNG = 5;
-        public final static int BI_RGB = 0; //no compression
-        public final static int BI_RLE4 = 2;
-        public final static int BI_RLE8 = 1;
-        public final static int BI_1632 = 0x32333631;
-
-        public String getCompressionName(int val) {
-            switch (val) {
-                case BI_BITFIELDS:
-                    return "BI_BITFIELDS";
-                case BI_JPEG:
-                    return "BI_JPEG";
-                case BI_PNG:
-                    return "BI_PNG";
-                case BI_RGB:
-                    return "BI_RGB (uncompressed)";
-                case BI_RLE4:
-                    return "BI_RLE4";
-                case BI_RLE8:
-                    return "BI_RLE8";
-                case BI_1632:
-                    return "BI_1632";
-                default:
-                    return "UNKNOWN";
-            }
-        }
-
-    }
-
-
-    protected Bitmap(IconImage entry) throws IOException {
-        this.entry = entry;
-//      width = pEntry.getWidth();
-        //    height = pEntry.getHeight();
-        this.reader = new MyReader(new DataInputStream(new ByteArrayInputStream(entry.getData())));
-        this.biSize = reader.readDWORD();
-        this.biWidth = reader.readLONG();
-        this.biHeight = reader.readLONG();
-        //    System.out.println("W="+biWidth +" h="+biHeight);
-        this.biPlanes = reader.readWORD();
-        this.biBitCount = reader.readWORD();
-        this.biCompression = reader.readDWORD();
-        this.biSizeImage = reader.readDWORD();
-        this.biXPelsPerMeter = reader.readLONG();
-        this.biYPelsPerMeter = reader.readLONG();
-        this.biColorsUsed = reader.readDWORD();
-        this.biColorsImportant = reader.readDWORD();
-        //  _bytesInHeader = reader.getOffset();
-        checkCompression();
-    }
-
-    private void checkCompression() throws IOException {
-//        if (this.biCompression != 0 && !(this instanceof BitmapImageIO)) {
-//            throw new IOException("Compressed icons are currently unsupported... If you want support, please send an example to the author of this class, used compression: " + new Compression().getCompressionName(this.biCompression));
+//    protected class Compression {
+//        public final static int BI_BITFIELDS = 3;
+//        public final static int BI_JPEG = 4;
+//        public final static int BI_PNG = 5;
+//        public final static int BI_RGB = 0; //no compression
+//        public final static int BI_RLE4 = 2;
+//        public final static int BI_RLE8 = 1;
+//        public final static int BI_1632 = 0x32333631;
+//
+//        public String getCompressionName(int val) {
+//            switch (val) {
+//                case BI_BITFIELDS:
+//                    return "BI_BITFIELDS";
+//                case BI_JPEG:
+//                    return "BI_JPEG";
+//                case BI_PNG:
+//                    return "BI_PNG";
+//                case BI_RGB:
+//                    return "BI_RGB (uncompressed)";
+//                case BI_RLE4:
+//                    return "BI_RLE4";
+//                case BI_RLE8:
+//                    return "BI_RLE8";
+//                case BI_1632:
+//                    return "BI_1632";
+//                default:
+//                    return "UNKNOWN";
+//            }
 //        }
+//
+//    }
+
+    protected Bitmap(ImageInputStream is, int width, int height) throws IOException {
+        this.width = width;
+        this.height = height;
+
+        biSize = (int)is.readUnsignedInt();
+        biWidth = is.readInt();
+        biHeight = is.readInt();
+        biPlanes = is.readUnsignedShort();
+        biBitCount = is.readUnsignedShort();
+        biCompression = (int)is.readUnsignedInt();
+        biSizeImage = (int)is.readUnsignedInt();
+        biXPelsPerMeter = is.readInt();
+        biYPelsPerMeter = is.readInt();
+        biColorsUsed = (int)is.readUnsignedInt();
+        biColorsImportant = (int)is.readUnsignedInt();
     }
+
 
 //    public static Bitmap getImageIoBitmap(IconImage entry) throws IOException {
 //        return new BitmapImageIO(entry);
 //    }
 
     public BufferedImage getImage() throws IOException {
-        if (_cachedImage != null) return _cachedImage;
-        checkCompression();
+        if (_cachedImage != null)
+            return _cachedImage;
 
         _cachedImage = createImage();
         return _cachedImage;
@@ -228,15 +210,17 @@ public abstract class Bitmap {
 
     public static Bitmap getBitmap(IconImage entry) throws IOException, IconManagerException {
         int bitsPerPixel = entry.getHeader().getBitsPerPixel();
+        int width = entry.getHeader().getImageKey().getWidth();
+        int height = entry.getHeader().getImageKey().getHeight();
 
         if (bitsPerPixel == 1 || bitsPerPixel == 2 || bitsPerPixel == 4 || bitsPerPixel == 8)
-            return new IndexedBitmap(entry);
+            return IndexedBitmap.read(entry.getData(), width, height);
         if (bitsPerPixel == 16)
-            return new RgbBitmap(entry, 2);
+            return RgbBitmap.read(entry.getData(), 2, width, height);
         if (bitsPerPixel == 24)
-            return new RgbBitmap(entry, 3);
+            return RgbBitmap.read(entry.getData(), 3, width, height);
         if (bitsPerPixel == 32)
-            return new RgbBitmap(entry, 4);
+            return RgbBitmap.read(entry.getData(), 4, width, height);
 
         throw new IconManagerException("Unsupported image, bitsPerPixel=" + bitsPerPixel);
     }

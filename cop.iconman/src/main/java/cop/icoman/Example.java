@@ -1,26 +1,21 @@
 package cop.icoman;
 
-import cop.icoman.exceptions.IconManagerException;
 import cop.swing.iconman.IconFileDecorator;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.nio.ByteOrder;
 //import cop.swing.iconman.ImageIcon;
 
 public class Example {
     public static void main(String[] arg) {
         try {
             String path = "/testico.ico";
-            IconFile icon = getIcon(path);
+            IconFile icon = IconFile.read(path);
 
             JDialog dialog = new JDialog();
             dialog.setTitle("Test");
             dialog.setModal(true);
-            dialog.setSize(500, 100);
+            dialog.setSize(200, 500);
 
             Container parent = dialog.getContentPane();
             parent.setLayout(new GridBagLayout());
@@ -87,19 +82,6 @@ public class Example {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private static IconFile getIcon(String path) throws IOException, IconManagerException {
-        try (ImageInputStream is = ImageIO.createImageInputStream(Example.class.getResourceAsStream(path))) {
-            is.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-
-            IconFile icon = IconFile.read(is);
-
-            if (is.read() != -1)
-                throw new IconManagerException("End of the stream is not reached");
-
-            return icon;
         }
     }
 }
