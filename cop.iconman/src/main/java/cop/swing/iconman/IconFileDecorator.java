@@ -22,13 +22,12 @@ public final class IconFileDecorator {
     }
 
     public Icon getIcon(int id) throws IOException, IconManagerException {
-        if (icons[id] == null)
-            icons[id] = new ImageIcon(getBitmap(iconFile.getImage(id)).getImage());
-
-        return icons[id];
+        return icons[id] == null ? icons[id] = new ImageIcon(getBitmap(iconFile.getImage(id)).getImage()) : icons[id];
     }
 
-    private Bitmap getBitmap(IconImage iconImage) throws IOException, IconManagerException {
+    // ========== static ==========
+
+    private static Bitmap getBitmap(IconImage iconImage) throws IOException, IconManagerException {
         return Bitmap.getBitmap(iconImage);
     }
 }
