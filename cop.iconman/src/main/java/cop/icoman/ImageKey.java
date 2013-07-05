@@ -3,7 +3,11 @@ package cop.icoman;
 import java.io.DataInput;
 import java.io.IOException;
 
-public final class ImageKey implements Comparable<ImageKey> {
+/**
+ * @author Oleg Cherednik
+ * @since 14.12.2012
+ */
+public final class ImageKey {
     private final int width; // size: 1, offs: 0x0 (0-255, 0=256 pixels)
     private final int height; // size: 1, offs: 0x1 (0-255, 0=256 pixels)
     private final int colors; // size: 1, offs: 0x2 (0=256 - truecolor)
@@ -41,27 +45,7 @@ public final class ImageKey implements Comparable<ImageKey> {
         return colors;
     }
 
-	/*
-     * Comparable
-	 */
-
-    public int compareTo(ImageKey obj) {
-        if (obj == null)
-            return 1;
-
-        if (this.width != obj.width)
-            return (this.width > obj.width) ? 1 : -1;
-        if (this.height != obj.height)
-            return (this.height > obj.height) ? 1 : -1;
-        if (this.colors != obj.colors)
-            return (this.colors > obj.colors) ? 1 : -1;
-
-        return 0;
-    }
-
-	/*
-     * Object
-	 */
+    // ========== Object ==========
 
     @Override
     public int hashCode() {
@@ -81,19 +65,15 @@ public final class ImageKey implements Comparable<ImageKey> {
             return false;
         if (getClass() != obj.getClass())
             return false;
+
         ImageKey other = (ImageKey)obj;
-        if (colors != other.colors)
-            return false;
-        if (height != other.height)
-            return false;
-        if (width != other.width)
-            return false;
-        return true;
+
+        return colors == other.colors && height == other.height && width == other.width;
     }
 
     @Override
     public String toString() {
-        return width + "x" + height + " " + ((colors == 256) ? "truecolor" : colors + "colors");
+        return width + "x" + height + " " + (colors == 256 ? "truecolor" : colors + "colors");
     }
 
     // ========== static ==========

@@ -153,6 +153,6 @@ public class ICOReaderSpi extends ImageReaderSpi {
    * @todo Implement this javax.imageio.spi.IIOServiceProvider method
    */
   public String getDescription(Locale locale) {
-    return "Microsoft Icon Format (ICO) Reader version: "+VersionData.getVersion() + " #"+VersionData.getBuild();
+    return "Microsoft IconFile Format (ICO) Reader version: "+VersionData.getVersion() + " #"+VersionData.getBuild();
   }
 }
