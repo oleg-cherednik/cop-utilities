@@ -12,7 +12,6 @@
             <outputDirectory>/</outputDirectory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <includes>
-                <include>${exe.name}.exe</include>
                 <include>${project.build.finalName}*.jar</include>
                 <include>${lib.name}/**</include>
             </includes>
