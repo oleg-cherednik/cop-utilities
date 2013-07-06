@@ -34,41 +34,63 @@ public final class FileUtils {
 		return pos > 0 ? filename.substring(pos + 1) : null;
 	}
 
+	public static File getAbsolutePath(File base, File relativeFile) {
+		checkAbsolutePath(base);
+		checkRelativePath(relativeFile);
+
+		for (String part : getPathParts(relativeFile))
+			if (!".".equals(part))
+				base = "..".equals(part) ? base.getParentFile() : new File(base, part);
+
+		return base;
+	}
+
 	public static File getRelativePath(File base, File file) {
-		String[] basePath = getAbsoluteFilePath(base);
-		String[] filePath = getAbsoluteFilePath(file);
+		checkAbsolutePath(base);
+		checkAbsolutePath(file);
+
+		String[] basePath = getPathParts(base);
+		String[] filePath = getPathParts(file);
 
 		if (!basePath[0].equals(filePath[0]))
-			return new File(filePath[0]);
+			return new File('.' + File.separator + filePath[0]);
 
 		int i = 0;
 		int j = 0;
 		final int maxBasePath = basePath.length;
 		final int maxFilePath = filePath.length;
 
-		StringBuilder buf = new StringBuilder();
+		StringBuilder buf = new StringBuilder(".");
 
 		for (int max = Math.max(maxBasePath, maxFilePath); i < max && j < max; i++, j++)
 			if (!basePath[i].equals(filePath[j]))
 				break;
 
 		for (; i < maxBasePath; i++)
-			buf.append("..").append(File.separator);
-		for (; j < maxFilePath - 1; j++)
-			buf.append(filePath[j]).append(File.separator);
-
-		buf.append(filePath[j]);
+			buf.append(File.separator).append("..");
+		for (; j < maxFilePath; j++)
+			buf.append(File.separator).append(filePath[j]);
 
 		return new File(buf.toString());
 	}
 
-	public static String[] getAbsoluteFilePath(File file) {
+	private static void checkAbsolutePath(File file) {
 		if (file == null)
 			throw new NullPointerException("File is not set");
-		if (!file.isAbsolute())
-			throw new IllegalArgumentException("File is not absolute: " + file.getPath());
+		if (file.isFile() || file.getPath().startsWith("."))
+			throw new NullPointerException("File is not absolute: " + file);
+	}
 
-		file = file.getAbsoluteFile();
+	private static void checkRelativePath(File file) {
+		if (file == null)
+			throw new NullPointerException("File is not set");
+		if (file.isAbsolute() || !file.getPath().startsWith("."))
+			throw new NullPointerException("File is not relative: " + file);
+	}
+
+	private static String[] getPathParts(File file) {
+		assert file != null;
+
 		File parent;
 		List<String> path = new ArrayList<>();
 
