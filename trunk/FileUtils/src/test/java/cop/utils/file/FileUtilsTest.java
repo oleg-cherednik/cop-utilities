@@ -15,6 +15,7 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Oleg Cherednik
@@ -35,6 +36,13 @@ public class FileUtilsTest {
 		File file = buildPath(File.separator, "one", "two2", "three2");
 
 		assertEquals(buildPath("..", "two2", "three2"), FileUtils.getRelativePath(base, file));
+	}
+
+	@Test
+	public void testGetExtension() {
+		assertEquals("exe", FileUtils.getExtension("foo.exe"));
+		assertEquals("", FileUtils.getExtension("foo."));
+		assertNull(FileUtils.getExtension(".foo"));
 	}
 
 	// ========== static ==========
