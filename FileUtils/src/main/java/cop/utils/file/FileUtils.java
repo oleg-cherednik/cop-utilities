@@ -23,6 +23,17 @@ public final class FileUtils {
 	private FileUtils() {
 	}
 
+	public static String getExtension(String filename) {
+		if (filename == null)
+			throw new NullPointerException("Filename is not set");
+		if (filename.contains(File.pathSeparator))
+			throw new IllegalArgumentException("Illegal filename: " + filename);
+
+		filename = filename.trim();
+		int pos = filename.lastIndexOf('.');
+		return pos > 0 ? filename.substring(pos + 1) : null;
+	}
+
 	public static File getRelativePath(File base, File file) {
 		String[] basePath = getAbsoluteFilePath(base);
 		String[] filePath = getAbsoluteFilePath(file);
