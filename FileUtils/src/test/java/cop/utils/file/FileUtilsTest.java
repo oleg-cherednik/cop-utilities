@@ -27,7 +27,8 @@ public class FileUtilsTest {
 		File base = buildPath("d:", "one", "two1");
 		File file = buildPath("d:", "one", "two2", "three2");
 
-		assertEquals(buildPath("..", "two2", "three2"), FileUtils.getRelativePath(base, file));
+		assertEquals(buildPath(".", "..", "two2", "three2"), FileUtils.getRelativePath(base, file));
+		assertEquals(buildPath("."), FileUtils.getRelativePath(base, base));
 	}
 
 	@Test
@@ -35,7 +36,15 @@ public class FileUtilsTest {
 		File base = buildPath(File.separator, "one", "two1");
 		File file = buildPath(File.separator, "one", "two2", "three2");
 
-		assertEquals(buildPath("..", "two2", "three2"), FileUtils.getRelativePath(base, file));
+		assertEquals(buildPath(".", "..", "two2", "three2"), FileUtils.getRelativePath(base, file));
+	}
+
+	@Test
+	public void testAbsolutePath() {
+		File base = buildPath("d:", "one", "two1");
+		File file = buildPath(".", "..", "two2", "three2");
+
+		assertEquals(buildPath("d:", "one", "two2", "three2"), FileUtils.getAbsolutePath(base, file));
 	}
 
 	@Test
