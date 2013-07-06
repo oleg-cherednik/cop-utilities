@@ -1,13 +1,12 @@
 /*
- * Copyright © 2013 RITCON LTD. (www.ritcon.ru)
+ * Copyright © 2013 oleg.cherednik (http://code.google.com/u/oleg.cherednik/)
  *
- * The copyright of the computer program is the property of RITCON LTD. The program may be used and/or copied
- * only with the written permission of RITCON LTD. or in accordance with the terms and conditions stipulated in the
- * agreement/contract under which the program has been supplied.
+ * The copyright of the computer program is the property of oleg.cherednik. The program may
+ * be used and/or copied in accordance with the terms and conditions of GNU Leser General Public License.
  */
 package cop.utils.file.filters;
 
-import cop.utils.file.FileUtilsLocal;
+import cop.utils.file.FileUtils;
 
 import javax.validation.constraints.NotNull;
 import java.io.File;
@@ -38,6 +37,6 @@ public final class ExtensionFileFilter implements FileFilter {
 	public boolean accept(File file) {
 		if (file == null || !file.isFile())
 			return delegate.accept(file);
-		return extension.equalsIgnoreCase(FileUtilsLocal.getExtension(file.getName()));
+		return extension.equalsIgnoreCase(FileUtils.getExtension(file.getName()));
 	}
 }
