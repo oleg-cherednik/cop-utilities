@@ -62,7 +62,7 @@ public final class FileUtils {
 
 		StringBuilder buf = new StringBuilder(".");
 
-		for (int max = Math.max(maxBasePath, maxFilePath); i < max && j < max; i++, j++)
+		for (int max = Math.min(maxBasePath, maxFilePath); i < max && j < max; i++, j++)
 			if (!basePath[i].equals(filePath[j]))
 				break;
 
@@ -78,14 +78,14 @@ public final class FileUtils {
 		if (file == null)
 			throw new NullPointerException("File is not set");
 		if (file.isFile() || file.getPath().startsWith("."))
-			throw new NullPointerException("File is not absolute: " + file);
+			throw new IllegalArgumentException("File is not absolute: " + file);
 	}
 
 	private static void checkRelativePath(File file) {
 		if (file == null)
 			throw new NullPointerException("File is not set");
 		if (file.isAbsolute() || !file.getPath().startsWith("."))
-			throw new NullPointerException("File is not relative: " + file);
+			throw new IllegalArgumentException("File is not relative: " + file);
 	}
 
 	private static String[] getPathParts(File file) {
