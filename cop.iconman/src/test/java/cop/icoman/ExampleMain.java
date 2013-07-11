@@ -17,8 +17,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
-public class TestApplication extends JFrame implements FilenameFilter {
-	public TestApplication() throws IOException, IconManagerException {
+public class ExampleMain extends JFrame implements FilenameFilter {
+	public ExampleMain() throws IOException, IconManagerException {
 		super("Example");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		init("testico");
@@ -54,7 +54,7 @@ public class TestApplication extends JFrame implements FilenameFilter {
 	// ========== static ==========
 
 	public static void main(String[] args) throws IOException, IconManagerException {
-		new TestApplication().setVisible(true);
+		new ExampleMain().setVisible(true);
 	}
 
 	private static JLabel createLabelIcon(Icon icon) {
