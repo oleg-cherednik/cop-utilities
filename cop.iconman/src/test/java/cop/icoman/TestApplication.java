@@ -26,6 +26,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -36,6 +38,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -46,31 +49,8 @@ public class TestApplication extends JFrame implements FilenameFilter {
 		super("Example");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		List<Image> images = getImages(this);
+		init();
 
-		JPanel contentPane = new JPanel();
-		System.out.println("Fetched: " + images.size() + " images");
-
-		for (Image image : images) {
-			Image img = image;
-			String label = " ";
-			if (image instanceof NxtImageHolder) {
-				img = ((NxtImageHolder)image).im;
-				label = ((NxtImageHolder)image).label;
-			}
-			int width = 20;
-			int height = (int)((20d / img.getWidth(null)) * img.getHeight(null));
-			Image imScaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-			JPanel centerPanel = createPanel(createLabelIcon(img), new JLabel(label));
-			JPanel eastPanel = createPanel(createLabelIcon(imScaled), new JLabel("20x" + height));
-
-			contentPane.add(createPanel(centerPanel, eastPanel));
-		}
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(new JScrollPane(contentPane));
-//	frame.getContentPane().setBackground(Color.red);
-//        contentPane.setBackground(Color.WHITE);
-		contentPane.setBackground(Color.LIGHT_GRAY);
 		pack();
 		Dimension d = getSize();
 		d.width += 15;
@@ -86,49 +66,29 @@ public class TestApplication extends JFrame implements FilenameFilter {
 		setLocation(25, 25);
 	}
 
-	private static List<Image> getImages(FilenameFilter filter) {
-		List<Image> images = new ArrayList<>();
+	private void init() {
+		GridBagConstraints gbc = new GridBagConstraints();
+		JPanel panel = new JPanel(new GridBagLayout());
 
-		for (String name : new File("/").list(filter))
-			images.addAll(getImage(new File("/", name)));
+		getContentPane().add(new JScrollPane(panel));
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+//		panel.setBackground(Color.green);
 
-		return images.isEmpty() ? Collections.<Image>emptyList() : Collections.unmodifiableList(images);
-	}
-
-	private static java.util.List<Image> getImage(File path) {
-		System.out.println("Fetch image: " + path.getAbsolutePath());
-		try {
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			FileInputStream in = new FileInputStream(path);
-			byte[] buff = new byte[512];
-			int off;
-			while ((off = in.read(buff)) != -1) {
-				out.write(buff, 0, off);
+		for (Image image : getImages(this)) {
+			Image img = image;
+			String label = " ";
+			if (image instanceof NxtImageHolder) {
+				img = ((NxtImageHolder)image).im;
+				label = ((NxtImageHolder)image).label;
 			}
-			BufferedImage im = null;
-			java.util.List<BufferedImage> imList = null;
-			if (imageio)
-				imList = getImageImageIO(out.toByteArray());
-			else
-				imList = getImageNEW(out.toByteArray());
-			if (imList == null || imList.size() == 0) {
-				System.err.println("Error fetching image " + TestApplication.class.getName());
-				return null;
-			}
-			java.util.List<Image> res = new ArrayList<Image>();
-	  /*
-	  final int MULITPLIER = 4;
-      java.util.List<Image> res = new ArrayList<Image>();
-      for(BufferedImage bim : imList) {
-	Image im2 = bim.getScaledInstance(bim.getWidth(null) * MULITPLIER, bim.getHeight(null) * MULITPLIER, Image.SCALE_SMOOTH);
-	res.add(im2);
-      }*/
-			res.addAll(imList);
-			return res;
-		} catch(Exception ex) {
-			ex.printStackTrace();
+			int width = 20;
+			int height = (int)(20d / img.getWidth(null) * img.getHeight(null));
+			Image imScaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			JPanel centerPanel = createPanel(createLabelIcon(img), new JLabel(label));
+			JPanel eastPanel = createPanel(createLabelIcon(imScaled), new JLabel("20x" + height));
+
+			panel.add(createPanel(centerPanel, eastPanel), gbc);
 		}
-		return null;
 	}
 
 	static class NxtImageHolder extends BufferedImage {
@@ -147,8 +107,8 @@ public class TestApplication extends JFrame implements FilenameFilter {
 
 	}
 
-	private static List<BufferedImage> getImageNEW(byte[] data) throws ImageReaderException {
-		java.util.List<BufferedImage> images = new ArrayList<BufferedImage>();
+	private static List<Image> getImageNEW(byte[] data) throws ImageReaderException {
+		List<Image> images = new ArrayList<>();
 		try {
 			ICOFile f = new ICOFile(data);
 
@@ -173,8 +133,8 @@ public class TestApplication extends JFrame implements FilenameFilter {
 		return images;
 	}
 
-	private static List<BufferedImage> getImageImageIO(byte[] data) throws ImageReaderException {
-		java.util.List<BufferedImage> images = new ArrayList<>();
+	private static List<Image> getImageImageIO(byte[] data) throws ImageReaderException {
+		List<Image> images = new ArrayList<>();
 		try {
 			ByteArrayInputStream bIn = new ByteArrayInputStream(data);
 			ImageInputStream in = ImageIO.createImageInputStream(bIn);
@@ -353,5 +313,31 @@ public class TestApplication extends JFrame implements FilenameFilter {
 		panel.add(eastPanel, BorderLayout.EAST);
 
 		return panel;
+	}
+
+	private static List<Image> getImage(String name) {
+		try (InputStream in = TestApplication.class.getResourceAsStream("/" + name)) {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] buff = new byte[512];
+			int off;
+			while ((off = in.read(buff)) != -1) {
+				out.write(buff, 0, off);
+			}
+
+			return imageio ? getImageImageIO(out.toByteArray()) : getImageNEW(out.toByteArray());
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private static List<Image> getImages(FilenameFilter filter) {
+		List<Image> images = new ArrayList<>();
+
+		for (String name : new File("/").list(filter))
+			images.addAll(getImage(name));
+
+		return images.isEmpty() ? Collections.<Image>emptyList() : Collections.unmodifiableList(images);
 	}
 }
