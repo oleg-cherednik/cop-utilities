@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cop.utils</groupId>
@@ -64,7 +63,7 @@
 		<java.version>1.7</java.version>
 		<lib.name>lib</lib.name>
 		<lib.dir>${project.build.directory}/${lib.name}</lib.dir>
-		<copyright>Copyright © ${project.inceptionYear} ${project.organization.name}</copyright>
+		<copyright>Copyright ï¿½ ${project.inceptionYear} ${project.organization.name}</copyright>
 	</properties>
 
 	<reporting>
@@ -444,11 +443,11 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://cop-utilities.googlecode.com/svn/trunk/cop-utils/</connection>
+		<connection>scm:svn:http://cop-utilities.googlecode.com/svn/branches/cop-utils-1.0</connection>
 		<developerConnection>
-			scm:svn:https://cop-utilities.googlecode.com/svn/trunk/cop-utils/
+			scm:svn:https://cop-utilities.googlecode.com/svn/branches/cop-utils-1.0
 		</developerConnection>
-		<url>http://cop-utilities.googlecode.com/svn/trunk/cop-utils/</url>
+		<url>http://cop-utilities.googlecode.com/svn/branches/cop-utils-1.0</url>
 	</scm>
 
 	<pluginRepositories>
