@@ -45,12 +45,12 @@ public final class FileUtils {
 		return base;
 	}
 
-	public static File getRelativePath(File base, File file) {
+	public static File getRelativePath(File base, File absoluteFile) {
 		checkAbsolutePath(base);
-		checkAbsolutePath(file);
+		checkAbsolutePath(absoluteFile);
 
 		String[] basePath = getPathParts(base);
-		String[] filePath = getPathParts(file);
+		String[] filePath = getPathParts(absoluteFile);
 
 		if (!basePath[0].equals(filePath[0]))
 			return new File('.' + File.separator + filePath[0]);
@@ -77,7 +77,7 @@ public final class FileUtils {
 	private static void checkAbsolutePath(File file) {
 		if (file == null)
 			throw new NullPointerException("File is not set");
-		if (file.isFile() || file.getPath().startsWith("."))
+		if (file.getPath().startsWith("."))
 			throw new IllegalArgumentException("File is not absolute: " + file);
 	}
 
