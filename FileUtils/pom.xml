@@ -3,7 +3,7 @@
 
 	<groupId>cop.utils</groupId>
 	<artifactId>fileutils</artifactId>
-	<version>1.2</version>
+	<version>1.2.6</version>
 	<packaging>jar</packaging>
 
 	<name>FileUtils</name>
