@@ -57,7 +57,7 @@ final class FinderTask implements Callable<Set<String>> {
 			for (File file : root.listFiles(DirectoryFileFilter.getInstance()))
 				new FinderTask(fileFilter, file, findInSubPaths, futures, pool);
 
-		Set<String> paths = new TreeSet<>();
+		Set<String> paths = new TreeSet<String>();
 
 
 		for (File file : root.listFiles(fileFilter)) {

@@ -50,7 +50,7 @@ public final class FileFinder {
 		if (roots == null || roots.isEmpty())
 			return Collections.emptySet();
 
-		final Queue<Future<Set<String>>> futures = new LinkedBlockingQueue<>();
+		final Queue<Future<Set<String>>> futures = new LinkedBlockingQueue<Future<Set<String>>>();
 		ExecutorService pool = Executors.newFixedThreadPool(threadAmount);
 
 		for (FinderRoot root : roots)
@@ -66,7 +66,7 @@ public final class FileFinder {
 		if (roots == null || roots.isEmpty())
 			return Collections.emptyList();
 
-		Map<String, FinderRoot> map = new HashMap<>(roots.size());
+		Map<String, FinderRoot> map = new HashMap<String, FinderRoot>(roots.size());
 		FinderRoot tmp;
 
 		for (FinderRoot root : roots) {
@@ -81,12 +81,12 @@ public final class FileFinder {
 
 		if (map.isEmpty())
 			return Collections.emptyList();
-		return Collections.unmodifiableList(new ArrayList<>(map.values()));
+		return Collections.unmodifiableList(new ArrayList<FinderRoot>(map.values()));
 	}
 
 	@NotNull
 	private static Set<String> getResults(Queue<Future<Set<String>>> futures) {
-		Set<String> res = new TreeSet<>();
+		Set<String> res = new TreeSet<String>();
 
 		try {
 			while (!futures.isEmpty()) {

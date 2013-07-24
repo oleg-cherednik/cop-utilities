@@ -92,7 +92,7 @@ public final class FileUtils {
 		assert file != null;
 
 		File parent;
-		List<String> path = new ArrayList<>();
+		List<String> path = new ArrayList<String>();
 
 		do {
 			if ((parent = file.getParentFile()) != null) {
