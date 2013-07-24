@@ -3,7 +3,7 @@
 
 	<groupId>cop.utils</groupId>
 	<artifactId>cop-utils</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 
 	<name>cop-utils</name>
@@ -60,10 +60,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
+		<java.version>1.6</java.version>
 		<lib.name>lib</lib.name>
 		<lib.dir>${project.build.directory}/${lib.name}</lib.dir>
-		<copyright>Copyright � ${project.inceptionYear} ${project.organization.name}</copyright>
+		<copyright>Copyright © ${project.inceptionYear} ${project.organization.name}</copyright>
 	</properties>
 
 	<reporting>
