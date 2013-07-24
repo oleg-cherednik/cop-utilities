@@ -443,11 +443,11 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://cop-utilities.googlecode.com/svn/trunk/cop-utils/</connection>
+		<connection>scm:svn:http://cop-utilities.googlecode.com/svn/branches/cop-utils-1.1</connection>
 		<developerConnection>
-			scm:svn:https://cop-utilities.googlecode.com/svn/trunk/cop-utils/
+			scm:svn:https://cop-utilities.googlecode.com/svn/branches/cop-utils-1.1
 		</developerConnection>
-		<url>http://cop-utilities.googlecode.com/svn/trunk/cop-utils/</url>
+		<url>http://cop-utilities.googlecode.com/svn/branches/cop-utils-1.1</url>
 	</scm>
 
 	<pluginRepositories>
