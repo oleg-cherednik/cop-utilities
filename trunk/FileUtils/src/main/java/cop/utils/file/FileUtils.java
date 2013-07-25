@@ -34,6 +34,17 @@ public final class FileUtils {
 		return pos > 0 ? filename.substring(pos + 1) : null;
 	}
 
+	public static String getName(String filename) {
+		if (filename == null)
+			throw new NullPointerException("Filename is not set");
+		if (filename.contains(File.pathSeparator))
+			throw new IllegalArgumentException("Illegal filename: " + filename);
+
+		filename = filename.trim();
+		int pos = filename.lastIndexOf('.');
+		return pos > 0 ? filename.substring(0, pos) : filename;
+	}
+
 	public static File getAbsolutePath(File base, File relativeFile) {
 		checkAbsolutePath(base);
 		checkRelativePath(relativeFile);
