@@ -6,8 +6,9 @@ package cop.icoman;
  */
 public final class VersionData {
 	private VersionData() {
-
 	}
+
+	// ========== static ==========
 
 	public static String getVersion() {
 		return "1.0";
