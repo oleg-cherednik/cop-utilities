@@ -1,7 +1,8 @@
 package cop.icoman;
 
 import cop.icoman.exceptions.IconManagerException;
-import cop.swing.icoman.IconFileDecorator;
+import cop.icoman.imageio.bmp.IconBitmapReaderSpi;
+import cop.icoman.imageio.ico.IconReaderSpi;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -25,6 +26,8 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 	}
 
 	private void init(String name) throws IOException, IconManagerException {
+		IconManager.register();
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		JPanel panel = new JPanel(new GridBagLayout());
 
@@ -32,12 +35,11 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 //		panel.setBackground(Color.green);
 
-		IconFileDecorator dec = new IconFileDecorator(IconFile.read(String.format("/%s.ico", name)));
-		IconFile iconFile = dec.getIconFile();
+		IconFile iconFile = IconFile.read(String.format("/%s.ico", name));
 
-		for (int i = 0, total = dec.size(); i < total; i++) {
-			Icon icon = dec.getIcon(i);
+		for (int i = 0, total = iconFile.getImagesAmount(); i < total; i++) {
 			IconImage iconImage = iconFile.getImage(i);
+			Icon icon = iconImage.getIcon();
 			panel.add(createPanel(createLabelIcon(icon), new JLabel(iconImage.getHeader().toString())), gbc);
 		}
 
