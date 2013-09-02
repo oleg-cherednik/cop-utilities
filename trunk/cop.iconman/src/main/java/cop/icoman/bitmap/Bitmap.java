@@ -11,6 +11,10 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.ByteOrder;
 
+/**
+ * @author Oleg Cherednik
+ * @since 01.09.2013
+ */
 public abstract class Bitmap {
 	/*
 	 * @see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/bitmaps_1rw2.asp

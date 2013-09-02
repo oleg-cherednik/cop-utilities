@@ -70,8 +70,6 @@ public final class IconFile implements Iterable<IconImage> {
 		for (int i = 0; i < total; i++)
 			headers.add(BitmapType.ICO.createImageHeader(i, in));
 
-		Collections.sort(headers, OffsetComparator.getInstance());
-
 		return Collections.unmodifiableList(headers);
 	}
 

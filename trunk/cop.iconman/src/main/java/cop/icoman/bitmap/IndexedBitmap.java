@@ -10,6 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * @author Oleg Cherednik
+ * @since 01.09.2013
+ */
 public final class IndexedBitmap extends Bitmap {
 	private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 

@@ -10,7 +10,7 @@ import java.io.IOException;
 public final class ImageKey {
 	private final int width; // size: 1, offs: 0x0 (0-255, 0=256 pixels)
 	private final int height; // size: 1, offs: 0x1 (0-255, 0=256 pixels)
-	private final int colors; // size: 1, offs: 0x2 (0=256 - truecolor)
+	private final int colors; // size: 1, offs: 0x2 (0=256 - true color)
 
 	public static ImageKey readKey(DataInput in) throws IOException {
 		int width = fix(in.readUnsignedByte());
@@ -83,6 +83,5 @@ public final class ImageKey {
 	}
 
 	private static void check(int width, int height, int colors) {
-
 	}
 }
