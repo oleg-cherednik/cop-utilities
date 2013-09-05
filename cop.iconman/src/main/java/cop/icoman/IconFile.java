@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Oleg Cherednik
@@ -38,6 +39,11 @@ public final class IconFile implements Iterable<IconImage> {
 
 	public IconFileHeader getHeader() {
 		return header;
+	}
+
+	@NotNull
+	public Set<ImageKey> getKeys() {
+		return images.isEmpty() ? Collections.<ImageKey>emptySet() : images.keySet();
 	}
 
 	@NotNull

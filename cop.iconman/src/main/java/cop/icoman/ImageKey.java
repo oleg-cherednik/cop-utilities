@@ -1,7 +1,7 @@
 package cop.icoman;
 
-import java.io.DataInput;
-import java.io.IOException;
+import cop.icoman.exceptions.UnsupportedImageException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,19 +13,15 @@ import java.util.Map;
  * @since 14.12.2012
  */
 public final class ImageKey {
+	private static final int HIGH_COLOR = -1;    // 16bit
+	private static final int TRUE_COLOR = -2;    // 24bit
+	private static final int XP = -3;            // 32bit
+
 	private static final Map<String, ImageKey> MAP = new HashMap<>();
 
 	private final int width; // size: 1, offs: 0x0 (0-255, 0=256 pixels)
 	private final int height; // size: 1, offs: 0x1 (0-255, 0=256 pixels)
-	private final int colors; // size: 1, offs: 0x2 (0=256 - true color)
-
-	public static ImageKey readKey(DataInput in) throws IOException {
-		int width = fix(in.readUnsignedByte());
-		int height = fix(in.readUnsignedByte());
-		int colors = fix(in.readUnsignedByte());
-
-		return createKey(width, height, colors);
-	}
+	private final int colors; // size: 1, offs: 0x2 (0=256 - high/true color)
 
 	public static ImageKey createKey(int width, int height, int colors) {
 		check(width, height, colors);
@@ -35,9 +31,9 @@ public final class ImageKey {
 	}
 
 	private ImageKey(int width, int height, int colors) {
-		this.width = fix(width);
-		this.height = fix(height);
-		this.colors = fix(colors);
+		this.width = width;
+		this.height = height;
+		this.colors = colors;
 
 		MAP.put(getString(width, height, colors), this);
 	}
@@ -51,6 +47,10 @@ public final class ImageKey {
 	}
 
 	public int getColors() {
+		if (colors == HIGH_COLOR)
+			return 65536;
+		if (colors == TRUE_COLOR || colors == XP)
+			return 16777216;
 		return colors;
 	}
 
@@ -88,13 +88,39 @@ public final class ImageKey {
 	// ========== static ==========
 
 	private static String getString(int width, int height, int colors) {
-		return width + "x" + height + ' ' + colors + " colors";
-	}
+		StringBuilder buf = new StringBuilder();
 
-	private static int fix(int size) {
-		return size != 0 ? size : 256;
+		buf.append(width).append('x').append(height).append(' ');
+
+		if (colors == HIGH_COLOR)
+			buf.append(" High Color");
+		else if (colors == TRUE_COLOR)
+			buf.append(" True Color");
+		else if (colors == XP)
+			buf.append(" XP");
+		else
+			buf.append(' ').append(colors).append(" colors");
+
+		return buf.toString();
 	}
 
 	private static void check(int width, int height, int colors) {
+	}
+
+	static int getColors(int bitsPerPixel) throws UnsupportedImageException {
+		if (bitsPerPixel == 1)
+			return 2;
+		if (bitsPerPixel == 4)
+			return 16;
+		if (bitsPerPixel == 8)
+			return 256;
+		if (bitsPerPixel == 16)
+			return HIGH_COLOR;
+		if (bitsPerPixel == 24)
+			return TRUE_COLOR;
+		if (bitsPerPixel == 32)
+			return XP;
+
+		throw new UnsupportedImageException("bitPerPixel = " + bitsPerPixel);
 	}
 }
