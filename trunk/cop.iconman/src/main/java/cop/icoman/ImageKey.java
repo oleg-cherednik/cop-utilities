@@ -1,9 +1,5 @@
 package cop.icoman;
 
-import cop.icoman.exceptions.DuplicateException;
-import cop.icoman.exceptions.IconManagerException;
-import cop.icoman.exceptions.UnsupportedImageException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,19 +25,19 @@ public final class ImageKey implements Comparable<ImageKey> {
 	private final int height; // size: 1, offs: 0x1 (0-255, 0=256 pixels)
 	private final int colors; // size: 1, offs: 0x2 (0=256 - high/true color)
 
-	public static ImageKey createHighColorKey(int width, int height) throws IconManagerException {
+	public static ImageKey createHighColorKey(int width, int height) {
 		return createKey(width, height, BITS_HIGH_COLOR);
 	}
 
-	public static ImageKey createTrueColorKey(int width, int height) throws IconManagerException {
+	public static ImageKey createTrueColorKey(int width, int height) {
 		return createKey(width, height, BITS_TRUE_COLOR);
 	}
 
-	public static ImageKey createXpKey(int width, int height) throws IconManagerException {
+	public static ImageKey createXpKey(int width, int height) {
 		return createKey(width, height, BITS_XP);
 	}
 
-	static ImageKey createKey(int width, int height, int bitsPerPixel) throws IconManagerException {
+	static ImageKey createKey(int width, int height, int bitsPerPixel) {
 		check(width, height, bitsPerPixel);
 
 		int colors = getColors(bitsPerPixel);
@@ -50,13 +46,13 @@ public final class ImageKey implements Comparable<ImageKey> {
 		return key != null ? key : new ImageKey(width, height, colors);
 	}
 
-	private ImageKey(int width, int height, int colors) throws DuplicateException {
+	private ImageKey(int width, int height, int colors) {
 		this.width = width;
 		this.height = height;
 		this.colors = colors;
 
 		if (MAP.put(getString(width, height, colors), this) != null)
-			throw new DuplicateException(this);
+			assert false : "key duplication";
 	}
 
 	public int getWidth() {
@@ -145,7 +141,7 @@ public final class ImageKey implements Comparable<ImageKey> {
 	private static void check(int width, int height, int bitsPerPixel) {
 	}
 
-	private static int getColors(int bitsPerPixel) throws UnsupportedImageException {
+	private static int getColors(int bitsPerPixel) {
 		if (bitsPerPixel == 1)
 			return 2;
 		if (bitsPerPixel == 4)
@@ -159,6 +155,8 @@ public final class ImageKey implements Comparable<ImageKey> {
 		if (bitsPerPixel == BITS_XP)
 			return XP;
 
-		throw new UnsupportedImageException("bitPerPixel = " + bitsPerPixel);
+		assert false : "invalid value: bitPerPixel = " + bitsPerPixel;
+
+		return (int)Math.pow(2, bitsPerPixel);
 	}
 }

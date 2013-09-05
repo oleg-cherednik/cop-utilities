@@ -24,8 +24,6 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 	}
 
 	private void init(String name) throws IOException, IconManagerException {
-		IconManager.register();
-
 		GridBagConstraints gbc = new GridBagConstraints();
 		JPanel panel = new JPanel(new GridBagLayout());
 
