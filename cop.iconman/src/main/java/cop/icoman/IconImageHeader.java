@@ -32,7 +32,7 @@ public final class IconImageHeader {
 		int size = in.readInt();
 		int offs = in.readInt();
 
-		ImageKey key = ImageKey.createKey(width, height, ImageKey.getColors(bitsPerPixel));
+		ImageKey key = ImageKey.createKey(width, height, bitsPerPixel);
 
 		check(key, colorPlanes, bitsPerPixel, size, offs);
 

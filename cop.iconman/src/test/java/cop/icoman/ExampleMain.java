@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.ByteOrder;
+import java.util.Set;
 
 public class ExampleMain extends JFrame implements FilenameFilter {
 	public ExampleMain() throws IOException, IconManagerException {
@@ -38,8 +39,8 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 
 		IconFile iconFile = read(String.format("/%s.ico", name));
 
-		for (int i = 0, total = iconFile.getImagesAmount(); i < total; i++) {
-			IconImage iconImage = iconFile.getImage(i);
+		for (ImageKey key : iconFile.getKeys()) {
+			IconImage iconImage = iconFile.getImage(key);
 			JLabel icon = createLabelIcon(iconImage.getIcon());
 			panel.add(createPanel(icon, new JLabel(iconImage.getHeader().getImageKey().toString())), gbc);
 		}
