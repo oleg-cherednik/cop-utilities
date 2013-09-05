@@ -11,14 +11,14 @@ import static cop.icoman.BitmapType.parseCode;
  * @author Oleg Cherednik
  * @since 03.07.2013
  */
-public final class IconHeader {
-	public static final IconHeader NULL = new IconHeader(BitmapType.NONE, 0);
+public final class IconFileHeader {
+	public static final IconFileHeader NULL = new IconFileHeader(BitmapType.NONE, 0);
 	public static final int SIZE = 6;
 
 	private final BitmapType type; // size: 2, offs: 0x2
 	private final int imageCount; // size: 2, offs: 0x4
 
-	public static IconHeader readHeader(ImageInputStream in) throws IconManagerException, IOException {
+	public static IconFileHeader readHeader(ImageInputStream in) throws IconManagerException, IOException {
 		if (in.readUnsignedShort() != 0)
 			throw new IconManagerException("'header offs:0, size:2' is reserved, should be 0");
 
@@ -27,10 +27,10 @@ public final class IconHeader {
 
 		check(type, imageCount);
 
-		return new IconHeader(type, imageCount);
+		return new IconFileHeader(type, imageCount);
 	}
 
-	private IconHeader(BitmapType type, int imageCount) {
+	private IconFileHeader(BitmapType type, int imageCount) {
 		assert type != null && type != BitmapType.NONE;
 		assert imageCount > 0;
 

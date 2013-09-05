@@ -1,57 +1,63 @@
 package cop.icoman;
 
+import cop.icoman.exceptions.DuplicationKeyException;
 import cop.icoman.exceptions.IconManagerException;
+import cop.icoman.exceptions.ImageNotFoundException;
 
-import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Oleg Cherednik
  * @since 03.07.2013
  */
 public final class IconFile implements Iterable<IconImage> {
-	private final IconHeader header;
-	private final List<IconImage> images;
-
-	public static IconFile read(String filename) throws IOException, IconManagerException {
-		try (ImageInputStream in = ImageIO.createImageInputStream(IconFile.class.getResourceAsStream(filename))) {
-			in.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-
-			IconFile icon = read(in);
-
-			if (in.read() != -1)
-				throw new IconManagerException("End of the stream is not reached");
-
-			return icon;
-		}
-	}
+	private final IconFileHeader header;
+	private final Map<ImageKey, IconImage> images;
 
 	public static IconFile read(ImageInputStream in) throws IOException, IconManagerException {
-		IconHeader header = IconHeader.readHeader(in);
-		List<IconImage> images = readImages(header, in);
+		IconFileHeader header = IconFileHeader.readHeader(in);
+		Map<ImageKey, IconImage> images = readImages(header, in);
 		return new IconFile(header, images);
 	}
 
-	private IconFile(IconHeader header, List<IconImage> images) {
-		assert header != null && header != IconHeader.NULL;
+	private IconFile(IconFileHeader header, Map<ImageKey, IconImage> images) {
+		assert header != null && header != IconFileHeader.NULL;
 		assert images != null && !images.isEmpty();
 
 		this.header = header;
 		this.images = images;
 	}
 
-	public IconHeader getHeader() {
+	public IconFileHeader getHeader() {
 		return header;
 	}
 
-	public IconImage getImage(int id) {
-		return images.get(id);
+	@NotNull
+	public IconImage getImage(int id) throws ImageNotFoundException {
+		int i = 0;
+
+		for (IconImage image : images.values())
+			if (i++ == id)
+				return image;
+
+		throw new ImageNotFoundException(id, images.size());
+	}
+
+	public IconImage getImage(ImageKey key) throws ImageNotFoundException {
+		IconImage image = images.get(key);
+
+		if (image == null)
+			throw new ImageNotFoundException(key);
+
+		return image;
 	}
 
 	public int getImagesAmount() {
@@ -73,19 +79,23 @@ public final class IconFile implements Iterable<IconImage> {
 		return Collections.unmodifiableList(headers);
 	}
 
-	private static List<IconImage> readImages(IconHeader header, ImageInputStream in)
+	private static Map<ImageKey, IconImage> readImages(IconFileHeader fileHeader, ImageInputStream in)
 			throws IOException, IconManagerException {
-		List<IconImageHeader> imageHeaders = readImageHeaders(header.getImageCount(), in);
-		List<IconImage> images = new ArrayList<>(imageHeaders.size());
-		int offs = IconHeader.SIZE + imageHeaders.size() * IconImageHeader.SIZE;
+		List<IconImageHeader> imageHeaders = readImageHeaders(fileHeader.getImageCount(), in);
+		Map<ImageKey, IconImage> images = new LinkedHashMap<>(imageHeaders.size());
+		int offs = IconFileHeader.SIZE + imageHeaders.size() * IconImageHeader.SIZE;
 
 		for (IconImageHeader imageHeader : imageHeaders) {
 			checkOffs(offs, imageHeader);
-			images.add(IconImage.createImage(imageHeader, readData(imageHeader.getSize(), in)));
+			byte[] data = readData(imageHeader.getSize(), in);
+
+			if (images.put(imageHeader.getImageKey(), IconImage.createImage(imageHeader, data)) != null)
+				throw new DuplicationKeyException(imageHeader.getImageKey());
+
 			offs += imageHeader.getSize();
 		}
 
-		return Collections.unmodifiableList(images);
+		return Collections.unmodifiableMap(images);
 	}
 
 	private static byte[] readData(int size, ImageInputStream in) throws IOException {
@@ -104,6 +114,6 @@ public final class IconFile implements Iterable<IconImage> {
 
 	@Override
 	public Iterator<IconImage> iterator() {
-		return images.iterator();
+		return images.values().iterator();
 	}
 }

@@ -2,12 +2,19 @@ package cop.icoman;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * Represents single image in the icon. There're no images with same key (width, height, colors), that's why this class
+ * is singleton for each key. So each set of width, height and color returns <b>same</b> class instance.
+ *
  * @author Oleg Cherednik
  * @since 14.12.2012
  */
 public final class ImageKey {
+	private static final Map<String, ImageKey> MAP = new HashMap<>();
+
 	private final int width; // size: 1, offs: 0x0 (0-255, 0=256 pixels)
 	private final int height; // size: 1, offs: 0x1 (0-255, 0=256 pixels)
 	private final int colors; // size: 1, offs: 0x2 (0=256 - true color)
@@ -17,20 +24,22 @@ public final class ImageKey {
 		int height = fix(in.readUnsignedByte());
 		int colors = fix(in.readUnsignedByte());
 
-		check(width, height, colors);
-
-		return new ImageKey(width, height, colors);
+		return createKey(width, height, colors);
 	}
 
 	public static ImageKey createKey(int width, int height, int colors) {
 		check(width, height, colors);
-		return new ImageKey(width, height, colors);
+
+		ImageKey key = MAP.get(getString(width, height, colors));
+		return key != null ? key : new ImageKey(width, height, colors);
 	}
 
 	private ImageKey(int width, int height, int colors) {
 		this.width = fix(width);
 		this.height = fix(height);
 		this.colors = fix(colors);
+
+		MAP.put(getString(width, height, colors), this);
 	}
 
 	public int getWidth() {
@@ -73,10 +82,14 @@ public final class ImageKey {
 
 	@Override
 	public String toString() {
-		return width + "x" + height + ' ' + colors + " colors";
+		return getString(width, height, colors);
 	}
 
 	// ========== static ==========
+
+	private static String getString(int width, int height, int colors) {
+		return width + "x" + height + ' ' + colors + " colors";
+	}
 
 	private static int fix(int size) {
 		return size != 0 ? size : 256;

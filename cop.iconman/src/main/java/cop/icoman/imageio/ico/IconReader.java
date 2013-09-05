@@ -5,8 +5,8 @@ import cop.icoman.IconImage;
 import cop.icoman.IconImageHeader;
 import cop.icoman.ImageKey;
 import cop.icoman.exceptions.IconManagerException;
+import cop.icoman.exceptions.ImageNotFoundException;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -81,7 +81,11 @@ public class IconReader extends ImageReader {
 	 * @throws IOException if an error occurs reading the height information from the input source
 	 */
 	public int getHeight(int index) throws IOException {
-		return getIcoFile().getImage(index).getHeader().getImageKey().getHeight();
+		try {
+			return getIcoFile().getImage(index).getHeader().getImageKey().getHeight();
+		} catch(ImageNotFoundException e) {
+			throw new IOException(e);
+		}
 	}
 
 	/**
@@ -132,7 +136,7 @@ public class IconReader extends ImageReader {
 
 			return metaData;
 		} catch(Exception e) {
-			throw new IIOException("Exception reading metadata", e);
+			throw new IOException(e);
 		}
 	}
 
@@ -210,7 +214,11 @@ public class IconReader extends ImageReader {
 	 * @todo Implement this javax.imageio.ImageReader method
 	 */
 	public int getWidth(int imageIndex) throws IOException {
-		return getIcoFile().getImage(imageIndex).getHeader().getImageKey().getWidth();
+		try {
+			return getIcoFile().getImage(imageIndex).getHeader().getImageKey().getWidth();
+		} catch(ImageNotFoundException e) {
+			throw new IOException(e);
+		}
 	}
 
 	/**
@@ -227,6 +235,10 @@ public class IconReader extends ImageReader {
 	 * @throws IOException if an error occurs during reading.
 	 */
 	public BufferedImage read(int index, ImageReadParam param) throws IOException {
-		return (BufferedImage)getIcoFile().getImage(index).getIcon().getImage();
+		try {
+			return (BufferedImage)getIcoFile().getImage(index).getIcon().getImage();
+		} catch(ImageNotFoundException e) {
+			throw new IOException(e);
+		}
 	}
 }
