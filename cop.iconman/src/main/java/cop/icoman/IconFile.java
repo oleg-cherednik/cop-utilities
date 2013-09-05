@@ -78,6 +78,13 @@ public final class IconFile implements Iterable<IconImage> {
 		return images.size();
 	}
 
+	// ========== Object ==========
+
+	@Override
+	public String toString() {
+		return header.toString();
+	}
+
 	// ========== static ==========
 
 	private static List<IconImageHeader> readImageHeaders(int total, ImageInputStream in)
