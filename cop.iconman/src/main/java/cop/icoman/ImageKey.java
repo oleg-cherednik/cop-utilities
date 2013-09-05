@@ -1,6 +1,6 @@
 package cop.icoman;
 
-import cop.icoman.exceptions.DuplicationKeyException;
+import cop.icoman.exceptions.DuplicateException;
 import cop.icoman.exceptions.IconManagerException;
 import cop.icoman.exceptions.UnsupportedImageException;
 
@@ -50,13 +50,13 @@ public final class ImageKey implements Comparable<ImageKey> {
 		return key != null ? key : new ImageKey(width, height, colors);
 	}
 
-	private ImageKey(int width, int height, int colors) throws DuplicationKeyException {
+	private ImageKey(int width, int height, int colors) throws DuplicateException {
 		this.width = width;
 		this.height = height;
 		this.colors = colors;
 
 		if (MAP.put(getString(width, height, colors), this) != null)
-			throw new DuplicationKeyException(this);
+			throw new DuplicateException(this);
 	}
 
 	public int getWidth() {

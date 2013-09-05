@@ -9,8 +9,8 @@ import cop.icoman.ImageKey;
 public class ImageNotFoundException extends IconManagerException {
 	private static final long serialVersionUID = -6470950436657824550L;
 
-	public ImageNotFoundException(int id, int total) {
-		super("id = " + id + ", total = " + total);
+	public ImageNotFoundException(int pos, int total) {
+		super("pos = " + pos + ", total = " + total);
 	}
 
 	public ImageNotFoundException(ImageKey key) {

@@ -2,8 +2,6 @@ package cop.icoman;
 
 import cop.icoman.exceptions.IconManagerException;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JFrame;
@@ -17,8 +15,6 @@ import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.nio.ByteOrder;
-import java.util.Set;
 
 public class ExampleMain extends JFrame implements FilenameFilter {
 	public ExampleMain() throws IOException, IconManagerException {
@@ -37,11 +33,12 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 //		panel.setBackground(Color.green);
 
-		IconFile iconFile = read(String.format("/%s.ico", name));
+		IconManager iconManager = IconManager.getInstance();
+		IconFile iconFile = iconManager.addIcon(name, String.format("/%s.ico", name));
 
 		for (ImageKey key : iconFile.getKeys()) {
-			IconImage iconImage = iconFile.getImage(key);
-			JLabel icon = createLabelIcon(iconImage.getIcon());
+			IconImage iconImage = iconManager.getIconFile(name).getImage(key);
+			JLabel icon = createLabelIcon(iconManager.getIcon(name, key));
 			panel.add(createPanel(icon, new JLabel(iconImage.getHeader().getImageKey().toString())), gbc);
 		}
 
@@ -59,19 +56,6 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 
 	public static void main(String[] args) throws IOException, IconManagerException {
 		new ExampleMain().setVisible(true);
-	}
-
-	private static IconFile read(String filename) throws IOException, IconManagerException {
-		try (ImageInputStream in = ImageIO.createImageInputStream(IconFile.class.getResourceAsStream(filename))) {
-			in.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-
-			IconFile icon = IconFile.read(in);
-
-			if (in.read() != -1)
-				throw new IconManagerException("End of the stream is not reached");
-
-			return icon;
-		}
 	}
 
 	private static JLabel createLabelIcon(Icon icon) {

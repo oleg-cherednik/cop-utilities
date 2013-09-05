@@ -1,6 +1,6 @@
 package cop.icoman;
 
-import cop.icoman.exceptions.DuplicationKeyException;
+import cop.icoman.exceptions.DuplicateException;
 import cop.icoman.exceptions.IconManagerException;
 import cop.icoman.exceptions.ImageNotFoundException;
 
@@ -55,16 +55,17 @@ public final class IconFile implements Iterable<IconImage> {
 	}
 
 	@NotNull
-	public IconImage getImage(int id) throws ImageNotFoundException {
+	public IconImage getImage(int pos) throws ImageNotFoundException {
 		int i = 0;
 
 		for (IconImage image : images.values())
-			if (i++ == id)
+			if (i++ == pos)
 				return image;
 
-		throw new ImageNotFoundException(id, images.size());
+		throw new ImageNotFoundException(pos, images.size());
 	}
 
+	@NotNull
 	public IconImage getImage(ImageKey key) throws ImageNotFoundException {
 		IconImage image = images.get(key);
 
@@ -111,7 +112,7 @@ public final class IconFile implements Iterable<IconImage> {
 			byte[] data = readData(imageHeader.getSize(), in);
 
 			if (images.put(imageHeader.getImageKey(), IconImage.createImage(imageHeader, data)) != null)
-				throw new DuplicationKeyException(imageHeader.getImageKey());
+				throw new DuplicateException(imageHeader.getImageKey());
 
 			offs += imageHeader.getSize();
 		}
