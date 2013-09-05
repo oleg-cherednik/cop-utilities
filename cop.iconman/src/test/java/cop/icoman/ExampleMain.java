@@ -31,12 +31,13 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 
 		getContentPane().add(new JScrollPane(panel));
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.WEST;
 //		panel.setBackground(Color.green);
 
 		IconManager iconManager = IconManager.getInstance();
 		IconFile iconFile = iconManager.addIcon(name, String.format("/%s.ico", name));
 
-		for (ImageKey key : iconFile.getKeys()) {
+		for (ImageKey key : iconFile.getSortedKeys()) {
 			IconImage iconImage = iconManager.getIconFile(name).getImage(key);
 			JLabel icon = createLabelIcon(iconManager.getIcon(name, key));
 			panel.add(createPanel(icon, new JLabel(iconImage.getHeader().getImageKey().toString())), gbc);
