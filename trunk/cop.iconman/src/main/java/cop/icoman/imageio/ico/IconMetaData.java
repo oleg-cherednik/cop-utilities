@@ -1,6 +1,5 @@
 package cop.icoman.imageio.ico;
 
-import nl.ikarus.nxt.priv.imageio.icoreader.lib.ICOMetaDataFormat;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -43,7 +42,7 @@ public final class IconMetaData extends IIOMetadata {
 	public IIOMetadataFormat getMetadataFormat(String formatName) {
 		if (!formatName.equals(NATIVE_METADATA_FORMAT_NAME))
 			throw new IllegalArgumentException("Bad format name!");
-		return ICOMetaDataFormat.getDefaultInstance();
+		return IconMetaDataFormat.getInstance();
 	}
 
 	public Node getAsTree(String formatName) {

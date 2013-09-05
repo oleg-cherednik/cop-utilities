@@ -5,10 +5,12 @@ package cop.icoman.exceptions;
  * @since 03.07.2013
  */
 public class IconManagerException extends Exception {
-    public IconManagerException() {
-    }
+	private static final long serialVersionUID = -2835443248290009280L;
 
-    public IconManagerException(String message) {
-        super(message);
-    }
+	public IconManagerException() {
+	}
+
+	public IconManagerException(String message) {
+		super(message);
+	}
 }

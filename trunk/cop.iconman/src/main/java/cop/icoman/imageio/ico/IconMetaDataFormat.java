@@ -14,7 +14,7 @@ public final class IconMetaDataFormat extends IIOMetadataFormatImpl {
 
 	private static final IconMetaDataFormat INSTANCE = new IconMetaDataFormat();
 
-	public static IconMetaDataFormat getINSTANCE() {
+	public static IconMetaDataFormat getInstance() {
 		return INSTANCE;
 	}
 
