@@ -40,8 +40,8 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 
 		for (int i = 0, total = iconFile.getImagesAmount(); i < total; i++) {
 			IconImage iconImage = iconFile.getImage(i);
-			Icon icon = iconImage.getIcon();
-			panel.add(createPanel(createLabelIcon(icon), new JLabel(iconImage.getHeader().toString())), gbc);
+			JLabel icon = createLabelIcon(iconImage.getIcon());
+			panel.add(createPanel(icon, new JLabel(iconImage.getHeader().getImageKey().toString())), gbc);
 		}
 
 		pack();

@@ -15,13 +15,15 @@ public final class IconImageHeader {
 	private final int id;
 	private final ImageKey key;
 	// private int res; // size: 1, offs: 0x3 (0 or 255, ignored)
-	private int colorPlanes; // size: 2, offs: 0x4 (...)
-	private int bitsPerPixel; // size: 2, offs: 0x6 (...)
-	private int size; // size: 4, offs: 0x8 (bitmap data size)
-	private int offs; // size: 4, offs: 0xC (bitmap data offset)
+	private final int colorPlanes; // size: 2, offs: 0x4 (...)
+	private final int bitsPerPixel; // size: 2, offs: 0x6 (...)
+	private final int size; // size: 4, offs: 0x8 (bitmap data size)
+	private final int offs; // size: 4, offs: 0xC (bitmap data offset)
 
 	public static IconImageHeader readHeader(int id, DataInput in) throws IconManagerException, IOException {
-		ImageKey key = ImageKey.readKey(in);
+		int width = fix(in.readUnsignedByte());
+		int height = fix(in.readUnsignedByte());
+		in.readUnsignedByte();  // colors
 
 		skip(id, in);
 
@@ -29,6 +31,8 @@ public final class IconImageHeader {
 		int bitsPerPixel = in.readShort();
 		int size = in.readInt();
 		int offs = in.readInt();
+
+		ImageKey key = ImageKey.createKey(width, height, ImageKey.getColors(bitsPerPixel));
 
 		check(key, colorPlanes, bitsPerPixel, size, offs);
 
@@ -72,7 +76,7 @@ public final class IconImageHeader {
 
 	@Override
 	public String toString() {
-		return key + " " + bitsPerPixel + "bits";
+		return key.toString() + ", planes: " + colorPlanes + ", size: " + size + ", offs: " + offs;
 	}
 
 	// ========== static ==========
@@ -86,5 +90,9 @@ public final class IconImageHeader {
 		if (val != 0 && val != 255)
 			throw new IconManagerException(
 					"'header offs:0, size:2' of image no. " + id + " is reserved, should be 0 or 255");
+	}
+
+	private static int fix(int size) {
+		return size != 0 ? size : 256;
 	}
 }
