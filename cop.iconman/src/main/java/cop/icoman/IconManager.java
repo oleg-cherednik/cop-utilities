@@ -29,6 +29,10 @@ public final class IconManager {
 		return INSTANCE;
 	}
 
+	static {
+		register();
+	}
+
 	private IconManager() {
 	}
 
@@ -67,7 +71,7 @@ public final class IconManager {
 
 	// ========== static ==========
 
-	public static void register() {
+	private static void register() {
 		IconReaderSpi.register();
 		IconBitmapReaderSpi.register();
 	}
