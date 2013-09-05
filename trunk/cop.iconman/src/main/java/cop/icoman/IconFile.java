@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Oleg Cherednik
@@ -43,7 +44,14 @@ public final class IconFile implements Iterable<IconImage> {
 
 	@NotNull
 	public Set<ImageKey> getKeys() {
-		return images.isEmpty() ? Collections.<ImageKey>emptySet() : images.keySet();
+		return images.isEmpty() ? Collections.<ImageKey>emptySet() : Collections.unmodifiableSet(images.keySet());
+	}
+
+	@NotNull
+	public Set<ImageKey> getSortedKeys() {
+		if (images.isEmpty())
+			return Collections.emptySet();
+		return Collections.unmodifiableSet(new TreeSet<ImageKey>(images.keySet()));
 	}
 
 	@NotNull

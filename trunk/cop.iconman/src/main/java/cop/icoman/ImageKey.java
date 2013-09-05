@@ -1,5 +1,7 @@
 package cop.icoman;
 
+import cop.icoman.exceptions.DuplicationKeyException;
+import cop.icoman.exceptions.IconManagerException;
 import cop.icoman.exceptions.UnsupportedImageException;
 
 import java.util.HashMap;
@@ -12,10 +14,14 @@ import java.util.Map;
  * @author Oleg Cherednik
  * @since 14.12.2012
  */
-public final class ImageKey {
-	private static final int HIGH_COLOR = -1;    // 16bit
-	private static final int TRUE_COLOR = -2;    // 24bit
-	private static final int XP = -3;            // 32bit
+public final class ImageKey implements Comparable<ImageKey> {
+	private static final int BITS_HIGH_COLOR = 16;
+	private static final int BITS_TRUE_COLOR = 24;
+	private static final int BITS_XP = 32;
+
+	private static final int HIGH_COLOR = Integer.MAX_VALUE - 2;
+	private static final int TRUE_COLOR = Integer.MAX_VALUE - 1;
+	private static final int XP = Integer.MAX_VALUE;
 
 	private static final Map<String, ImageKey> MAP = new HashMap<>();
 
@@ -23,19 +29,34 @@ public final class ImageKey {
 	private final int height; // size: 1, offs: 0x1 (0-255, 0=256 pixels)
 	private final int colors; // size: 1, offs: 0x2 (0=256 - high/true color)
 
-	public static ImageKey createKey(int width, int height, int colors) {
-		check(width, height, colors);
+	public static ImageKey createHighColorKey(int width, int height) throws IconManagerException {
+		return createKey(width, height, BITS_HIGH_COLOR);
+	}
+
+	public static ImageKey createTrueColorKey(int width, int height) throws IconManagerException {
+		return createKey(width, height, BITS_TRUE_COLOR);
+	}
+
+	public static ImageKey createXpKey(int width, int height) throws IconManagerException {
+		return createKey(width, height, BITS_XP);
+	}
+
+	static ImageKey createKey(int width, int height, int bitsPerPixel) throws IconManagerException {
+		check(width, height, bitsPerPixel);
+
+		int colors = getColors(bitsPerPixel);
 
 		ImageKey key = MAP.get(getString(width, height, colors));
 		return key != null ? key : new ImageKey(width, height, colors);
 	}
 
-	private ImageKey(int width, int height, int colors) {
+	private ImageKey(int width, int height, int colors) throws DuplicationKeyException {
 		this.width = width;
 		this.height = height;
 		this.colors = colors;
 
-		MAP.put(getString(width, height, colors), this);
+		if (MAP.put(getString(width, height, colors), this) != null)
+			throw new DuplicationKeyException(this);
 	}
 
 	public int getWidth() {
@@ -52,6 +73,23 @@ public final class ImageKey {
 		if (colors == TRUE_COLOR || colors == XP)
 			return 16777216;
 		return colors;
+	}
+
+	// ========== Comparable ==========
+
+	@Override
+	public int compareTo(ImageKey key) {
+		if (key == this)
+			return 0;
+
+		int res;
+
+		if ((res = Integer.compare(width, key.width)) != 0)
+			return res;
+		if ((res = Integer.compare(height, key.height)) != 0)
+			return res;
+
+		return Integer.compare(colors, key.colors);
 	}
 
 	// ========== Object ==========
@@ -104,21 +142,21 @@ public final class ImageKey {
 		return buf.toString();
 	}
 
-	private static void check(int width, int height, int colors) {
+	private static void check(int width, int height, int bitsPerPixel) {
 	}
 
-	static int getColors(int bitsPerPixel) throws UnsupportedImageException {
+	private static int getColors(int bitsPerPixel) throws UnsupportedImageException {
 		if (bitsPerPixel == 1)
 			return 2;
 		if (bitsPerPixel == 4)
 			return 16;
 		if (bitsPerPixel == 8)
 			return 256;
-		if (bitsPerPixel == 16)
+		if (bitsPerPixel == BITS_HIGH_COLOR)
 			return HIGH_COLOR;
-		if (bitsPerPixel == 24)
+		if (bitsPerPixel == BITS_TRUE_COLOR)
 			return TRUE_COLOR;
-		if (bitsPerPixel == 32)
+		if (bitsPerPixel == BITS_XP)
 			return XP;
 
 		throw new UnsupportedImageException("bitPerPixel = " + bitsPerPixel);
