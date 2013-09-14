@@ -33,7 +33,8 @@ public class ExampleMain extends JFrame implements FilenameFilter {
 //		panel.setBackground(Color.green);
 
 		IconManager iconManager = IconManager.getInstance();
-		IconFile iconFile = iconManager.addIcon(name, String.format("/%s.ico", name));
+		IconFile iconFile = iconManager.addIcon(name, ExampleMain.class.getResourceAsStream(String.format("/%s.ico",
+				name)));
 
 		for (ImageKey key : iconFile.getSortedKeys()) {
 			IconImage iconImage = iconManager.getIconFile(name).getImage(key);

@@ -1,6 +1,6 @@
 package cop.icoman;
 
-import cop.icoman.exceptions.DuplicateException;
+import cop.icoman.exceptions.IconDuplicationException;
 import cop.icoman.exceptions.IconManagerException;
 import cop.icoman.exceptions.IconNotFoundException;
 import cop.icoman.imageio.bmp.IconBitmapReaderSpi;
@@ -12,6 +12,7 @@ import javax.imageio.stream.ImageInputStream;
 import javax.swing.Icon;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +44,21 @@ public final class IconManager {
 		return icon;
 	}
 
+	@NotNull
+	public IconFile addIcon(String id, InputStream in) throws IconManagerException, IOException {
+		if (in == null)
+			throw new IOException("Resource '" + id + "' doesn't exists");
+
+		IconFile icon = read(in);
+		addIcon(id, icon);
+		return icon;
+	}
+
 	public void addIcon(String id, IconFile icon) throws IconManagerException {
 		if (StringUtils.isBlank(id) || icon == null)
 			throw new IconManagerException("id/icon is not set");
 		if (icons.put(id, icon) != null)
-			throw new DuplicateException(id);
+			throw new IconDuplicationException(id);
 	}
 
 	public void removeIcon(String id) {
@@ -78,14 +89,24 @@ public final class IconManager {
 
 	private static IconFile read(String filename) throws IOException, IconManagerException {
 		try (ImageInputStream in = ImageIO.createImageInputStream(IconFile.class.getResourceAsStream(filename))) {
-			in.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-
-			IconFile icon = IconFile.read(in);
-
-			if (in.read() != -1)
-				throw new IconManagerException("End of the stream is not reached");
-
-			return icon;
+			return read(in);
 		}
+	}
+
+	private static IconFile read(InputStream is) throws IOException, IconManagerException {
+		try (ImageInputStream in = ImageIO.createImageInputStream(is)) {
+			return read(in);
+		}
+	}
+
+	private static IconFile read(ImageInputStream in) throws IOException, IconManagerException {
+		in.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+
+		IconFile icon = IconFile.read(in);
+
+		if (in.read() != -1)
+			throw new IconManagerException("End of the stream is not reached");
+
+		return icon;
 	}
 }
