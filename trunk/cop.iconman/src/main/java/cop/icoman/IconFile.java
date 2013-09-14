@@ -1,6 +1,6 @@
 package cop.icoman;
 
-import cop.icoman.exceptions.DuplicateException;
+import cop.icoman.exceptions.ImageDuplicationException;
 import cop.icoman.exceptions.IconManagerException;
 import cop.icoman.exceptions.ImageNotFoundException;
 
@@ -112,7 +112,7 @@ public final class IconFile implements Iterable<IconImage> {
 			byte[] data = readData(imageHeader.getSize(), in);
 
 			if (images.put(imageHeader.getImageKey(), IconImage.createImage(imageHeader, data)) != null)
-				throw new DuplicateException(imageHeader.getImageKey());
+				throw new ImageDuplicationException(imageHeader.getImageKey());
 
 			offs += imageHeader.getSize();
 		}

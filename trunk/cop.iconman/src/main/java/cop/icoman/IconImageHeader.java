@@ -25,7 +25,7 @@ public final class IconImageHeader {
 		int height = fix(in.readUnsignedByte());
 		in.readUnsignedByte();  // colors
 
-		skip(id, in);
+		skipByte(id, in);
 
 		int colorPlanes = in.readShort();
 		int bitsPerPixel = in.readShort();
@@ -84,7 +84,7 @@ public final class IconImageHeader {
 	private static void check(ImageKey key, int colorPlanes, int bitsPerPixel, int size, int offs) {
 	}
 
-	private static void skip(int id, DataInput in) throws IOException, IconManagerException {
+	private static void skipByte(int id, DataInput in) throws IOException, IconManagerException {
 		int val = in.readUnsignedByte();
 
 		if (val != 0 && val != 255)
