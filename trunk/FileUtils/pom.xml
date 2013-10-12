@@ -3,7 +3,7 @@
 
 	<groupId>cop.utils</groupId>
 	<artifactId>fileutils</artifactId>
-	<version>1.2.7</version>
+	<version>1.2.8</version>
 	<packaging>jar</packaging>
 
 	<name>FileUtils</name>
@@ -121,15 +121,15 @@
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>2.5.2</version>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.10</version>
-				<configuration>
-					<configLocation>etc/checkstyle.xml</configLocation>
-					<consoleOutput>false</consoleOutput>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+				<!--<version>2.10</version>-->
+				<!--<configuration>-->
+					<!--<configLocation>etc/checkstyle.xml</configLocation>-->
+					<!--<consoleOutput>false</consoleOutput>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
@@ -174,23 +174,23 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.10</version>
-				<configuration>
-					<configLocation>etc/checkstyle.xml</configLocation>
-					<consoleOutput>false</consoleOutput>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+				<!--<version>2.10</version>-->
+				<!--<configuration>-->
+					<!--<configLocation>etc/checkstyle.xml</configLocation>-->
+					<!--<consoleOutput>false</consoleOutput>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<phase>package</phase>-->
+						<!--<goals>-->
+							<!--<goal>check</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>

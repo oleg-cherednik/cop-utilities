@@ -42,9 +42,13 @@ public class FileUtilsTest {
 	@Test
 	public void testAbsolutePath() {
 		File base = buildPath("d:", "one", "two1");
-		File file = buildPath(".", "..", "two2", "three2");
+		File file1 = buildPath(".", "..", "two2", "three2");
+		File file2 = new File(".\\xls");
+		File file3 = new File(".\\..\\two2\\xls");
 
-		assertEquals(buildPath("d:", "one", "two2", "three2"), FileUtils.getAbsolutePath(base, file));
+		assertEquals(buildPath("d:", "one", "two2", "three2"), FileUtils.getAbsolutePath(base, file1));
+		assertEquals(buildPath("d:", "one", "two1", "xls"), FileUtils.getAbsolutePath(base, file2));
+		assertEquals(buildPath("d:", "one", "two2", "xls"), FileUtils.getAbsolutePath(base, file3));
 	}
 
 	@Test
