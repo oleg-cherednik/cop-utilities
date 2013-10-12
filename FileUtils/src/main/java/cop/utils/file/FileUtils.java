@@ -104,17 +104,22 @@ public final class FileUtils {
 
 		File parent;
 		List<String> path = new ArrayList<String>();
+		String str = file.getPath();
 
-		do {
-			if ((parent = file.getParentFile()) != null) {
-				path.add(file.getName());
-				file = parent;
-			} else
-				path.add(file.getPath());
-		} while (parent != null);
+		String[] arr = str.split("[\\\\|/]");
 
-		Collections.reverse(path);
+		return arr;
 
-		return path.toArray(new String[path.size()]);
+//		do {
+//			if ((parent = file.getParentFile()) != null) {
+//				path.add(file.getName());
+//				file = parent;
+//			} else
+//				path.add(file.getPath());
+//		} while (parent != null);
+//
+//		Collections.reverse(path);
+//
+//		return path.toArray(new String[path.size()]);
 	}
 }
