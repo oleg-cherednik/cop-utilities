@@ -12,7 +12,6 @@ package cop.utils.file;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,6 +58,12 @@ public final class FileUtils {
 	public static File getRelativePath(File base, File absoluteFile) {
 		checkAbsolutePath(base);
 		checkAbsolutePath(absoluteFile);
+
+		try {
+			File res = base.toPath().relativize(absoluteFile.toPath()).toFile();
+			return new File('.' + File.separator + res.getPath());
+		} catch(Exception ignored) {
+		}
 
 		String[] basePath = getPathParts(base);
 		String[] filePath = getPathParts(absoluteFile);
