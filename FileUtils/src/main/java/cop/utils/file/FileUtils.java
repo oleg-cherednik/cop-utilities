@@ -46,7 +46,9 @@ public final class FileUtils {
 
 	public static File getAbsolutePath(File base, File relativeFile) {
 		checkAbsolutePath(base);
-		checkRelativePath(relativeFile);
+
+		if(relativeFile.isAbsolute())
+			return relativeFile;
 
 		for (String part : getPathParts(relativeFile))
 			if (!".".equals(part))
