@@ -71,7 +71,7 @@ public final class FileUtils {
 		String[] filePath = getPathParts(absoluteFile);
 
 		if (!basePath[0].equals(filePath[0]))
-			return new File('.' + File.separator + filePath[0]);
+			return absoluteFile;
 
 		int i = 0;
 		int j = 0;
