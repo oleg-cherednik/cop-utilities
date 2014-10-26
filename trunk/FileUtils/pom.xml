@@ -230,7 +230,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--plugin>
 				<groupId>com.google.code.maven-svn-revision-number-plugin</groupId>
 				<artifactId>svn-revision-number-maven-plugin</artifactId>
 				<version>1.13</version>
@@ -249,7 +249,7 @@
 						</entry>
 					</entries>
 				</configuration>
-			</plugin>
+			</plugin-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -263,10 +263,11 @@
 					</execution>
 				</executions>
 				<configuration>
-					<format>{0}.{1}</format>
+					<!--<format>{0}.{1}</format>-->
+					<format>{0}</format>
 					<items>
 						<item>${project.version}</item>
-						<item>${prefix.committedRevision}</item>
+						<!--<item>${prefix.committedRevision}</item>-->
 					</items>
 					<doCheck>true</doCheck>
 					<doUpdate>true</doUpdate>
