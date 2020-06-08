@@ -203,7 +203,7 @@ public final class BitUtils {
      * @return <code>true</code> if giving value is power of 2
      */
     public static boolean isPowerOfTwo(int val) {
-        return ((val - 1) & val) == 0;
+        return val > 0 && (val & val - 1) == 0;
     }
 
     public static long reverse(long val) {

@@ -1,11 +1,13 @@
 /**
  * <b>License</b>: <a href="http://www.gnu.org/licenses/lgpl.html">GNU Leser General Public License</a>
  * <b>Copyright</b>: <a href="mailto:abba-best@mail.ru">Cherednik, Oleg</a>
- * 
+ *
  * $Id$
  * $HeadURL$
  */
 package cop.utils;
+
+import org.junit.Test;
 
 import static cop.utils.BitUtils.BIT0;
 import static cop.utils.BitUtils.BIT1;
@@ -27,8 +29,6 @@ import static cop.utils.BitUtils.setBits;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 /**
  * @author <a href="mailto:abba-bestl@mail.ru">Cherednik, Oleg</a>
@@ -141,8 +141,9 @@ public class BitUtilsTest {
 		assertTrue(isPowerOfTwo(16));
 		assertTrue(isPowerOfTwo(32));
 
-		assertFalse(isPowerOfTwo(725));
-		assertFalse(isPowerOfTwo(100));
+		assertFalse(isPowerOfTwo(0));
 		assertFalse(isPowerOfTwo(60));
+		assertFalse(isPowerOfTwo(100));
+		assertFalse(isPowerOfTwo(725));
 	}
 }
